@@ -1,4 +1,4 @@
-const { admin, db, firebase } = require('../config/firebase');
+const { db, firebase } = require('../config/firebase');
 const validateLoginData = require('../helpers/validateLoginData');
 const { NO_USER, WRONG_PASSWORD, SUCCESS, FAILURE, NO_USER_RESPONSE, USER_LOGGED, GENERAL_ERROR } = require('../config/constants');
 
