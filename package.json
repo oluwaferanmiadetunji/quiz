@@ -1,7 +1,5 @@
 {
 	"scripts": {
-        "add":"git add .",
-        "commit":"git commit "
-		"push": "git add . "
+		"push": "git add . && git commit -m'.' && git subtree push --prefix server heroku master && git push"
 	}
 }
