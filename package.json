@@ -1,0 +1,7 @@
+{
+	"scripts": {
+        "add":"git add .",
+        "commit":"git commit "
+		"push": "git add . "
+	}
+}
