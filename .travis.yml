@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - 12
+before_deploy:
+  - cd server
+script:
+  - npm install
+deploy:
+  provider: heroku
+  api_key:
+    secure: iXBeTvTWFgS1fYpIbnaNqij+0YHnOUnyeY4b4TzkAZnlaTI8OI0IfKE6AhjolzYWrQv/fsIZ0FVWZAtsKIQhW0zyuolHU44Av8UvAdH6LmjiDdIX9L1yuCtkWQD2OevBINfj7syfYJ7ScH2vD95Go4g8Ij1jw5MMFGLwyRyclFnGzRCcFyKqauhiBlx1yjbDEESxGhCRi9hXLWQB9Qim/id+0DrSSb9ApiUUpta9yu3Tp3VTZOeVKb3PgTJRDf7QsTLO5iMb6VE/9PlAND3s0VbvGU7trGK/eklvuwgB/8zsZMFX76ZLJ21vsJJgJTPooAtFml6+/57ghY27AygdvtZItrUfIBU5IZlyVtY2K4UgnM+mvpS6n5HSaXWpH2xdpRrHdzVKb4Pu9dGfMfvRHa/1iCE2GtdKt3Uh9leywdZSQJT5A2xNxIWE9mECPpQrsCTrGR4I/LQpsIXeMRzMTH0U0XM/yFukX3NEJL8GoaVFQZ5jA3vU09aPC8Api/8Gt44/3WLvsrri9C30HRHvpYjmUneE6ThQN/8v2Ht3PcW3XN2LtGe5SpNy+NmrOgwK4Os6EBv4seR7eZCOtkJMYw9hktb32eA+azzX8uYtYVj4SE2UaVcsy/cMJSNvQpEhhKNfEAVmfICi5wloETtvmunO/P+b70CR8OC62jS1q1Q=
+  app: agile-peak-72692
+  on:
+    repo: oluwaferanmiadetunji/quiz
+  skip_cleanup: 'true'
