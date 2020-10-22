@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const home = require('../routes/home');
+const auth = require('../routes/auth');
 
 const app = express();
 app.use(cors());
@@ -24,5 +25,6 @@ let morganFunction = function (tokens, req, res) {
 app.use(morgan(morganFunction));
 
 app.use('/', home);
+app.use('/', auth);
 
 module.exports = app;

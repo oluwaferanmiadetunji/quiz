@@ -1,62 +1,32 @@
-const User = require('../models/user');
-const validateLoginCredentials = require('../helpers/validateLoginCredentials');
-const getDetails = require('../queries/getDetailsByEmail');
-const {validate} = require('../helpers/encrypt');
-const {generate} = require('../helpers/jwtToken');
-
+const { firebase } = require('../config/firebase');
 module.exports = async (req, res) => {
 	const email = req.body.email.trim();
 	const password = req.body.password.trim();
-
-	// validate the user's data
-	const validateParams = validateLoginCredentials({email, password});
-
-	if (validateParams.error) {
-		return res.status(417).json({status: 'error', message: validateParams.message, data: ''});
+	if (email.trim() === '') {
+		return res.status(400).json({ status: 'error', message: 'Email can not be empty', data: '' });
+	} else if (password.trim() === '') {
+		return res.status(400).json({ status: 'error', message: 'Password can not be empty', data: '' });
 	}
-
-	// get the user's details
-	const getUser = await getDetails(User, email);
-
-	if (!getUser) {
-		return res.status(409).json({status: 'error', message: 'Wrong credentials', data: ''});
-	}
-
-	try {
-		const hashedPassword = getUser.password;
-		const plainPassword = password;
-
-		// validate the user's password
-		const passwordIsMatch = validate(plainPassword, hashedPassword);
-		if (!passwordIsMatch) {
-			return res.status(409).json({status: 'error', message: 'Wrong credentials', data: ''});
-		}
-
-		// generate the user's token
-		const payload = {
-			id: getUser._id,
-			name: getUser.name,
-			email: getUser.email,
-			phone: getUser.phone,
-			imageURL: getUser.imageURL,
-		};
-		const userToken = generate(payload);
-
-		return res.status(200).json({
-			status: 'ok',
-			message: 'User logged in successfully',
-			data: {
-				_id: getUser._id,
-				name: getUser.name,
-				email: getUser.email,
-				phone: getUser.phone,
-				gender: getUser.gender,
-				imageURL: getUser.imageURL,
-				userToken,
-			},
-		});
-	} catch (err) {
-		console.log(err)
-		return res.status(500).json({status: 'error', message: 'Something went wrong!', data: ''});
-	}
+	const data = await firebase.auth().signInWithEmailAndPassword(email, password);
+	// firebase
+	// 	.auth()
+	// 	.signInWithEmailAndPassword(user.email, user.password)
+	// 	.then((data) => {
+	// 		return data.user.getIdToken();
+	// 	})
+	// 	.then((token) => {
+	// 		return res.json({ token });
+	// 	})
+	// 	.catch((err) => {
+	// 		console.log(err);
+	// 		if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+	// 			return res.status(400).json({
+	// 				general: 'Wrong credentials! Please, try again',
+	// 			});
+	// 		} else {
+	// 			return res.status(500).json({
+	// 				general: 'Something went wrong! Please try again',
+	// 			});
+	// 		}
+	// 	});
 };
