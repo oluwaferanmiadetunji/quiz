@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
 	}
 
 	try {
-		const userDoc = db.doc(`/users/${email}`);
+		const userDoc = db.doc(`/admins/${email}`);
 		const user = await userDoc.get();
 		if (!user.exists) return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
 		const data = await firebase.auth().signInWithEmailAndPassword(email, password);

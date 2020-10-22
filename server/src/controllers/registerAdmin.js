@@ -13,17 +13,19 @@ module.exports = async (req, res) => {
 
 	let token, userId;
 	try {
-		const user = await db.doc(`/admins/${email}`).get();
+		const adminDoc = db.doc(`/admins/${email}`);
+		const user = await adminDoc.get();
 		if (user.exists) return res.status(417).json({ status: FAILURE, message: USER_EXISTS_RESPONSE, data: '' });
 
 		const data = await firebase.auth().createUserWithEmailAndPassword(email, password);
 		userId = data.user.uid;
 		token = await data.user.getIdToken();
 
-		await db.doc(`/admins/${email}`).set({
+		await adminDoc.set({
 			email,
 			createdAt: new Date().toISOString(),
 			lastLogin: new Date().toISOString(),
+			userId,
 		});
 		return res.status(201).json({
 			status: SUCCESS,

@@ -14,14 +14,15 @@ module.exports = async (req, res) => {
 
 	let token, userId;
 	try {
-		const user = await db.doc(`/users/${email}`).get();
+		const userDoc = db.doc(`/users/${email}`);
+		const user = await userDoc.get();
 		if (user.exists) return res.status(417).json({ status: FAILURE, message: USER_EXISTS_RESPONSE, data: '' });
 
 		const data = await firebase.auth().createUserWithEmailAndPassword(email, password);
 		userId = data.user.uid;
 		token = await data.user.getIdToken();
 
-		await db.doc(`/users/${email}`).set({
+		await userDoc.set({
 			email,
 			name,
 			status: 'Free',
@@ -32,6 +33,7 @@ module.exports = async (req, res) => {
 			total: 0,
 			correct: 0,
 			times: 0,
+			userId,
 		});
 		return res.status(201).json({
 			status: SUCCESS,
