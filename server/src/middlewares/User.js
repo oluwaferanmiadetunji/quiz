@@ -19,6 +19,7 @@ module.exports = (req, res, next) => {
 				req.user.count = data.docs[0].data().count;
 				req.user.status = data.docs[0].data().status;
 				req.user.email = data.docs[0].data().email;
+				req.user.times = data.docs[0].data().times;
 				return next();
 			} catch (err) {
 				return res.status(403).json({ status: FAILURE, message: 'Unauthorized request', data: err });

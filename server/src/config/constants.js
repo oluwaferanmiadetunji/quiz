@@ -11,4 +11,5 @@ module.exports = {
 	GENERAL_ERROR: 'Something went wrong!',
 	FREE: 'Free',
 	UPDATED: 'Account updated successfully',
+	SAVED: 'History Saved',
 };
