@@ -9,4 +9,5 @@ module.exports = {
 	WRONG_PASSWORD: 'auth/wrong-password',
 	NO_USER_RESPONSE: 'Wrong credentials!',
 	GENERAL_ERROR: 'Something went wrong!',
+	FREE: 'Free',
 };

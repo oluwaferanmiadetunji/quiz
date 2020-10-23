@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const home = require('../routes/home');
 const auth = require('../routes/auth');
+const quiz = require('../routes/quiz');
 
 const app = express();
 app.use(cors());
@@ -26,5 +27,6 @@ app.use(morgan(morganFunction));
 
 app.use('/', home);
 app.use('/', auth);
+app.use('/', quiz);
 
 module.exports = app;

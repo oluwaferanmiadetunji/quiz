@@ -30,11 +30,11 @@ module.exports = async (req, res) => {
 		});
 	} catch (err) {
 		if (err.code === NO_USER) {
-			return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
+			return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: err });
 		} else if (err.code === WRONG_PASSWORD) {
-			return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
+			return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: err });
 		} else {
-			return res.status(417).json({ status: FAILURE, message: GENERAL_ERROR, data: '' });
+			return res.status(417).json({ status: FAILURE, message: GENERAL_ERROR, data: err });
 		}
 	}
 };

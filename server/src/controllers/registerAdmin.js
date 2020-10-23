@@ -38,13 +38,13 @@ module.exports = async (req, res) => {
 			return res.status(400).json({
 				status: FAILURE,
 				message: USER_EXISTS_RESPONSE,
-				data: '',
+				data: err,
 			});
 		} else {
 			return res.status(500).json({
 				status: FAILURE,
 				message: GENERAL_ERROR,
-				data: '',
+				data: err,
 			});
 		}
 	}
