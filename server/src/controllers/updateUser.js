@@ -5,7 +5,6 @@ module.exports = async (req, res) => {
 	const count = req.body.count;
 	const duration = req.body.duration;
 	const name = req.body.name;
-	const id = req.user.uid;
 	try {
 		await db.doc(`/users/${req.user.email}`).update({
 			name,
