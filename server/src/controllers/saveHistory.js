@@ -26,7 +26,6 @@ module.exports = async (req, res) => {
 			data: '',
 		});
 	} catch (err) {
-		console.log(err);
 		return res.status(500).json({
 			status: FAILURE,
 			message: GENERAL_ERROR,

@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
 			});
 		let history = [];
 		data.forEach((doc) => {
-			history.push(doc.data());
+			history.push({ ...doc.data(), uid: doc.id });
 		});
 		return res.status(201).json({
 			status: SUCCESS,
@@ -22,7 +22,6 @@ module.exports = async (req, res) => {
 			data: history,
 		});
 	} catch (err) {
-		console.log(err);
 		return res.status(500).json({
 			status: FAILURE,
 			message: GENERAL_ERROR,

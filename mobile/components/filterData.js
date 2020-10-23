@@ -6,5 +6,4 @@ export default (array, params) => {
 		zip.push({ uid: keys[i], value: value[i] });
 	}
 	const details = zip.filter((data) => data.uid === params);
-	console.log({ details: details[0].value });
 };

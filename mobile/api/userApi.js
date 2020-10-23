@@ -181,7 +181,6 @@ export const makePostReq = async (path, data) => {
 		});
 		return response.json();
 	} catch (err) {
-		console.log(err);
 		return null;
 	}
 };
@@ -195,7 +194,6 @@ export const makeGetReq = async (path) => {
 		});
 		return response.json();
 	} catch (err) {
-		console.log(err);
 		return null;
 	}
 };
