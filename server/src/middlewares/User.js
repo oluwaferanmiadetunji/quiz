@@ -18,6 +18,7 @@ module.exports = (req, res, next) => {
 				const data = await db.collection('users').where('userId', '==', req.user.uid).limit(1).get();
 				req.user.count = data.docs[0].data().count;
 				req.user.status = data.docs[0].data().status;
+				req.user.email = data.docs[0].data().email;
 				return next();
 			} catch (err) {
 				return res.status(403).json({ status: FAILURE, message: 'Unauthorized request', data: err });

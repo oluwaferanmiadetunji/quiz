@@ -10,4 +10,5 @@ module.exports = {
 	NO_USER_RESPONSE: 'Wrong credentials!',
 	GENERAL_ERROR: 'Something went wrong!',
 	FREE: 'Free',
+	UPDATED: 'Account updated successfully',
 };
