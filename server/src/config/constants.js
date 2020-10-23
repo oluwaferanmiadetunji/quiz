@@ -12,4 +12,5 @@ module.exports = {
 	FREE: 'Free',
 	UPDATED: 'Account updated successfully',
 	SAVED: 'History Saved',
+	SUCCESS_MESSAGE: 'Success',
 };

@@ -1,5 +1,5 @@
 const { db } = require('../config/firebase');
-const { SUCCESS, FAILURE, USER_CREATED } = require('../config/constants');
+const { SUCCESS, FAILURE, SUCCESS_MESSAGE, GENERAL_ERROR } = require('../config/constants');
 
 module.exports = async (req, res) => {
 	const email = req.user.email;
@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
 		const data = await (await db.doc(`/users/${email}`).get()).data();
 		return res.status(201).json({
 			status: SUCCESS,
-			message: USER_CREATED,
+			message: SUCCESS_MESSAGE,
 			data,
 		});
 	} catch (err) {
