@@ -19,7 +19,6 @@
 		"firebase-admin": "^9.1.1",
 		"helmet": "^4.1.0",
 		"morgan": "^1.10.0",
-		"nodemon": "^2.0.6",
-		"uuid": "^8.3.0"
+		"nodemon": "^2.0.6"
 	}
 }

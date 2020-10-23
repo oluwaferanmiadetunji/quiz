@@ -1,5 +1,4 @@
 const { db } = require('../config/firebase');
-const { v4: uuidv4 } = require('uuid');
 const { SUCCESS, FAILURE, SAVED, GENERAL_ERROR } = require('../config/constants');
 
 module.exports = async (req, res) => {
@@ -8,13 +7,10 @@ module.exports = async (req, res) => {
 
 	try {
 		const userDoc = db.collection('users').doc(email);
-		await userDoc
-			.collection('history')
-			.doc(uuidv4())
-			.set({
-				createdAt: new Date().toISOString(),
-				...data,
-			});
+		await userDoc.collection('history').add({
+			createdAt: new Date().toISOString(),
+			...data,
+		});
 		await userDoc.update({
 			total: data.total + 1,
 			correct: data.correct + 1,
