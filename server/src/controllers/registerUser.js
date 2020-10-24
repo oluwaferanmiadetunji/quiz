@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
 			status: 'Free',
 			createdAt: new Date().toISOString(),
 			lastLogin: new Date().toISOString(),
-			count: 50,
+			count: 20,
 			duration: 30,
 			total: 0,
 			correct: 0,
