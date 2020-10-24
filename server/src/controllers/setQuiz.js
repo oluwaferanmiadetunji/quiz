@@ -13,7 +13,6 @@ module.exports = async (req, res) => {
 		data.forEach((doc) => {
 			Data.push({ ...doc.data(), incorrectAnswers: JSON.parse(doc.data().incorrectAnswers), uid: doc.id });
 		});
-
 		let questions = [];
 		if (status === FREE) {
 			questions = shuffle(Data.filter((question) => question.type === FREE)).slice(0, count);
