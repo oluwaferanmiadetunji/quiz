@@ -41,7 +41,6 @@ module.exports = async (req, res) => {
 			data: { userToken: token },
 		});
 	} catch (err) {
-		console.log(err);
 		if (err.code === USER_EXISTS) {
 			return res.status(400).json({
 				status: FAILURE,
