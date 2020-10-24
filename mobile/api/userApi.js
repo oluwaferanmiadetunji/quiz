@@ -1,4 +1,4 @@
-const baseUrl = 'https://us-central1-quiz-a893a.cloudfunctions.net/api/';
+const baseUrl = 'https://agile-peak-72692.herokuapp.com/';
 import { AsyncStorage } from 'react-native';
 
 // get user token
@@ -68,7 +68,7 @@ export const loginUser = async (email, password) => {
 // Reset Password
 export const forgotPassword = async (email) => {
 	try {
-		const response = await fetch(`${baseUrl}user/login`, {
+		const response = await fetch(`${baseUrl}reset`, {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
 			body: JSON.stringify({ email, password }),
@@ -91,6 +91,27 @@ export const getData = async () => {
 		// get user token
 		const token = await _retrieveToken();
 		const response = await fetch(`${baseUrl}user`, {
+			method: 'GET',
+			headers: { Authorization: `Bearer ${token}` },
+		});
+		if (response.ok) {
+			const { data } = await response.json();
+			return data;
+		} else {
+			const { message } = await response.json();
+			return message;
+		}
+	} catch (err) {
+		throw new Error(err);
+	}
+};
+
+// Get User Data
+export const getHistory = async () => {
+	try {
+		// get user token
+		const token = await _retrieveToken();
+		const response = await fetch(`${baseUrl}user/history`, {
 			method: 'GET',
 			headers: { Authorization: `Bearer ${token}` },
 		});

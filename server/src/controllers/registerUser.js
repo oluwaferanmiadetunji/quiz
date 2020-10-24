@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
 		return res.status(201).json({
 			status: SUCCESS,
 			message: USER_CREATED,
-			data: '',
+			data: { userToken: token },
 		});
 	} catch (err) {
 		console.log(err);
