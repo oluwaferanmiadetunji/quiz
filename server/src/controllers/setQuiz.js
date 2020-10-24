@@ -8,7 +8,12 @@ module.exports = async (req, res) => {
 	const status = req.user.status;
 
 	try {
-		const Data = await db.collection('questions').where('category', '==', category).get();
+		const data = await db.collection('questions').where('category', '==', category).get();
+		let Data = [];
+		data.forEach((doc) => {
+			Data.push({ ...doc.data(), incorrectAnswers: JSON.parse(doc.data().incorrectAnswers), uid: doc.id });
+		});
+
 		let questions = [];
 		if (status === FREE) {
 			questions = shuffle(Data.filter((question) => question.type === FREE)).slice(0, count);
