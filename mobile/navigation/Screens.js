@@ -55,7 +55,7 @@ const Screens = () => {
 				console.log({ name, email, password });
 				const response = await registerUser(name, email, password);
 				console.log(response);
-				if (response.status === 'ok') {
+				if (response.data.userToken !== undefined && response.data.userToken !== null && response.data.userToken !== '') {
 					let { userToken } = response.data;
 					try {
 						await AsyncStorage.setItem('userToken', userToken);
