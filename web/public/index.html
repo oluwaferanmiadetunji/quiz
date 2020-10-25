@@ -9,9 +9,30 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <script src="/__/firebase/7.19.1/firebase-app.js"></script>
-    <script src="/__/firebase/7.19.1/firebase-analytics.js"></script>
-    <script src="/__/firebase/init.js"></script>
+   <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyCvsO-xImvIL-bl8uADmKFEVk0GNYn6qUg",
+    authDomain: "quiz-a893a.firebaseapp.com",
+    databaseURL: "https://quiz-a893a.firebaseio.com",
+    projectId: "quiz-a893a",
+    storageBucket: "quiz-a893a.appspot.com",
+    messagingSenderId: "730799293119",
+    appId: "1:730799293119:web:21c79d0c12090410b0fc0a",
+    measurementId: "G-V833H6CNGJ"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
     
     <title>Quiz App</title>
   </head>
