@@ -18,7 +18,8 @@ export default ({ navigation }) => {
 			show('Email can not be empty', 'warning');
 		} else {
 			setLoading(true);
-			const { message, status } = await forgotPassword(email);
+			const { message, status } = await forgotPassword(email).trim();
+			console.log(message, status);
 			if (status === 'error') {
 				show(message, 'danger');
 			} else {

@@ -42,10 +42,10 @@ export default ({ navigation }) => {
 
 	useEffect(() => {
 		const getNameAsyncStorage = async () => {
-			const getName = await AsyncStorage.getItem('name');
 			const getData = await AsyncStorage.getItem('userData');
 			const uData = JSON.parse(getData);
-			setName(getName);
+			console.log(uData);
+			setName(uData.name);
 			setCount(uData.count);
 			setDuration(uData.duration);
 		};

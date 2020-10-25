@@ -24,14 +24,14 @@ const Screens = () => {
 		() => ({
 			signIn: async (email, password) => {
 				const response = await loginUser(email, password);
-				if (response.token) {
-					let { token } = response;
+				if (response.userToken) {
+					let { userToken } = response;
 					try {
-						await AsyncStorage.setItem('userToken', token);
+						await AsyncStorage.setItem('userToken', userToken);
 					} catch (err) {
 						console.log(err);
 					}
-					dispatch({ type: 'LOGIN', id: email, token });
+					dispatch({ type: 'LOGIN', id: email, token: userToken });
 					try {
 						const userData = await getData();
 						await AsyncStorage.setItem('userData', JSON.stringify(userData));
@@ -52,9 +52,8 @@ const Screens = () => {
 				dispatch({ type: 'LOGOUT' });
 			},
 			signUp: async (name, email, password) => {
-				console.log({ name, email, password });
 				const response = await registerUser(name, email, password);
-				console.log(response);
+
 				if (response.data.userToken !== undefined && response.data.userToken !== null && response.data.userToken !== '') {
 					let { userToken } = response.data;
 					try {
