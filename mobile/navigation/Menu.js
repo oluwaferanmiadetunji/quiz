@@ -9,7 +9,7 @@ import { AuthContext } from '../components/context';
 
 function CustomDrawerContent({ navigation, state }) {
 	const { signOut } = React.useContext(AuthContext);
-	const screens = ['Home', 'Profile', 'History', 'Elements', 'Articles'];
+	const screens = ['Home', 'Profile', 'History', 'Contact Us', 'Elements', 'Articles'];
 
 	return (
 		<Block style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>

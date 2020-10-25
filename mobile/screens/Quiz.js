@@ -65,6 +65,7 @@ export default ({ navigation, route }) => {
 				uid: userId,
 				data: { questions: answeredQuestions, correct: numCorrect, total: questions.length },
 			};
+			console.log(data);
 			saveHistory(data);
 			navigation.navigate('Summary', { data });
 		}, 3000);
@@ -135,7 +136,7 @@ export default ({ navigation, route }) => {
 									size={19}
 								/>
 								<Text color={argonTheme.COLORS.MUTED} style={{ marginLeft: 20 }} size={15}>
-									Question {index + 1} / {questions.length + 1}:
+									Question {index + 1} / {questions.length}:
 								</Text>
 								<Hr lineColor={argonTheme.COLORS.MUTED} text='' />
 								<Text color={argonTheme.COLORS.BLACK} style={{ marginLeft: 20 }} size={18}>
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
 		borderColor: 'green',
 		width: width * 0.8,
 		height: 'auto',
-		marginTop: 30,
+		marginTop: 20,
 		backgroundColor: argonTheme.COLORS.SUCCESS,
 	},
 	white: {
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
 		borderColor: 'red',
 		width: width * 0.8,
 		height: 'auto',
-		marginTop: 30,
+		marginTop: 20,
 		backgroundColor: argonTheme.COLORS.LABEL,
 	},
 	selected: {
@@ -267,7 +268,7 @@ const styles = StyleSheet.create({
 		borderColor: 'blue',
 		width: width * 0.8,
 		height: 'auto',
-		marginTop: 30,
+		marginTop: 20,
 		backgroundColor: 'blue',
 	},
 });

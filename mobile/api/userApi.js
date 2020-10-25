@@ -159,6 +159,7 @@ export const setQuiz = async (category) => {
 	try {
 		// get user data
 		const { count, status } = JSON.parse(await _retrieveData());
+		console.log(count);
 		const response = await fetch(`${baseUrl}quiz`, {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },

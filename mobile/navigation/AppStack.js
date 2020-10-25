@@ -6,6 +6,7 @@ import ProfileStack from './ProfileStack';
 import ArticlesStack from './ArticlesStack';
 import ElementsStack from './ElementsStack';
 import HistoryStack from './HistoryStack';
+import ContactStack from './ContactStack';
 import { Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('screen');
@@ -44,6 +45,7 @@ const AppStack = () => {
 			<Drawer.Screen name='Home' component={HomeStack} />
 			<Drawer.Screen name='Profile' component={ProfileStack} />
 			<Drawer.Screen name='History' component={HistoryStack} />
+			<Drawer.Screen name='Contact Us' component={ContactStack} />
 			<Drawer.Screen name='Elements' component={ElementsStack} />
 			<Drawer.Screen name='Articles' component={ArticlesStack} />
 		</Drawer.Navigator>
