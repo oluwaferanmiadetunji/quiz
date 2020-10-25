@@ -14,6 +14,7 @@ const saveHistory = require('./controllers/saveHistory');
 const getUserDetails = require('./controllers/getUserDetails');
 const getCourses = require('./controllers/getCourses');
 const resetPassword = require('./controllers/resetPassword');
+const contact = require('./controllers/contact');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,5 +33,6 @@ app.post('/user/history/save', saveHistory);
 app.get('/user', auth, getUserDetails);
 app.get('/courses', getCourses);
 app.post('/reset', resetPassword);
+app.post('/contact', contact);
 
 exports.api = functions.https.onRequest(app);
