@@ -11,10 +11,13 @@ import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Divider from '@material-ui/core/Divider';
 import { Styles } from './style';
-import Routes from './Routes';
+import Routes from './RouteItems';
+import { useSelector } from 'react-redux';
 
 const SideBar = () => {
   const classes = Styles();
+  const title = useSelector((state) => state.title);
+
   const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -26,7 +29,7 @@ const SideBar = () => {
     <>
       <AppBar
         position="fixed"
-        style={{ backgroundColor: '#111' }}
+        style={{ backgroundColor: '#111', zIndex: 50 }}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open
         })}
@@ -52,7 +55,7 @@ const SideBar = () => {
               [classes.shift]: open
             })}
           >
-            Dashboard
+            {title}
           </Typography>
           <IconButton color="primary">
             <Badge badgeContent={4} color="secondary">

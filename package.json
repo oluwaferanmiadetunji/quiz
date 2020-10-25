@@ -1,5 +1,6 @@
 {
 	"scripts": {
-		"deploy": "git add . && git commit -m'.' && git subtree push --prefix server heroku master && git push"
+		"test": "git add . && git commit -m'.' && git subtree push --prefix server heroku master && git push",
+		"deploy": "git add . && git commit -m'.' && git push && firebase deploy"
 	}
 }

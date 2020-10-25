@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 export const Styles = makeStyles((theme) => ({
   root: {
@@ -36,7 +36,8 @@ export const Styles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    zIndex: 50
   },
   title: {
     flexGrow: 1,

@@ -4,7 +4,7 @@ import { Block, Text } from 'galio-framework';
 
 import { Button, Icon, Input } from '../components';
 import { Images, argonTheme } from '../constants';
-import { makePostReq } from '../api/userApi';
+import { forgotPassword } from '../api/userApi';
 import show from '../components/showMessage';
 
 const { width, height } = Dimensions.get('screen');
@@ -18,7 +18,7 @@ export default ({ navigation }) => {
 			show('Email can not be empty', 'warning');
 		} else {
 			setLoading(true);
-			const { message, status } = await makePostReq('/user/reset', { email });
+			const { message, status } = await forgotPassword(email);
 			if (status === 'error') {
 				show(message, 'danger');
 			} else {
@@ -80,7 +80,7 @@ export default ({ navigation }) => {
 										</Text>
 									</Block>
 									<Block style={{ marginTop: 20 }}>
-										<Text color={argonTheme.COLORS.PRIMARY} size={18} onPress={() => navigation.navigate('Regiter')}>
+										<Text color={argonTheme.COLORS.PRIMARY} size={18} onPress={() => navigation.navigate('Register')}>
 											Don't have an account?
 										</Text>
 									</Block>

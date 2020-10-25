@@ -1,11 +1,12 @@
 import React from 'react';
-import Layout from '../../layout';
 import Page from './Reports';
-
-const ReportsWithLayout = Layout(Page);
+import { setTitle } from '../../layout/redux';
+import { useDispatch } from 'react-redux';
 
 function Reports() {
-  return <ReportsWithLayout title="Reports" />;
+  const dispatch = useDispatch();
+  dispatch(setTitle('Reports'));
+  return <Page />;
 }
 
 export default Reports;

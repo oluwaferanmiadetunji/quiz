@@ -12,6 +12,7 @@ export default ({ navigation }) => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [password1, setPassword1] = useState('');
 	const [loading, setLoading] = useState(false);
 	const { signUp } = React.useContext(AuthContext);
 	const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -21,18 +22,22 @@ export default ({ navigation }) => {
 			show('Name can not be empty', 'warning');
 		} else if (email.trim() === '') {
 			show('Email can not be empty', 'warning');
-		} else if (!email.match(re)) {
+		} else if (!email.trim().match(re)) {
 			show('Please, enter a valid email address', 'warning');
 		} else if (password.trim() === '') {
 			show('Password can not be empty', 'warning');
 		} else if (password.trim().length < 6) {
 			show('Password must be at least 6 characters', 'warning');
+		} else if (password.trim() !== password1.trim()) {
+			show('Passwords must be the same', 'warning');
 		} else {
 			setLoading(true);
 			signUp(name.trim(), email.trim(), password.trim())
-				.then(() => setLoading(false))
+				.then(() => {
+					setLoading(false);
+				})
 				.catch((err) => {
-					conole.log(err);
+					console.log(err);
 					setLoading(false);
 				});
 		}
@@ -83,6 +88,18 @@ export default ({ navigation }) => {
 											}
 											value={password}
 											onChangeText={(val) => setPassword(val)}
+										/>
+									</Block>
+									<Block width={width * 0.8}>
+										<Input
+											password
+											borderless
+											placeholder='Confirm Password'
+											iconContent={
+												<Icon size={16} color={argonTheme.COLORS.ICON} name='padlock-unlocked' family='ArgonExtra' style={styles.inputIcons} />
+											}
+											value={password1}
+											onChangeText={(val) => setPassword1(val)}
 										/>
 									</Block>
 									{loading && (

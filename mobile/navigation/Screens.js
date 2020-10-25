@@ -24,16 +24,14 @@ const Screens = () => {
 		() => ({
 			signIn: async (email, password) => {
 				const response = await loginUser(email, password);
-				if (response.userToken) {
-					let { userToken } = response;
+				if (response.token) {
+					let { token } = response;
 					try {
-						await AsyncStorage.setItem('userToken', userToken);
-						await AsyncStorage.setItem('name', response.name);
-						await AsyncStorage.setItem('email', response.email);
+						await AsyncStorage.setItem('userToken', token);
 					} catch (err) {
 						console.log(err);
 					}
-					dispatch({ type: 'LOGIN', id: email, token: userToken });
+					dispatch({ type: 'LOGIN', id: email, token });
 					try {
 						const userData = await getData();
 						await AsyncStorage.setItem('userData', JSON.stringify(userData));
@@ -47,16 +45,17 @@ const Screens = () => {
 			},
 			signOut: async () => {
 				try {
-					await AsyncStorage.clear();
+					await AsyncStorage.removeItem('userToken');
 				} catch (err) {
 					console.log(err);
 				}
 				dispatch({ type: 'LOGOUT' });
 			},
 			signUp: async (name, email, password) => {
+				console.log({ name, email, password });
 				const response = await registerUser(name, email, password);
 				console.log(response);
-				if (response.data.userToken !== undefined && response.data.userToken !== null && response.data.userToken !== '') {
+				if (response.status === 'ok') {
 					let { userToken } = response.data;
 					try {
 						await AsyncStorage.setItem('userToken', userToken);
