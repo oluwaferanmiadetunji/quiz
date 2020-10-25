@@ -74,16 +74,19 @@ export default ({ navigation }) => {
 											</Button>
 										</Block>
 									)}
-
-									<Block style={{ marginTop: 20 }}>
-										<Text color={argonTheme.COLORS.PRIMARY} size={18} onPress={() => navigation.navigate('Login')}>
-											Already have an account?
-										</Text>
+									<Block middle>
+										<Button color='secondary' style={styles.createButton} onPress={() => navigation.navigate('Login')}>
+											<Text bold size={14} color={argonTheme.COLORS.PRIMARY}>
+												Login
+											</Text>
+										</Button>
 									</Block>
-									<Block style={{ marginTop: 20 }}>
-										<Text color={argonTheme.COLORS.PRIMARY} size={18} onPress={() => navigation.navigate('Register')}>
-											Don't have an account?
-										</Text>
+									<Block middle>
+										<Button color='secondary' style={styles.createButton} onPress={() => navigation.navigate('Register')}>
+											<Text bold size={14} color={argonTheme.COLORS.PRIMARY}>
+												Register
+											</Text>
+										</Button>
 									</Block>
 								</KeyboardAvoidingView>
 							</Block>
@@ -111,36 +114,8 @@ const styles = StyleSheet.create({
 		elevation: 1,
 		overflow: 'hidden',
 	},
-	socialConnect: {
-		backgroundColor: argonTheme.COLORS.WHITE,
-		borderBottomWidth: StyleSheet.hairlineWidth,
-		borderColor: '#8898AA',
-	},
-	socialButtons: {
-		width: 120,
-		height: 40,
-		backgroundColor: '#fff',
-		shadowColor: argonTheme.COLORS.BLACK,
-		shadowOffset: {
-			width: 0,
-			height: 4,
-		},
-		shadowRadius: 8,
-		shadowOpacity: 0.1,
-		elevation: 1,
-	},
-	socialTextButtons: {
-		color: argonTheme.COLORS.PRIMARY,
-		fontWeight: '800',
-		fontSize: 14,
-	},
 	inputIcons: {
 		marginRight: 12,
-	},
-	passwordCheck: {
-		paddingLeft: 15,
-		paddingTop: 13,
-		paddingBottom: 30,
 	},
 	createButton: {
 		width: width * 0.5,

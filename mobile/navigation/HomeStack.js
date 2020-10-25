@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from '../screens/Home';
-import Pro from '../screens/Pro';
+import Quiz from '../screens/Quiz';
+import Summary from '../screens/Summary';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import { Header } from '../components';
@@ -16,14 +17,23 @@ const HomeStack = () => {
 					cardStyle: { backgroundColor: '#F8F9FE' },
 				}}
 			/>
-			{/* <Stack.Screen
-				name='Pro'
-				component={Pro}
+			<Stack.Screen
+				name='Quiz'
+				component={Quiz}
 				options={{
-					header: ({ navigation, scene }) => <Header title='' back white transparent navigation={navigation} scene={scene} />,
+					header: ({ navigation, scene }) => <Header transparent white navigation={navigation} scene={scene} />,
+					cardStyle: { backgroundColor: '#FFFFFF' },
 					headerTransparent: true,
 				}}
-			/> */}
+			/>
+			<Stack.Screen
+				name='Summary'
+				component={Summary}
+				options={{
+					header: ({ navigation, scene }) => <Header title='' navigation={navigation} scene={scene} />,
+					headerTransparent: true,
+				}}
+			/>
 		</Stack.Navigator>
 	);
 };
