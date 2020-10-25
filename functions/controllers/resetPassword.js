@@ -1,5 +1,5 @@
 const { firebase } = require('../config/firebase');
-const { SUCCESS, FAILURE } = require('../config/constants');
+const { SUCCESS, FAILURE } = require('../constants');
 
 module.exports = async (req, res) => {
 	const email = req.body.email;
