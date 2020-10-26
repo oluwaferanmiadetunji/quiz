@@ -4,7 +4,6 @@ import { ScrollView, StyleSheet, Dimensions, AsyncStorage, TouchableWithoutFeedb
 import { Block, Text, theme } from 'galio-framework';
 //argon
 import { argonTheme } from '../constants/';
-import compareValues from '../components/sortData';
 import dayjs from 'dayjs';
 
 const { width } = Dimensions.get('screen');
@@ -16,16 +15,7 @@ export default ({ navigation }) => {
 		const getNameAsyncStorage = async () => {
 			const getData = await AsyncStorage.getItem('userData');
 			const uData = JSON.parse(getData);
-			const historyObject = uData.history;
-			if (historyObject) {
-				const historyArray = Object.keys(historyObject)
-					.map((key) => ({
-						...historyObject[key],
-						uid: key,
-					}))
-					.sort(compareValues('createdAt', 'desc'));
-				setDetails(historyArray);
-			}
+			setDetails(uData.history);
 		};
 		getNameAsyncStorage();
 	}, []);
@@ -35,24 +25,24 @@ export default ({ navigation }) => {
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Block flex style={styles.group}>
 					{details.length > 0
-						? details.map((detail, index) => (
+						? details.map(({ data }, index) => (
 								<Block card flex style={styles.card} key={index}>
-									{/* <TouchableWithoutFeedback onPress={() => navigation.navigate('SingleHistory', { details: detail })}> */}
-									<Block flex space='between' style={styles.cardDescription}>
-										<Text size={14} style={styles.cardTitle}>
-											{dayjs(detail.createdAt).format('MMMM DD, YYYY  hh:mm A')}
-										</Text>
-										<Text size={16} style={styles.text} bold>
-											Number of Correct Answers: {detail.data.correct}
-										</Text>
-										<Text size={16} style={styles.text} bold>
-											Number of Questions: {detail.data.total}
-										</Text>
-										<Text size={16} style={styles.nav}>
-											View
-										</Text>
-									</Block>
-									{/* </TouchableWithoutFeedback> */}
+									<TouchableWithoutFeedback onPress={() => navigation.navigate('SingleHistory', { details: data })}>
+										<Block flex space='between' style={styles.cardDescription}>
+											<Text size={14} style={styles.cardTitle}>
+												{dayjs(data.createdAt).format('MMMM DD, YYYY  hh:mm A')}
+											</Text>
+											<Text size={16} style={styles.text} bold>
+												Number of Correct Answers: {data.data.correct}
+											</Text>
+											<Text size={16} style={styles.text} bold>
+												Number of Questions: {data.data.total}
+											</Text>
+											<Text size={16} style={styles.nav}>
+												View
+											</Text>
+										</Block>
+									</TouchableWithoutFeedback>
 								</Block>
 						  ))
 						: null}

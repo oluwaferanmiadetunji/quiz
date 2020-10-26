@@ -3,8 +3,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from './Menu';
 import HomeStack from './HomeStack';
 import ProfileStack from './ProfileStack';
-import ArticlesStack from './ArticlesStack';
-import ElementsStack from './ElementsStack';
 import HistoryStack from './HistoryStack';
 import ContactStack from './ContactStack';
 import { Dimensions } from 'react-native';
@@ -46,8 +44,6 @@ const AppStack = () => {
 			<Drawer.Screen name='Profile' component={ProfileStack} />
 			<Drawer.Screen name='History' component={HistoryStack} />
 			<Drawer.Screen name='Contact Us' component={ContactStack} />
-			<Drawer.Screen name='Elements' component={ElementsStack} />
-			<Drawer.Screen name='Articles' component={ArticlesStack} />
 		</Drawer.Navigator>
 	);
 };

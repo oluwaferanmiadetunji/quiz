@@ -1,6 +1,5 @@
 import React from 'react';
 import Profile from '../screens/Profile';
-import Pro from '../screens/Pro';
 import Update from '../screens/Update';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Header } from '../components';
@@ -19,14 +18,7 @@ const ProfileStack = () => {
 					headerTransparent: true,
 				}}
 			/>
-			<Stack.Screen
-				name='Pro'
-				component={Pro}
-				options={{
-					header: ({ navigation, scene }) => <Header title='' back white transparent navigation={navigation} scene={scene} />,
-					headerTransparent: true,
-				}}
-			/>
+
 			<Stack.Screen
 				name='Update'
 				component={Update}

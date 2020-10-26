@@ -45,6 +45,21 @@ export const registerUser = async (name, email, password) => {
 	}
 };
 
+// Send Message
+export const sendMessage = async (email, content) => {
+	try {
+		const response = await fetch(`${baseUrl}contact`, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ email, content }),
+		});
+		return await response.json();
+	} catch (err) {
+		throw new Error(err);
+		return null;
+	}
+};
+
 // Login User
 export const loginUser = async (email, password) => {
 	try {

@@ -5,18 +5,31 @@ import { Block, Text } from 'galio-framework';
 import { Button, Icon, Input } from '../components';
 import { Images, argonTheme } from '../constants';
 import show from '../components/showMessage';
+import { sendMessage } from '../api/userApi';
 
 const { width, height } = Dimensions.get('screen');
 
-export default ({ navigation }) => {
+export default () => {
 	const [email, setEmail] = useState('');
+	const [content, setContent] = useState();
 	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = async () => {
 		if (email.trim() === '') {
 			show('Email can not be empty', 'warning');
+		} else if (content.trim() === '') {
+			show('Message can not be empty', 'warning');
 		} else {
 			setLoading(true);
+			const { message, status } = await sendMessage(email, content);
+			if (status === 'error') {
+				show(message, 'danger');
+			} else {
+				show(message, 'success');
+				setContent('');
+				setEmail('');
+			}
+			setLoading(false);
 		}
 	};
 
@@ -44,6 +57,15 @@ export default ({ navigation }) => {
 											}
 											value={email}
 											onChangeText={(val) => setEmail(val)}
+										/>
+									</Block>
+									<Block width={width * 0.8} style={{ marginBottom: 15 }}>
+										<Input
+											borderless
+											placeholder='Message'
+											iconContent={<Icon size={16} color={argonTheme.COLORS.ICON} name='hat-3' family='ArgonExtra' style={styles.inputIcons} />}
+											value={content}
+											onChangeText={(val) => setContent(val)}
 										/>
 									</Block>
 

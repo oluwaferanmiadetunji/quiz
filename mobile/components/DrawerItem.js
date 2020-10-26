@@ -18,10 +18,6 @@ class DrawerItem extends React.Component {
 				return <Icon name='calendar-date' family='ArgonExtra' size={14} color={focused ? 'white' : argonTheme.COLORS.PRIMARY} />;
 			case 'Contact Us':
 				return <Icon name='map-big' family='ArgonExtra' size={14} color={focused ? 'white' : argonTheme.COLORS.PRIMARY} />;
-			case 'Elements':
-				return <Icon name='map-big' family='ArgonExtra' size={14} color={focused ? 'white' : argonTheme.COLORS.PRIMARY} />;
-			case 'Articles':
-				return <Icon name='spaceship' family='ArgonExtra' size={14} color={focused ? 'white' : argonTheme.COLORS.PRIMARY} />;
 
 			default:
 				return null;
