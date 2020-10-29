@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
 				return res.status(200).json({
 					status: SUCCESS,
 					message: USER_LOGGED,
-					data: { token, user: { ...userData, history: array } },
+					data: { token, user: { ...userData, uid, history: array } },
 				});
 			} else {
 				return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });

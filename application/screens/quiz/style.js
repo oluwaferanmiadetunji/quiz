@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { WHITE, BLUE, BLACK } from '../../components/Color';
+import { WHITE, BLACK } from '../../components/Color';
 
 export default StyleSheet.create({
 	container: {
@@ -7,13 +7,9 @@ export default StyleSheet.create({
 		backgroundColor: WHITE,
 		alignItems: 'center',
 	},
-	image: {
-		marginBottom: 15,
-		marginTop: 25,
-	},
 	title: {
 		fontSize: 30,
-		color: BLUE,
+		color: BLACK,
 		fontWeight: 'bold',
 	},
 	text: {
@@ -25,5 +21,13 @@ export default StyleSheet.create({
 	},
 	button: {
 		marginTop: 20,
+	},
+	pickerView: {
+		borderWidth: 1,
+		borderColor: BLACK,
+		borderRadius: 4,
+	},
+	picker: {
+		height: 50,
 	},
 });

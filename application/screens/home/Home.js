@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Dimensions, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import styles from './style';
 import { RED, BLACK } from '../../components/Color';
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
+import { Card } from 'react-native-elements';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
@@ -17,6 +17,7 @@ export default ({ navigation }) => {
 	const handlePress = (route) => {
 		navigation.navigate(route);
 	};
+
 	return (
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.02 }}>
 			<View style={{ marginTop: 20 }}>

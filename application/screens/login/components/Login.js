@@ -5,7 +5,7 @@ import CustomButton from '../../../components/Button';
 import CustomText from '../../../components/Text';
 import { BLACK, GREEN, GRAY, BLUE } from '../../../components/Color';
 import { Input, Block } from 'galio-framework';
-import { makePostReq } from '../../../utils/api';
+import { makePostReq, makeGetReq } from '../../../utils/api';
 import show from '../../../utils/showMessage';
 import { isLogged } from '../redux';
 import { useDispatch } from 'react-redux';
