@@ -9,7 +9,6 @@ const { height, width } = Dimensions.get('window');
 
 export default ({ navigation }) => {
 	const [data, setData] = useState([]);
-	console.log(JSON.stringify(data[0]));
 
 	useEffect(() => {
 		const getData = async () => {
