@@ -8,26 +8,17 @@ export default StyleSheet.create({
 		alignItems: 'center',
 	},
 	title: {
-		fontSize: 25,
+		fontSize: 20,
 		color: BLACK,
 		fontWeight: 'bold',
 	},
 	text: {
+		fontSize: 18,
 		color: BLACK,
-		fontSize: 19,
-		textAlign: 'center',
-		fontWeight: '900',
-		marginTop: 25,
+		fontWeight: 'bold',
+		marginBottom: 10,
 	},
-	button: {
-		marginTop: 20,
-	},
-	pickerView: {
-		borderWidth: 1,
-		borderColor: BLACK,
-		borderRadius: 4,
-	},
-	picker: {
-		height: 50,
+	scrollView: {
+		marginBottom: 40,
 	},
 });

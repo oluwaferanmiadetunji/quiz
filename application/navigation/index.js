@@ -12,6 +12,7 @@ import Summary from '../screens/summary';
 import Update from '../screens/updateProfile';
 import History from '../screens/history';
 import { SingleHistory } from '../screens/history';
+import TakeQuiz from '../screens/takeQuiz';
 import { useSelector } from 'react-redux';
 import { _retrieveData } from '../utils/storage';
 import Header from './Header';
@@ -51,7 +52,7 @@ export default () => {
 								},
 							}}
 						/>
-						<Stack.Screen name='Quiz' component={Quiz} options={{ headerShown: false }} />
+						<Stack.Screen name='Quiz' component={Quiz} options={{ title: '' }} />
 						<Stack.Screen name='Summary' component={Summary} options={{ title: '' }} />
 						<Stack.Screen name='Update' component={Update} options={{ title: '' }} />
 						<Stack.Screen
@@ -72,6 +73,13 @@ export default () => {
 								headerTitleStyle: {
 									fontWeight: 'bold',
 								},
+							}}
+						/>
+						<Stack.Screen
+							name='TakeQuiz'
+							component={TakeQuiz}
+							options={{
+								headerShown: false,
 							}}
 						/>
 					</>
