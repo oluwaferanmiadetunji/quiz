@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { WHITE, BLUE, BLACK } from '../../components/Color';
+import { WHITE, BLACK } from '../../components/Color';
 
 export default StyleSheet.create({
 	container: {

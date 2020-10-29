@@ -19,7 +19,7 @@ export default () => {
 
 	const handleSubmit = async () => {
 		setLoading(true);
-		const { status, message, data } = await makePostReq('user/update', { name: name.trim(), count, duration });
+		const { status, message, data } = await makePostReq('user/update', { name: name.trim(), count: parseInt(count), duration: parseInt(duration) });
 		if (status === 'ok') {
 			show(message, 'success');
 			setLoading(false);

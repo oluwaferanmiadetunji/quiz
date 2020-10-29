@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { WHITE, BLUE, BLACK } from '../../components/Color';
+import { WHITE, BLACK } from '../../components/Color';
 
 export default StyleSheet.create({
 	container: {
@@ -7,23 +7,18 @@ export default StyleSheet.create({
 		backgroundColor: WHITE,
 		alignItems: 'center',
 	},
-	image: {
-		marginBottom: 15,
-		marginTop: 25,
-	},
 	title: {
-		fontSize: 30,
-		color: BLUE,
+		fontSize: 20,
+		color: BLACK,
 		fontWeight: 'bold',
 	},
 	text: {
+		fontSize: 18,
 		color: BLACK,
-		fontSize: 19,
-		textAlign: 'center',
-		fontWeight: '900',
-		marginTop: 25,
+		fontWeight: 'bold',
+		marginTop: 10,
 	},
-	button: {
-		marginTop: 20,
+	scrollView: {
+		marginBottom: 40,
 	},
 });

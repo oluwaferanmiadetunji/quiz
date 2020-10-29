@@ -11,6 +11,7 @@ import Quiz from '../screens/quiz';
 import Summary from '../screens/summary';
 import Update from '../screens/updateProfile';
 import History from '../screens/history';
+import { SingleHistory } from '../screens/history';
 import { useSelector } from 'react-redux';
 import { _retrieveData } from '../utils/storage';
 import Header from './Header';
@@ -53,7 +54,26 @@ export default () => {
 						<Stack.Screen name='Quiz' component={Quiz} options={{ headerShown: false }} />
 						<Stack.Screen name='Summary' component={Summary} options={{ title: '' }} />
 						<Stack.Screen name='Update' component={Update} options={{ title: '' }} />
-						<Stack.Screen name='History' component={History} options={{ headerTitle: (props) => <Header {...props} /> }} />
+						<Stack.Screen
+							name='History'
+							component={History}
+							options={{
+								title: 'My History',
+								headerTitleStyle: {
+									fontWeight: 'bold',
+								},
+							}}
+						/>
+						<Stack.Screen
+							name='SingleHistory'
+							component={SingleHistory}
+							options={{
+								title: 'My History',
+								headerTitleStyle: {
+									fontWeight: 'bold',
+								},
+							}}
+						/>
 					</>
 				)}
 			</Stack.Navigator>
