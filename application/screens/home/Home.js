@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Dimensions, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import styles from './style';
-import { RED, BLACK, BLUE } from '../../components/Color';
+import { RED, BLACK } from '../../components/Color';
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -26,7 +26,7 @@ export default ({ navigation }) => {
 							<Entypo name='rocket' size={24} color={BLACK} />
 							<Text style={styles.text}>Take Quiz</Text>
 							<View style={{ marginLeft: width * 0.45 }}>
-								<AntDesign name='right' size={24} color={BLUE} />
+								<AntDesign name='right' size={24} color={BLACK} />
 							</View>
 						</View>
 					</Card>
@@ -38,7 +38,7 @@ export default ({ navigation }) => {
 							<Entypo name='user' size={24} color={BLACK} />
 							<Text style={styles.text}>User Profile</Text>
 							<View style={{ marginLeft: width * 0.42 }}>
-								<AntDesign name='right' size={24} color={BLUE} />
+								<AntDesign name='right' size={24} color={BLACK} />
 							</View>
 						</View>
 					</Card>
@@ -50,7 +50,7 @@ export default ({ navigation }) => {
 							<Entypo name='edit' size={24} color={BLACK} />
 							<Text style={styles.text}>Update Profile</Text>
 							<View style={{ marginLeft: width * 0.38 }}>
-								<AntDesign name='right' size={24} color={BLUE} />
+								<AntDesign name='right' size={24} color={BLACK} />
 							</View>
 						</View>
 					</Card>
@@ -61,7 +61,7 @@ export default ({ navigation }) => {
 							<FontAwesome name='history' size={24} color={BLACK} />
 							<Text style={styles.text}>History</Text>
 							<View style={{ marginLeft: width * 0.5 }}>
-								<AntDesign name='right' size={24} color={BLUE} />
+								<AntDesign name='right' size={24} color={BLACK} />
 							</View>
 						</View>
 					</Card>

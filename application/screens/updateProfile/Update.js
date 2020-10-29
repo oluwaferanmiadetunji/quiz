@@ -5,7 +5,7 @@ import CustomButton from '../../components/Button';
 import CustomText from '../../components/Text';
 import { BLACK, BLUE, GRAY } from '../../components/Color';
 import { Input, Block, Text } from 'galio-framework';
-import { makePostReq, makeGetReq } from '../../utils/api';
+import { makePostReq } from '../../utils/api';
 import show from '../../utils/showMessage';
 const { height, width } = Dimensions.get('window');
 import { _retrieveData, _storeData } from '../../utils/storage';
@@ -20,13 +20,14 @@ export default () => {
 	const handleSubmit = async () => {
 		setLoading(true);
 		const { status, message, data } = await makePostReq('user/update', { name: name.trim(), count, duration });
-		console.log({ status, message, data });
 		if (status === 'ok') {
 			show(message, 'success');
+			setLoading(false);
+			await _storeData('User', JSON.stringify(data.user));
 		} else {
 			show(message, 'danger');
+			setLoading(false);
 		}
-		setLoading(false);
 	};
 
 	const disabled = (count.trim() === '') | (duration.trim() === '') | (name.trim() === '');
@@ -39,8 +40,8 @@ export default () => {
 		const getData = async () => {
 			const data = JSON.parse(await _retrieveData('User'));
 			setName(data.name);
-			setCount(data.count);
-			setDuration(data.duration);
+			setCount(`${data.count}`);
+			setDuration(`${data.duration}`);
 		};
 		getData();
 	}, []);

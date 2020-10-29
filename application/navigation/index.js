@@ -40,7 +40,16 @@ export default () => {
 				{isLoggedIn && (
 					<>
 						<Stack.Screen name='Home' component={Home} options={{ headerTitle: (props) => <Header {...props} /> }} />
-						<Stack.Screen name='Profile' component={Profile} options={{ title: '' }} />
+						<Stack.Screen
+							name='Profile'
+							component={Profile}
+							options={{
+								title: 'My Profile',
+								headerTitleStyle: {
+									fontWeight: 'bold',
+								},
+							}}
+						/>
 						<Stack.Screen name='Quiz' component={Quiz} options={{ headerShown: false }} />
 						<Stack.Screen name='Summary' component={Summary} options={{ title: '' }} />
 						<Stack.Screen name='Update' component={Update} options={{ title: '' }} />
