@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
 			duration,
 			name,
 		});
-		await db.ref(`user/${uid}`).once('value', (snapshot) => {
+		await db.ref(`user/${id}`).once('value', (snapshot) => {
 			userData = snapshot.val();
 		});
 		const history = userData.history;
@@ -30,6 +30,7 @@ module.exports = async (req, res) => {
 
 		return res.status(200).json({ status: 'ok', message: 'Account successfully updated', data: { ...userData, history: array } });
 	} catch (err) {
+		console.log(err);
 		return res.status(500).json({ status: 'error', message: 'Error updating account', data: null });
 	}
 };
