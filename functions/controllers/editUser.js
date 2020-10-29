@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
 			array.push(data);
 		}
 
-		return res.status(200).json({ status: 'ok', message: 'Account successfully updated', data: { ...userData, uid: id, history: array } });
+		return res.status(200).json({ status: 'ok', message: 'Account successfully updated', data: { uid: id, ...userData, history: array } });
 	} catch (err) {
 		console.log(err);
 		return res.status(500).json({ status: 'error', message: 'Error updating account', data: null });
