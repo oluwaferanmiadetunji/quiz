@@ -13,6 +13,7 @@ import Update from '../screens/updateProfile';
 import History from '../screens/history';
 import { SingleHistory } from '../screens/history';
 import TakeQuiz from '../screens/takeQuiz';
+import Register from '../screens/register';
 import { useSelector } from 'react-redux';
 import { _retrieveData } from '../utils/storage';
 import Header from './Header';
@@ -35,12 +36,20 @@ export default () => {
 							}}
 						/>
 						<Stack.Screen name='Login' component={Login} options={{ title: '' }} />
+						<Stack.Screen name='Register' component={Register} options={{ title: '' }} />
 						<Stack.Screen name='ForgotPassword' component={ForgotPassword} options={{ title: '' }} />
 					</>
 				)}
 
 				{isLoggedIn && (
 					<>
+						<Stack.Screen
+							name='TakeQuiz'
+							component={TakeQuiz}
+							options={{
+								headerShown: false,
+							}}
+						/>
 						<Stack.Screen name='Home' component={Home} options={{ headerTitle: (props) => <Header {...props} /> }} />
 						<Stack.Screen
 							name='Profile'
@@ -73,13 +82,6 @@ export default () => {
 								headerTitleStyle: {
 									fontWeight: 'bold',
 								},
-							}}
-						/>
-						<Stack.Screen
-							name='TakeQuiz'
-							component={TakeQuiz}
-							options={{
-								headerShown: false,
 							}}
 						/>
 					</>

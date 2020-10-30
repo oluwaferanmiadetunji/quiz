@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Image, Dimensions, SafeAreaView } from 'react-native';
 import styles from './style';
 import CustomButton from '../../components/Button';
@@ -23,7 +23,10 @@ export default ({ navigation }) => {
 			<CustomText style={styles.title}>QUIZ</CustomText>
 			<Image style={{ ...styles.image, width: width * 0.8, height: height * 0.35 }} source={require('../../assets/home.png')} />
 			<CustomText style={styles.text}>Want to take a few practice questions?</CustomText>
-			<CustomButton textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }} style={{ marginTop: 30 }}>
+			<CustomButton
+				textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }}
+				style={{ marginTop: 30 }}
+				onPress={() => navigation.navigate('Register')}>
 				Start
 			</CustomButton>
 			<View style={{ marginTop: 30, flex: 1, flexDirection: 'row' }}>

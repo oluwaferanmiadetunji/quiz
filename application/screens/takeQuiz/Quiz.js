@@ -1,100 +1,146 @@
 import React, { useEffect, useState } from 'react';
-import { View, Dimensions, SafeAreaView, Text, Image, ScrollView } from 'react-native';
+import { View, Dimensions, SafeAreaView, Text, ScrollView } from 'react-native';
 import styles from './style';
 import { RED } from '../../components/Color';
 import { Card } from 'react-native-elements';
 import { _retrieveData } from '../../utils/storage';
 import CustomButton from '../../components/Button';
-import dayjs from 'dayjs';
+import _ from 'lodash';
+import Modal from 'react-native-modal';
+import CountDown from 'react-native-countdown-component';
+import Hr from 'react-native-hr-component';
 
 const { height, width } = Dimensions.get('window');
 
-export default ({ navigation }) => {
-	const [user, setUser] = useState({});
+export default ({ navigation, route }) => {
+	const [index, setIndex] = useState(0);
+	const [currentQuestion, setCurrentQuestion] = useState({});
+	const [answer, setAnswer] = useState([]);
+	const [selectedIndex, setSelectedIndex] = useState(null);
+	const [correctIndex, setCorrectIndex] = useState(null);
+	const [numCorrect, setNumCorrect] = useState(0);
+	const [answeredQuestions, setAnsweredQuestions] = useState([]);
+	const [answered, setAnswered] = useState(false);
+	const [open, setOpen] = useState(false);
+	const { duration, questions, userId } = route.params;
 
 	useEffect(() => {
-		const getData = async () => {
-			const data = JSON.parse(await _retrieveData('User'));
-			setUser(data);
-		};
-		getData();
-	}, [user]);
+		let q = questions[index];
+		setCurrentQuestion(q);
+		let shuffledAnswers = _.shuffle([...q.incorrectAnswers, q.correctAnswer]);
+		setCorrectIndex(shuffledAnswers.indexOf(q.correctAnswer));
+		setAnswer(shuffledAnswers);
+	}, [index]);
+
+	const selectAnswer = (index) => {
+		setSelectedIndex(index);
+	};
+
+	const submit = () => {
+		if (selectedIndex === correctIndex) {
+			setNumCorrect(numCorrect + 1);
+		}
+		setAnswered(true);
+		let questionData = {};
+		questionData.isCorrect = selectedIndex === correctIndex ? true : false;
+		questionData.userPicked = answer[selectedIndex];
+		questionData.question = currentQuestion.question;
+		questionData.correctAnswer = currentQuestion.correctAnswer;
+
+		setAnsweredQuestions([...answeredQuestions, questionData]);
+
+		setTimeout(() => {
+			index + 1 != questions.length ? next() : finish();
+		}, 3000);
+	};
+
+	const next = () => {
+		setSelectedIndex(null);
+		setAnswered(false);
+		setIndex(index + 1);
+	};
+
+	const finish = async () => {
+		setTimeout(() => {
+			const data = {
+				uid: userId,
+				data: { questions: answeredQuestions, correct: numCorrect, total: questions.length },
+			};
+			console.log(data);
+			saveHistory(data);
+			navigation.navigate('Summary', { data });
+		}, 3000);
+	};
+
+	const answerClass = (index) => {
+		let answerClass = styles.button;
+		if (!answered && selectedIndex === index) {
+			answerClass = styles.selected;
+		} else if (answered && correctIndex === index) {
+			answerClass = styles.correct;
+		} else if (answered && selectedIndex === index && correctIndex !== index) {
+			answerClass = styles.incorrect;
+		}
+		return answerClass;
+	};
+	const textClass = (index) => {
+		let textClass = styles.black;
+		if (!answered && selectedIndex === index) {
+			textClass = styles.white;
+		} else if (answered && correctIndex === index) {
+			textClass = styles.black;
+		} else if (answered && selectedIndex === index && correctIndex !== index) {
+			textClass = styles.white;
+		}
+		return textClass;
+	};
 
 	return (
-		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.01 }}>
-			<View>
-				<Image style={{ width: 100, height: 100 }} source={require('../../assets/avatar.png')} />
-			</View>
-			<View style={{ marginTop: 10, marginBottom: 10 }}>
-				<Text style={styles.text}>{user.name}</Text>
-			</View>
-			{user.status === 'Free' && (
-				<View style={{ marginTop: 10, marginBottom: 20 }}>
-					<Text muted style={{ textAlign: 'center' }}>
-						Your account is limited to only free questions
-					</Text>
+		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.1 }}>
+			<Modal isVisible={open} animationIn='bounceInUp' backdropColor='black' backdropOpacity={1}>
+				<View style={{ flex: 1, marginTop: 50 }}>
+					<Text style={{ color: 'white', fontSize: 22 }}>Are you sure you want to cancel this quiz?</Text>
 					<CustomButton
-						textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }}
-						style={{ marginTop: 10, backgroundColor: RED, marginBottom: 10 }}>
-						Update Account
+						style={{ borderRadius: 20, marginTop: 30, backgroundColor: 'green' }}
+						onPress={() => setOpen(false)}
+						textStyling={{ color: 'white' }}>
+						No, Stay
+					</CustomButton>
+					<CustomButton
+						style={{ borderRadius: 20, marginTop: 30, backgroundColor: 'red' }}
+						onPress={() => {
+							setIndex(0);
+							setCurrentQuestion({});
+							setAnswer([]);
+							setSelectedIndex(null);
+							setCorrectIndex(null);
+							setNumCorrect(0);
+							setAnsweredQuestions([]);
+							setAnswered(false);
+							setOpen(false);
+							navigation.navigate('Home');
+						}}
+						textStyling={{ color: 'white' }}>
+						Yes, Cancel
 					</CustomButton>
 				</View>
-			)}
+			</Modal>
+			<View style={{ marginTop: 10, marginBottom: 10 }}>
+				<CountDown
+					until={duration * 60}
+					digitStyle={{ backgroundColor: '#060814' }}
+					digitTxtStyle={{ color: '#fff', fontWeight: 'bold' }}
+					timeLabelStyle={{ color: '#fff', fontWeight: 'bold' }}
+					timeToShow={['H', 'M', 'S']}
+					onFinish={finish}
+					size={19}
+				/>
+			</View>
 			<ScrollView style={styles.scrollView}>
 				<Card>
 					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{user.email}</Text>
+						<Text style={styles.text}>Lol</Text>
 						<Text muted>Email Address</Text>
-					</View>
-				</Card>
-				<Card>
-					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{user.status}</Text>
-						<Text muted>Plan </Text>
-					</View>
-				</Card>
-				<Card>
-					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{user.count}</Text>
-						<Text muted>Exam Count</Text>
-					</View>
-				</Card>
-				<Card>
-					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{user.duration}</Text>
-						<Text muted>Exam Duration (minutes)</Text>
-					</View>
-				</Card>
-
-				<Card>
-					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{user.correct}</Text>
-						<Text muted>Number of Correct Questions</Text>
-					</View>
-				</Card>
-
-				<Card>
-					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{user.total}</Text>
-						<Text muted>Total Number of Questions</Text>
-					</View>
-				</Card>
-				<Card>
-					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{user.times}</Text>
-						<Text muted>Number of Attempts</Text>
-					</View>
-				</Card>
-				<Card>
-					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{`${((user.correct / user.total) * 100).toFixed(2)} %`}</Text>
-						<Text muted>Success Rate</Text>
-					</View>
-				</Card>
-				<Card>
-					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{dayjs(user.createdAt).format('MMM DD, YYYY h:mm a')}</Text>
-						<Text muted>Account created on</Text>
 					</View>
 				</Card>
 			</ScrollView>
