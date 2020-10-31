@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-escape */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,8 +11,8 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { styles } from './style';
-import { REPORTS, RESET_PASSWORD } from '../../../constant';
-import { USER_EXISTS, USER_EXISTS_RESPONSE } from './constants';
+import { RESET_PASSWORD } from '../../../constant';
+import actions from '../../addAdmin/actions';
 
 const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, ...other } = props;
@@ -37,10 +38,12 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 export const SignUpForm = ({ firebase, history }) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  const loading = useSelector((state) => state.addAdminLoading);
+  const message = useSelector((state) => state.addAdminMessage);
 
   const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
@@ -57,28 +60,9 @@ export const SignUpForm = ({ firebase, history }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setMessage('');
-    setLoading(true);
-    firebase
-      .doCreateUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        return firebase.admin(authUser.user.uid).set({ email, createdAt: firebase.serverValue.TIMESTAMP });
-      })
-      .then(() => {
-        setEmail('');
-        setPassword('');
-        setMessage('');
-        setLoading(false);
-        history.push(REPORTS);
-      })
-      .catch((err) => {
-        if (err.code === USER_EXISTS) {
-          setMessage(USER_EXISTS_RESPONSE);
-        } else {
-          setMessage(err.message);
-        }
-        setLoading(false);
-      });
+    dispatch(actions.clearMessage());
+    dispatch(actions.loading(true));
+    dispatch(actions.addAdmin({ email, password }));
   };
 
   return (

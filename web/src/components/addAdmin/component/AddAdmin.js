@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import actions from '../actions';
 
-export const AddQuestion = ({ firebase }) => {
+export const AddQuestion = () => {
   const dispatch = useDispatch();
   const classes = Styles();
   const [email, setEmail] = useState('');
