@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Dimensions, SafeAreaView, Text, ScrollView } from 'react-native';
+import { View, Dimensions, SafeAreaView, Text, ScrollView, TouchableOpacity } from 'react-native';
 import styles from './style';
-import { RED } from '../../components/Color';
 import { Card } from 'react-native-elements';
 import { _retrieveData } from '../../utils/storage';
 import CustomButton from '../../components/Button';
 import _ from 'lodash';
 import Modal from 'react-native-modal';
 import CountDown from 'react-native-countdown-component';
-import Hr from 'react-native-hr-component';
+import { Block } from 'galio-framework';
+import { makePostReq } from '../../utils/api';
 
 const { height, width } = Dimensions.get('window');
 
@@ -66,8 +66,11 @@ export default ({ navigation, route }) => {
 				uid: userId,
 				data: { questions: answeredQuestions, correct: numCorrect, total: questions.length },
 			};
-			console.log(data);
-			saveHistory(data);
+			makePostReq('user/history/save', data)
+				.then((res) => {
+					console.log(res);
+				})
+				.catch((err) => console.log(err));
 			navigation.navigate('Summary', { data });
 		}, 3000);
 	};
@@ -96,18 +99,18 @@ export default ({ navigation, route }) => {
 	};
 
 	return (
-		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.1 }}>
+		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.07 }}>
 			<Modal isVisible={open} animationIn='bounceInUp' backdropColor='black' backdropOpacity={1}>
-				<View style={{ flex: 1, marginTop: 50 }}>
-					<Text style={{ color: 'white', fontSize: 22 }}>Are you sure you want to cancel this quiz?</Text>
+				<Block style={{ width: width * 0.8 }}>
+					<Text style={{ color: 'white', fontSize: 22, marginLeft: 15 }}>Are you sure you want to cancel this quiz?</Text>
 					<CustomButton
-						style={{ borderRadius: 20, marginTop: 30, backgroundColor: 'green' }}
+						style={{ marginTop: 30, backgroundColor: 'green', marginLeft: 15 }}
 						onPress={() => setOpen(false)}
 						textStyling={{ color: 'white' }}>
 						No, Stay
 					</CustomButton>
 					<CustomButton
-						style={{ borderRadius: 20, marginTop: 30, backgroundColor: 'red' }}
+						style={{ marginTop: 30, backgroundColor: 'red', marginLeft: 15 }}
 						onPress={() => {
 							setIndex(0);
 							setCurrentQuestion({});
@@ -123,9 +126,9 @@ export default ({ navigation, route }) => {
 						textStyling={{ color: 'white' }}>
 						Yes, Cancel
 					</CustomButton>
-				</View>
+				</Block>
 			</Modal>
-			<View style={{ marginTop: 10, marginBottom: 10 }}>
+			<View style={{ marginBottom: 10 }}>
 				<CountDown
 					until={duration * 60}
 					digitStyle={{ backgroundColor: '#060814' }}
@@ -137,13 +140,56 @@ export default ({ navigation, route }) => {
 				/>
 			</View>
 			<ScrollView style={styles.scrollView}>
-				<Card>
+				<Text muted style={{ textAlign: 'center', fontSize: 18 }}>
+					Question {index + 1} / {questions.length}
+				</Text>
+				<Card containerStyle={{ marginBottom: 30 }}>
 					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>Lol</Text>
-						<Text muted>Email Address</Text>
+						<Text muted style={{ textAlign: 'center', fontSize: 22 }}>
+							{currentQuestion.question}
+						</Text>
 					</View>
 				</Card>
+
+				{answer &&
+					answer.map((ans, index) => (
+						<TouchableOpacity
+							onPress={() => {
+								answered ? null : selectAnswer(index);
+							}}
+							key={index}>
+							<Card containerStyle={answerClass(index)}>
+								<View style={{ width: width * 0.8 }}>
+									<Text muted style={textClass(index)}>
+										{ans}
+									</Text>
+								</View>
+							</Card>
+						</TouchableOpacity>
+					))}
 			</ScrollView>
+			<Block style={{ width: width * 0.8, marginBottom: height * 0.05 }}>
+				<CustomButton
+					style={{ backgroundColor: 'green', width: width * 0.8, marginBottom: 20 }}
+					onPress={() => {
+						selectedIndex === null || answered ? null : submit();
+					}}
+					textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }}>
+					Submit
+				</CustomButton>
+				<CustomButton
+					style={{ backgroundColor: '#FB6340', width: width * 0.8, marginBottom: 20 }}
+					onPress={finish}
+					textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }}>
+					Finish Quiz
+				</CustomButton>
+				<CustomButton
+					style={{ backgroundColor: 'red', width: width * 0.8, marginBottom: 20 }}
+					onPress={() => setOpen(true)}
+					textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }}>
+					Cancel Quiz
+				</CustomButton>
+			</Block>
 		</SafeAreaView>
 	);
 };

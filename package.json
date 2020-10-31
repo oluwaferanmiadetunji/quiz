@@ -3,11 +3,5 @@
 		"test": "git add . && git commit -m'.' && git subtree push --prefix server heroku master && git push",
 		"deploy": "yarn run push && firebase deploy",
 		"push": "git add . && git commit -m'.' && git push"
-	},
-	"dependencies": {
-		"lodash": "^4.17.20",
-		"react-native-countdown-component": "^2.7.1",
-		"react-native-hr-component": "^2.0.3",
-		"react-native-modal": "^11.5.6"
 	}
 }

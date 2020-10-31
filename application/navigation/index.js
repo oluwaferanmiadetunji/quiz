@@ -43,13 +43,6 @@ export default () => {
 
 				{isLoggedIn && (
 					<>
-						<Stack.Screen
-							name='TakeQuiz'
-							component={TakeQuiz}
-							options={{
-								headerShown: false,
-							}}
-						/>
 						<Stack.Screen name='Home' component={Home} options={{ headerTitle: (props) => <Header {...props} /> }} />
 						<Stack.Screen
 							name='Profile'
@@ -62,7 +55,7 @@ export default () => {
 							}}
 						/>
 						<Stack.Screen name='Quiz' component={Quiz} options={{ title: '' }} />
-						<Stack.Screen name='Summary' component={Summary} options={{ title: '' }} />
+						<Stack.Screen name='Summary' component={Summary} options={{ headerShown: false }} />
 						<Stack.Screen name='Update' component={Update} options={{ title: '' }} />
 						<Stack.Screen
 							name='History'
@@ -82,6 +75,13 @@ export default () => {
 								headerTitleStyle: {
 									fontWeight: 'bold',
 								},
+							}}
+						/>
+						<Stack.Screen
+							name='TakeQuiz'
+							component={TakeQuiz}
+							options={{
+								headerShown: false,
 							}}
 						/>
 					</>

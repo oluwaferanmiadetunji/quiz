@@ -1,27 +1,55 @@
-import React from 'react';
-import { View, Image, Dimensions, SafeAreaView } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Dimensions, SafeAreaView, Text, ScrollView, BackHandler } from 'react-native';
 import styles from './style';
-import CustomButton from '../../components/Button';
-import CustomText from '../../components/Text';
-import { GREEN } from '../../components/Color';
+import { Card } from 'react-native-elements';
+import { _retrieveData, _storeData } from '../../utils/storage';
+import { makePostReq } from '../../utils/api';
+import dayjs from 'dayjs';
 
 const { height, width } = Dimensions.get('window');
 
-export default ({ navigation }) => {
+export default ({ route, navigation }) => {
+	const data = route.params.data.data;
+
+	BackHandler.addEventListener('hardwareBackPress', function () {
+		navigation.navigate('Home');
+		return true;
+	});
+
+	useEffect(() => {
+		const getUserData = async () => {
+			const userData = await getData();
+			await AsyncStorage.setItem('userData', JSON.stringify(userData));
+		};
+		getUserData();
+	}, []);
+
 	return (
-		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.12 }}>
-			<CustomText style={styles.title}>Summary</CustomText>
-			<Image style={{ ...styles.image, width: width * 0.8, height: height * 0.35 }} source={require('../../assets/home.png')} />
-			<CustomText style={styles.text}>Want to take a few practice questions?</CustomText>
-			<CustomButton textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }} style={{ marginTop: 30 }}>
-				Start
-			</CustomButton>
-			<View style={{ marginTop: 30, flex: 1, flexDirection: 'row' }}>
-				<CustomText style={{ fontSize: 16, fontWeight: 'bold' }}>Have an account?</CustomText>
-				<CustomText style={{ fontSize: 16, marginLeft: 5, color: GREEN, fontWeight: 'bold' }} onPress={() => navigation.navigate('Login')}>
-					Sign In
-				</CustomText>
+		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.01 }}>
+			<View style={{ marginTop: 10, marginBottom: 10 }}>
+				<Text muted style={{ fontSize: 18, marginBottom: 10 }}>
+					Date : {dayjs(new Date().toISOString()).format('MMMM DD, YYYY  hh:mm A')}
+				</Text>
+				<Text muted style={{ fontSize: 18, marginBottom: 10 }}>
+					Number of Correct: {data.correct}
+				</Text>
+				<Text muted style={{ fontSize: 18, marginBottom: 10 }}>
+					Number of Questions: {data.questions.length}
+				</Text>
 			</View>
+			<ScrollView style={styles.scrollView}>
+				{data.questions.length > 0
+					? data.questions.map((question, index) => (
+							<Card containerStyle={question.isCorrect ? styles.correct : styles.incorrect} key={index}>
+								<View style={{ width: width * 0.8 }}>
+									<Text style={styles.historyText}>Question {index + 1}</Text>
+									<Text style={styles.historyText}>Question: {question.question}</Text>
+									<Text style={styles.historyText}>Your answer: {question.userPicked}</Text>
+								</View>
+							</Card>
+					  ))
+					: null}
+			</ScrollView>
 		</SafeAreaView>
 	);
 };

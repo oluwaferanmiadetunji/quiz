@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
 				status: 'Free',
 				createdAt: admin.database.ServerValue.TIMESTAMP,
 				lastLogin: admin.database.ServerValue.TIMESTAMP,
-				count: 50,
+				count: 20,
 				duration: 30,
 				total: 0,
 				correct: 0,

@@ -18,15 +18,19 @@ export default () => {
 	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = async () => {
-		setLoading(true);
-		const { status, message, data } = await makePostReq('user/update', { name: name.trim(), count: parseInt(count), duration: parseInt(duration) });
-		if (status === 'ok') {
-			show(message, 'success');
-			setLoading(false);
-			await _storeData('User', JSON.stringify(data.user));
+		if (parseInt(count) > 50) {
+			show('The maximum number of questions you can attempt is 50', 'warning');
 		} else {
-			show(message, 'danger');
-			setLoading(false);
+			setLoading(true);
+			const { status, message, data } = await makePostReq('user/update', { name: name.trim(), count: parseInt(count), duration: parseInt(duration) });
+			if (status === 'ok') {
+				show(message, 'success');
+				setLoading(false);
+				await _storeData('User', JSON.stringify(data.user));
+			} else {
+				show(message, 'danger');
+				setLoading(false);
+			}
 		}
 	};
 

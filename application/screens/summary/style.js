@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { WHITE, BLUE, BLACK } from '../../components/Color';
+import { WHITE, BLACK } from '../../components/Color';
 
 export default StyleSheet.create({
 	container: {
@@ -7,23 +7,60 @@ export default StyleSheet.create({
 		backgroundColor: WHITE,
 		alignItems: 'center',
 	},
-	image: {
-		marginBottom: 15,
-		marginTop: 25,
-	},
 	title: {
-		fontSize: 30,
-		color: BLUE,
+		fontSize: 20,
+		color: BLACK,
 		fontWeight: 'bold',
 	},
 	text: {
+		fontSize: 18,
 		color: BLACK,
-		fontSize: 19,
-		textAlign: 'center',
-		fontWeight: '900',
-		marginTop: 25,
+		fontWeight: 'bold',
+		marginTop: 10,
 	},
-	button: {
-		marginTop: 20,
+	scrollView: {
+		marginBottom: 40,
+	},
+	historyText: {
+		fontSize: 18,
+		color: WHITE,
+		marginBottom: 10,
+	},
+	correct: {
+		backgroundColor: 'green',
+		borderColor: 'green',
+		backgroundColor: 'green',
+		marginVertical: 10,
+		borderWidth: 0,
+		shadowColor: BLACK,
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		shadowOpacity: 0.1,
+		elevation: 2,
+		marginBottom: 10,
+		padding: 10,
+	},
+	incorrect: {
+		backgroundColor: 'red',
+		marginVertical: 10,
+		borderWidth: 0,
+		shadowColor: BLACK,
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		shadowOpacity: 0.1,
+		elevation: 2,
+		marginBottom: 10,
+		padding: 10,
+	},
+	card: {
+		backgroundColor: WHITE,
+		marginVertical: 10,
+		borderWidth: 0,
+		shadowColor: BLACK,
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		shadowOpacity: 0.1,
+		elevation: 2,
+		marginBottom: 10,
 	},
 });
