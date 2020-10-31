@@ -133,10 +133,10 @@ export default ({ navigation, route }) => {
 					until={duration * 60}
 					digitStyle={{ backgroundColor: '#060814' }}
 					digitTxtStyle={{ color: '#fff', fontWeight: 'bold' }}
-					timeLabelStyle={{ color: '#fff', fontWeight: 'bold' }}
+					timeLabelStyle={{ color: '#000',  fontSize: 10 }}
 					timeToShow={['H', 'M', 'S']}
 					onFinish={finish}
-					size={19}
+					size={15}
 				/>
 			</View>
 			<ScrollView style={styles.scrollView}>

@@ -26,7 +26,7 @@ export default () => {
 			if (status === 'ok') {
 				show(message, 'success');
 				setLoading(false);
-				await _storeData('User', JSON.stringify(data.user));
+				await _storeData('User', JSON.stringify(data));
 			} else {
 				show(message, 'danger');
 				setLoading(false);

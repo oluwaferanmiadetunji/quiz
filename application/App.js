@@ -19,7 +19,7 @@ _retrieveData('Token')
 			store.dispatch(isLogged(true));
 		}
 	})
-	.catch(() => store.dispatch(isLogged(true)));
+	.catch(() => store.dispatch(isLogged(false)));
 
 export default function App() {
 	return (
