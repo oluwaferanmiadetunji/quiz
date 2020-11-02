@@ -5,7 +5,7 @@ export const isLogged = (payload) => ({
 	payload,
 });
 
-const authReducer = (state = false, action) => {
+export default (state = false, action) => {
 	switch (action.type) {
 		case IS_LOGGED:
 			return action.payload;
@@ -13,5 +13,3 @@ const authReducer = (state = false, action) => {
 			return state;
 	}
 };
-
-export default authReducer;
