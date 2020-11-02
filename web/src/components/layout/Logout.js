@@ -5,27 +5,26 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import { actions } from '../login';
+import { isLogged } from '../../pages/login/redux';
 
 const Logout = () => {
-  const dispatch = useDispatch();
-  return (
-    <>
-      <ListItem
-        button
-        onClick={() => {
-          localStorage.removeItem('Token');
-          dispatch(actions.isLogged(false));
-        }}
-      >
-        <ListItemIcon>
-          <ExitToAppIcon color="primary" />
-        </ListItemIcon>
-        <ListItemText primary="Logout" />
-      </ListItem>
-      <Divider style={{ background: '#fff' }} />
-    </>
-  );
+	const dispatch = useDispatch();
+	return (
+		<>
+			<ListItem
+				button
+				onClick={() => {
+					localStorage.removeItem('Token');
+					dispatch(isLogged(false));
+				}}>
+				<ListItemIcon>
+					<ExitToAppIcon color='primary' />
+				</ListItemIcon>
+				<ListItemText primary='Logout' />
+			</ListItem>
+			<Divider style={{ background: '#fff' }} />
+		</>
+	);
 };
 
 export default Logout;

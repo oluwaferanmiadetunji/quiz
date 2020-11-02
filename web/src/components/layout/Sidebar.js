@@ -1,93 +1,104 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Typography from '@material-ui/core/Typography';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Drawer from '@material-ui/core/Drawer';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import AddIcon from '@material-ui/icons/Add';
 import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListIcon from '@material-ui/icons/List';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PeopleIcon from '@material-ui/icons/People';
 import { Styles } from './style';
-import Routes from './RouteItems';
-import { useSelector } from 'react-redux';
+import { AUTH_ROUTE_PATHS, titles } from '../../utils/constants';
+import Logout from './Logout';
 
-const SideBar = () => {
-  const classes = Styles();
-  const title = useSelector((state) => state.title);
+const { ADD_COURSE, ADD_QUESTION, ADMINS, COURSES, QUESTIONS, USERS, ADD_ADMIN } = AUTH_ROUTE_PATHS;
 
-  const [open, setOpen] = useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  return (
-    <>
-      <AppBar
-        position="fixed"
-        style={{ backgroundColor: '#111', zIndex: 50 }}
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="primary"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            style={{ marginRight: 25 }}
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            color="primary"
-            noWrap
-            className={clsx(classes.title, {
-              [classes.shift]: open
-            })}
-          >
-            {title}
-          </Typography>
-          <IconButton color="primary">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+const Routes = () => {
+	const classes = Styles();
+	return (
+		<List>
+			<NavLink activeClassName={classes.active} exact to={ADD_ADMIN}>
+				<ListItem button>
+					<ListItemIcon>
+						<PersonAddIcon color='primary' />
+					</ListItemIcon>
+					<ListItemText primary={titles.ADD_ADMIN} />
+				</ListItem>
+			</NavLink>
+			<Divider style={{ background: '#fff' }} />
 
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open
-          })
-        }}
-      >
-        <div className={open ? classes.toolbar : classes.hide} style={{ backgroundColor: '#111111', color: 'white' }}>
-          <IconButton onClick={handleDrawerClose} style={{ color: 'white' }}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider style={{ background: '#fff' }} />
-        <Routes />
-      </Drawer>
-    </>
-  );
+			<NavLink activeClassName={classes.active} exact to={ADD_COURSE}>
+				<ListItem button>
+					<ListItemIcon>
+						<AddIcon color='primary' />
+					</ListItemIcon>
+					<ListItemText primary={titles.ADD_COURSE} />
+				</ListItem>
+			</NavLink>
+			<Divider style={{ background: '#fff' }} />
+
+			<NavLink activeClassName={classes.active} exact to={ADD_QUESTION}>
+				<ListItem button>
+					<ListItemIcon>
+						<AddIcon color='primary' />
+					</ListItemIcon>
+					<ListItemText primary={titles.ADD_QUESTION} />
+				</ListItem>
+			</NavLink>
+			<Divider style={{ background: '#fff' }} />
+
+			<NavLink activeClassName={classes.active} exact to={ADMINS}>
+				<ListItem button>
+					<ListItemIcon>
+						<PeopleIcon color='primary' />
+					</ListItemIcon>
+					<ListItemText primary={titles.ADMINS} />
+				</ListItem>
+			</NavLink>
+			<Divider style={{ background: '#fff' }} />
+
+			<NavLink activeClassName={classes.active} exact to={COURSES}>
+				<ListItem button>
+					<ListItemIcon>
+						<ListIcon color='primary' />
+					</ListItemIcon>
+					<ListItemText primary={titles.COURSES} />
+				</ListItem>
+			</NavLink>
+			<Divider style={{ background: '#fff' }} />
+
+			<NavLink activeClassName={classes.active} exact to={QUESTIONS}>
+				<ListItem button>
+					<ListItemIcon>
+						<FormatListNumberedIcon color='primary' />
+					</ListItemIcon>
+					<ListItemText primary={titles.QUESTIONS} />
+				</ListItem>
+			</NavLink>
+			<Divider style={{ background: '#fff' }} />
+
+			<NavLink activeClassName={classes.active} exact to={USERS}>
+				<ListItem button>
+					<ListItemIcon>
+						<PeopleIcon color='primary' />
+					</ListItemIcon>
+					<ListItemText primary={titles.USERS} />
+				</ListItem>
+			</NavLink>
+			<Divider style={{ background: '#fff' }} />
+
+			<ListItem />
+			<ListItem />
+			<ListItem />
+
+			<Divider style={{ background: '#fff' }} />
+
+			<Logout />
+		</List>
+	);
 };
 
-export default SideBar;
+export default Routes;
