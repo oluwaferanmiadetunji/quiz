@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Styles } from './style';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -12,7 +12,6 @@ import Toast from '../../utils/Toast';
 
 const AddAdmin = () => {
 	const dispatch = useDispatch();
-	dispatch(setTitle('Add Admin'));
 	const classes = Styles();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -23,8 +22,6 @@ const AddAdmin = () => {
 	const handlePasswordChange = (event) => {
 		setPassword(event.target.value);
 	};
-
-	const message = useSelector((state) => state.addAdminMessage);
 
 	// function to handle user input on email
 	const handleEmailChange = (event) => {
@@ -49,6 +46,10 @@ const AddAdmin = () => {
 			return '';
 		}
 	};
+
+	useEffect(() => {
+		dispatch(setTitle('Add Admin'));
+	}, []);
 
 	return (
 		<div className={classes.root}>
@@ -87,11 +88,6 @@ const AddAdmin = () => {
 					/>
 				</div>
 
-				{message && (
-					<Typography gutterBottom style={{ color: 'yellow', textAlign: 'center' }}>
-						{message}
-					</Typography>
-				)}
 				<Button style={{ background: '#000', color: 'yellow' }} variant='contained' onClick={handleSubmit} type='submit' disabled={invalid}>
 					{loading ? 'Connecting' : 'Add'}
 				</Button>

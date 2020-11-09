@@ -26,3 +26,15 @@ export const makeGetReq = async (path) => {
 		return err.response.data;
 	}
 };
+
+export const makeDeleteReq = async (path) => {
+	const config = {
+		headers: { Authorization: `Bearer ${Token}` },
+	};
+	try {
+		const response = await axios.delete(`${BASE_URL}/${path}`, config);
+		return response.data;
+	} catch (err) {
+		return err.response.data;
+	}
+};

@@ -30,7 +30,7 @@ const AddAdmin = () => {
 	};
 
 	useEffect(() => {
-		dispatch(setTitle('Add Course'));
+		dispatch(setTitle('Add Question'));
 	}, []);
 
 	return (
