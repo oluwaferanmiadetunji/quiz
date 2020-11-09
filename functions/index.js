@@ -21,6 +21,7 @@ const addCourse = require('./controllers/addCourse');
 const addQuestions = require('./controllers/addQuestions');
 const deleteCourse = require('./controllers/deleteCourse');
 const deleteQuestion = require('./controllers/deleteQuestion');
+const editQuestion = require('./controllers/editQuestion');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -41,6 +42,7 @@ app.get('/user', auth, getUserDetails);
 app.get('/questions', getQuestions);
 app.post('/questions', addQuestions);
 app.delete('/questions/:id', deleteQuestion);
+app.post('/questions/:id', editQuestion);
 
 app.get('/courses/all', getCoursesAdmin);
 app.post('/courses', addCourse);

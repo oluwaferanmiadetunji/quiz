@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,7 +21,7 @@ const Courses = () => {
 
 	const deleteCourse = async (key) => {
 		dispatch({ type: DELETE_COURSE, payload: key });
-		const data = await makeDeleteReq(`courses/${key}`);
+		await makeDeleteReq(`courses/${key}`);
 	};
 
 	useEffect(() => {

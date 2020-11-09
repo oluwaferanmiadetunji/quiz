@@ -2,7 +2,8 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import Loader from './components/loader';
 import { Provider } from 'react-redux';
-import store from './redux';
+import { store, persistor } from './redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import App from './App';
@@ -22,7 +23,9 @@ if (token) {
 ReactDOM.render(
 	<Suspense fallback={<Loader />}>
 		<Provider store={store}>
-			<App />
+			<PersistGate loading={null} persistor={persistor}>
+				<App />
+			</PersistGate>
 		</Provider>
 	</Suspense>,
 	document.getElementById('root'),

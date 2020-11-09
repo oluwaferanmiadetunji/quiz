@@ -12,7 +12,7 @@ export default (state = [], action) => {
 		case SET_QUESTIONS:
 			return action.payload;
 		case DELETE_QUESTION:
-			let index = state.findIndex((course) => course.key === action.payload);
+			let index = state.findIndex((question) => question.key === action.payload);
 			state.splice(index, 1);
 			return [...state];
 		case ADD_QUESTION:

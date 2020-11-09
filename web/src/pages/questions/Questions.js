@@ -12,7 +12,9 @@ import Button from '@material-ui/core/Button';
 import dayjs from 'dayjs';
 import { makeGetReq } from '../../utils/api';
 import withLayout from '../../components/layout';
+import { setTitle } from '../../components/layout/redux';
 import { SET_QUESTIONS } from './redux';
+import { setQuestion } from '../question/redux';
 
 const Courses = () => {
 	const dispatch = useDispatch();
@@ -22,12 +24,19 @@ const Courses = () => {
 	const questions = useSelector((state) => state.questions);
 
 	useEffect(() => {
+		dispatch(setTitle('Questions'));
 		const getQuestions = async () => {
 			const { data } = await makeGetReq('questions');
 			dispatch({ type: SET_QUESTIONS, payload: data });
 		};
 		getQuestions();
 	}, []);
+
+	const getSingleQuestion = (key) => {
+		const singleQuestion = [...questions].find((question) => question.key === key);
+		dispatch(setQuestion(singleQuestion));
+		history.push(`/questions/${key}`);
+	};
 
 	return (
 		<TableContainer component={Paper}>
@@ -58,7 +67,7 @@ const Courses = () => {
 										color='secondary'
 										variant='contained'
 										onClick={() => {
-											history.push(`/questions/${key}`);
+											getSingleQuestion(key);
 										}}>
 										View
 									</Button>
