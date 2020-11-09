@@ -1,21 +1,14 @@
-import * as React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { GENERIC_ROUTES_PATHS, AUTH_ROUTE_PATHS } from '../utils/constants';
-import { AUTH_ROUTES } from './routes';
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { PUBLIC_ROUTE_PATHS } from '../utils/constants';
 
-export default function Authenticated() {
-	return (
-		<BrowserRouter>
-			<Switch>
-				{AUTH_ROUTES.map(({ path, component: Component, exact }) => (
-					<Route key={path} path={path} exact={exact}>
-						<Component />
-					</Route>
-				))}
-				<Route path={GENERIC_ROUTES_PATHS.WILD_CARD}>
-					<Redirect to={AUTH_ROUTE_PATHS.ADD_ADMIN} />
-				</Route>
-			</Switch>
-		</BrowserRouter>
-	);
-}
+const PrivateRoute = ({ component: Component, isLogged, ...rest }) => (
+	<Route {...rest} render={(props) => (isLogged ? <Component {...props} /> : <Redirect to={PUBLIC_ROUTE_PATHS.LOGIN} />)} />
+);
+
+const mapStateToProps = (state) => ({
+	isLogged: state.isLogged,
+});
+
+export default connect(mapStateToProps)(PrivateRoute);

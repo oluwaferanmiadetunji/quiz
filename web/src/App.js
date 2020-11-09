@@ -1,11 +1,18 @@
-import React, { lazy } from 'react';
-import { isLoggedIn } from './utils/helpers';
-
-const AuthRouter = lazy(() => import('./routes/Authenticated'));
-const PublicRouter = lazy(() => import('./routes/Unauthenticated'));
+import React from 'react';
+import Routes from './routes';
+import Theme from './Theme';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { ToastContainer } from 'react-toastify';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 function App() {
-	return isLoggedIn() ? <AuthRouter /> : <PublicRouter />;
+	return (
+		<ThemeProvider theme={Theme}>
+			<CssBaseline />
+			<Routes />
+			<ToastContainer />
+		</ThemeProvider>
+	);
 }
 
 export default App;

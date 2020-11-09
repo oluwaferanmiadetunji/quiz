@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -40,6 +40,8 @@ const DialogActions = withStyles((theme) => ({
 
 export default () => {
 	const dispatch = useDispatch();
+	const history = useHistory();
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -62,6 +64,7 @@ export default () => {
 		if (status === 'ok') {
 			localStorage.setItem('Token', data);
 			dispatch(isLogged(true));
+			history.push('/admin/add');
 		}
 		Toast(message, status);
 		setLoading(false);

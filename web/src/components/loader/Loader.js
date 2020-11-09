@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.css';
-import Logo from './Logo.svg';
+import Logo from './logo.svg';
 
 const LoadingScreen = () => {
 	return (
