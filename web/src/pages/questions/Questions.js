@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -9,27 +10,23 @@ import Paper from '@material-ui/core/Paper';
 import { StyledTableCell, StyledTableRow, useStyles } from './style';
 import Button from '@material-ui/core/Button';
 import dayjs from 'dayjs';
-import { makeGetReq, makeDeleteReq } from '../../utils/api';
+import { makeGetReq } from '../../utils/api';
 import withLayout from '../../components/layout';
-import { SET_COURSES, DELETE_COURSE } from './redux';
+import { SET_QUESTIONS } from './redux';
 
 const Courses = () => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const classes = useStyles();
 
-	const courses = useSelector((state) => state.courses);
-
-	const deleteCourse = async (key) => {
-		dispatch({ type: DELETE_COURSE, payload: key });
-		const data = await makeDeleteReq(`courses/${key}`);
-	};
+	const questions = useSelector((state) => state.questions);
 
 	useEffect(() => {
-		const getCourses = async () => {
-			const { data } = await makeGetReq('courses/all');
-			dispatch({ type: SET_COURSES, payload: data });
+		const getQuestions = async () => {
+			const { data } = await makeGetReq('questions');
+			dispatch({ type: SET_QUESTIONS, payload: data });
 		};
-		getCourses();
+		getQuestions();
 	}, []);
 
 	return (
@@ -38,29 +35,32 @@ const Courses = () => {
 				<TableHead>
 					<TableRow>
 						<StyledTableCell>S/N</StyledTableCell>
-						<StyledTableCell align='right'>Course</StyledTableCell>
+						<StyledTableCell align='right'>Question</StyledTableCell>
+						<StyledTableCell align='right'>Category</StyledTableCell>
+						<StyledTableCell align='right'>Status</StyledTableCell>
 						<StyledTableCell align='right'>Date</StyledTableCell>
 						<StyledTableCell align='right'></StyledTableCell>
 					</TableRow>
 				</TableHead>
-				{courses ? (
+				{questions ? (
 					<TableBody>
-						{courses.map((course, index) => (
+						{questions.map(({ key, data }, index) => (
 							<StyledTableRow key={index}>
 								<StyledTableCell component='th' scope='row'>
 									{index + 1}
 								</StyledTableCell>
-								<StyledTableCell align='right'> {course.data.course} </StyledTableCell>
-								<StyledTableCell align='right'>{dayjs(course.data.createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
+								<StyledTableCell align='right'> {data.question} </StyledTableCell>
+								<StyledTableCell align='right'> {data.category} </StyledTableCell>
+								<StyledTableCell align='right'> {data.type} </StyledTableCell>
+								<StyledTableCell align='right'>{dayjs(data.createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
 								<StyledTableCell align='right'>
 									<Button
 										color='secondary'
 										variant='contained'
 										onClick={() => {
-											deleteCourse(course.key);
-										}}
-										style={{ backgroundColor: 'red', color: 'white' }}>
-										Delete
+											history.push(`/questions/${key}`);
+										}}>
+										View
 									</Button>
 								</StyledTableCell>
 							</StyledTableRow>
