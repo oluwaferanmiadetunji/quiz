@@ -22,6 +22,7 @@ const addQuestions = require('./controllers/addQuestions');
 const deleteCourse = require('./controllers/deleteCourse');
 const deleteQuestion = require('./controllers/deleteQuestion');
 const editQuestion = require('./controllers/editQuestion');
+const getAdmins = require('./controllers/getAdmins');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,8 +33,11 @@ app.get('/', (req, res) => {
 
 app.post('/admin/register', createAdmin);
 app.post('/admin/login', loginAdmin);
+app.get('/admins', getAdmins);
+
 app.post('/user/register', createUser);
 app.post('/user/login', loginUser);
+
 app.post('/quiz', setQuestion);
 app.post('/user/update', auth, editUser);
 app.post('/user/history/save', saveHistory);

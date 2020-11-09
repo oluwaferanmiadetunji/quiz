@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
@@ -30,7 +30,7 @@ const Courses = () => {
 			dispatch({ type: SET_QUESTIONS, payload: data });
 		};
 		getQuestions();
-	}, []);
+	}, [dispatch]);
 
 	const getSingleQuestion = (key) => {
 		const singleQuestion = [...questions].find((question) => question.key === key);

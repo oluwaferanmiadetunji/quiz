@@ -89,14 +89,7 @@ const Question = () => {
 						InputLabelProps={{ style: { color: 'white', background: '#111', border: 'white' } }}
 					/>
 				</div>
-				{/* <Edit
-          uid={match.params.questionId}
-          firebase={firebase}
-          question={question}
-          correctAnswer={correctAnswer}
-          incorrectAnswers={incorrectAnswers}
-        />
-        */}
+				{/* <Edit /> */}
 				<Delete />
 			</form>
 		</div>

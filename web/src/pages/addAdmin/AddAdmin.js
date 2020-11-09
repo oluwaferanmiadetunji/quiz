@@ -49,7 +49,7 @@ const AddAdmin = () => {
 
 	useEffect(() => {
 		dispatch(setTitle('Add Admin'));
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className={classes.root}>

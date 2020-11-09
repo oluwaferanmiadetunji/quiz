@@ -31,7 +31,7 @@ const AddAdmin = () => {
 
 	useEffect(() => {
 		dispatch(setTitle('Add Course'));
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className={classes.root}>

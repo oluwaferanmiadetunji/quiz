@@ -72,7 +72,7 @@ const AddQuestion = () => {
 			dispatch({ type: SET_COURSES, payload: data });
 		};
 		getCourses();
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className={classes.root}>

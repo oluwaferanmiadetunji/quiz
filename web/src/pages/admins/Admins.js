@@ -13,7 +13,7 @@ import { makeGetReq, makeDeleteReq } from '../../utils/api';
 import withLayout from '../../components/layout';
 import { SET_COURSES, DELETE_COURSE } from './redux';
 
-const Courses = () => {
+const Admins = () => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 
@@ -74,4 +74,4 @@ const Courses = () => {
 	);
 };
 
-export default withLayout(Courses);
+export default withLayout(Admins);
