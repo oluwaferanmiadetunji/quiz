@@ -17,6 +17,7 @@ const getCoursesAdmin = require('./controllers/getCoursesAdmin');
 const resetPassword = require('./controllers/resetPassword');
 const contact = require('./controllers/contact');
 const addCourse = require('./controllers/addCourse');
+const deleteCourse = require('./controllers/deleteCourse');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -36,6 +37,7 @@ app.get('/user', auth, getUserDetails);
 app.get('/courses', getCourses);
 app.get('/courses/all', getCoursesAdmin);
 app.post('/courses', addCourse);
+app.delete('/courses/:id', deleteCourse);
 app.post('/reset', resetPassword);
 app.post('/contact', contact);
 

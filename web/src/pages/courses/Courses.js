@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import { StyledTableCell, StyledTableRow, useStyles } from './style';
 import Button from '@material-ui/core/Button';
 import dayjs from 'dayjs';
-import Loader from '../../components/loader';
 import { makeGetReq } from '../../utils/api';
 import withLayout from '../../components/layout';
 import { SET_COURSES, DELETE_COURSE } from './redux';
