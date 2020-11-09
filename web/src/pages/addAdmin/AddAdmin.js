@@ -9,6 +9,7 @@ import { setTitle } from '../../components/layout/redux';
 import { validateData, validateEmail, validatePassword } from '../../utils/validateData';
 import { makePostReq } from '../../utils/api';
 import Toast from '../../utils/Toast';
+import { ADD_ADMIN } from '../admins/redux';
 
 const AddAdmin = () => {
 	const dispatch = useDispatch();
@@ -31,8 +32,8 @@ const AddAdmin = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setLoading(true);
-		const { status, message } = await makePostReq('admin/register', { email: email.trim(), password: password.trim() });
-
+		const { status, message, data } = await makePostReq('admin/register', { email: email.trim(), password: password.trim() });
+		dispatch(ADD_ADMIN(data));
 		Toast(message, status);
 		setLoading(false);
 	};

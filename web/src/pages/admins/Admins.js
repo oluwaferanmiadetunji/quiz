@@ -9,27 +9,24 @@ import Paper from '@material-ui/core/Paper';
 import { StyledTableCell, StyledTableRow, useStyles } from './style';
 import Button from '@material-ui/core/Button';
 import dayjs from 'dayjs';
-import { makeGetReq, makeDeleteReq } from '../../utils/api';
+import { makeGetReq } from '../../utils/api';
 import withLayout from '../../components/layout';
-import { SET_COURSES, DELETE_COURSE } from './redux';
+import { SET_ADMINS } from './redux';
+import { setTitle } from '../../components/layout/redux';
 
 const Admins = () => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 
-	const courses = useSelector((state) => state.courses);
-
-	const deleteCourse = async (key) => {
-		dispatch({ type: DELETE_COURSE, payload: key });
-		await makeDeleteReq(`courses/${key}`);
-	};
+	const admins = useSelector((state) => state.admins);
 
 	useEffect(() => {
-		const getCourses = async () => {
-			const { data } = await makeGetReq('courses/all');
-			dispatch({ type: SET_COURSES, payload: data });
+		dispatch(setTitle('Admins'));
+		const getAdins = async () => {
+			const { data } = await makeGetReq('admins');
+			dispatch({ type: SET_ADMINS, payload: data });
 		};
-		getCourses();
+		getAdins();
 	}, [dispatch]);
 
 	return (
@@ -38,27 +35,27 @@ const Admins = () => {
 				<TableHead>
 					<TableRow>
 						<StyledTableCell>S/N</StyledTableCell>
-						<StyledTableCell align='right'>Course</StyledTableCell>
+						<StyledTableCell align='right'>Email</StyledTableCell>
 						<StyledTableCell align='right'>Date</StyledTableCell>
 						<StyledTableCell align='right'></StyledTableCell>
 					</TableRow>
 				</TableHead>
-				{courses ? (
+				{admins ? (
 					<TableBody>
-						{courses.map((course, index) => (
+						{admins.map((adin, index) => (
 							<StyledTableRow key={index}>
 								<StyledTableCell component='th' scope='row'>
 									{index + 1}
 								</StyledTableCell>
-								<StyledTableCell align='right'> {course.data.course} </StyledTableCell>
-								<StyledTableCell align='right'>{dayjs(course.data.createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
+								<StyledTableCell align='right'> {adin.data.email} </StyledTableCell>
+								<StyledTableCell align='right'>{dayjs(adin.data.createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
 								<StyledTableCell align='right'>
 									<Button
 										color='secondary'
 										variant='contained'
-										onClick={() => {
-											deleteCourse(course.key);
-										}}
+										// onClick={() => {
+										// 	deleteCourse(course.key);
+										// }}
 										style={{ backgroundColor: 'red', color: 'white' }}>
 										Delete
 									</Button>
@@ -67,7 +64,7 @@ const Admins = () => {
 						))}
 					</TableBody>
 				) : (
-					<div>No courses</div>
+					<div>No Admins</div>
 				)}
 			</Table>
 		</TableContainer>

@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import { makeGetReq, makeDeleteReq } from '../../utils/api';
 import withLayout from '../../components/layout';
 import { SET_COURSES, DELETE_COURSE } from './redux';
+import { setTitle } from '../../components/layout/redux';
 
 const Courses = () => {
 	const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Courses = () => {
 	};
 
 	useEffect(() => {
+		dispatch(setTitle('Courses'));
 		const getCourses = async () => {
 			const { data } = await makeGetReq('courses/all');
 			dispatch({ type: SET_COURSES, payload: data });
