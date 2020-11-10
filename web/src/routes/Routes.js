@@ -4,16 +4,7 @@ import { PUBLIC_ROUTE_PATHS, AUTH_ROUTE_PATHS } from '../utils/constants';
 import Authenticated from './Authenticated';
 import Unauthenticated from './Unauthenticated';
 
-const {
-	ADD_ADMIN,
-	ADD_COURSE,
-	ADD_QUESTION,
-	ADMINS,
-	COURSES,
-	QUESTION,
-	QUESTIONS,
-	// , USER, USERS
-} = AUTH_ROUTE_PATHS;
+const { ADD_ADMIN, ADD_COURSE, ADD_QUESTION, ADMINS, COURSES, QUESTION, QUESTIONS, USER, USERS } = AUTH_ROUTE_PATHS;
 const { LOGIN, SIGNUP, RESET_PASSWORD } = PUBLIC_ROUTE_PATHS;
 
 const Admins = lazy(() => import('../pages/admins' /* webpackChunkName: "Add Admin Page" */));

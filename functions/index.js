@@ -23,6 +23,8 @@ const deleteCourse = require('./controllers/deleteCourse');
 const deleteQuestion = require('./controllers/deleteQuestion');
 const editQuestion = require('./controllers/editQuestion');
 const getAdmins = require('./controllers/getAdmins');
+const getUsers = require('./controllers/getUsers');
+const getUser = require('./controllers/getUser');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -37,11 +39,12 @@ app.get('/admins', getAdmins);
 
 app.post('/user/register', createUser);
 app.post('/user/login', loginUser);
-
 app.post('/quiz', setQuestion);
 app.post('/user/update', auth, editUser);
 app.post('/user/history/save', saveHistory);
 app.get('/user', auth, getUserDetails);
+app.get('/users', getUsers);
+app.get('/users/:id', getUser);
 
 app.get('/questions', getQuestions);
 app.post('/questions', addQuestions);
