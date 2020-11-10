@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
 	await db.ref(`user/${uid}`).once('value', (snapshot) => {
 		userData = snapshot.val();
 	});
-	const history = userData.history;
+	const history = userData.history ? userData.history : [];
 	const key = Object.keys(history);
 	const value = Object.values(history);
 
