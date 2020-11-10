@@ -10,7 +10,7 @@ const middleware = [thunk];
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['courses', 'questions', 'question'],
+	whitelist: ['courses', 'questions', 'question', 'admins'],
 };
 
 const middlewares = () => {

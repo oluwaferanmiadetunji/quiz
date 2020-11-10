@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,7 +12,6 @@ import { styles } from './style';
 import { validateData, validateEmail } from '../../utils/validateData';
 import { makePostReq } from '../../utils/api';
 import Toast from '../../utils/Toast';
-import { isLogged } from './redux';
 
 const DialogTitle = withStyles(styles)((props) => {
 	const { children, classes, ...other } = props;
@@ -39,18 +37,10 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 export default () => {
-	const dispatch = useDispatch();
-	const history = useHistory();
-
 	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
 
-	const invalid = !validateData(email) || !validateData(password) || !validateEmail(email);
-
-	const handlePasswordChange = (event) => {
-		setPassword(event.target.value);
-	};
+	const invalid = !validateData(email) || !validateEmail(email);
 
 	// function to handle user input on email
 	const handleEmailChange = (event) => {
@@ -60,12 +50,7 @@ export default () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setLoading(true);
-		const { status, message, data } = await makePostReq('admin/login', { email: email.trim(), password: password.trim() });
-		if (status === 'ok') {
-			localStorage.setItem('Token', data);
-			dispatch(isLogged(true));
-			history.push('/admin/add');
-		}
+		const { status, message } = await makePostReq('reset', { email: email.trim() });
 		Toast(message, status);
 		setLoading(false);
 	};
@@ -73,7 +58,7 @@ export default () => {
 	return (
 		<Dialog aria-labelledby='customized-dialog-title' open fullWidth style={{ background: 'black' }}>
 			<DialogTitle id='customized-dialog-title' style={{ textAlign: 'center', background: 'rgba(0, 0, 0, 0.9)', color: 'white' }}>
-				Login
+				Reset Password
 			</DialogTitle>
 			<DialogContent dividers style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
 				<div style={{ marginBottom: 20 }}>
@@ -92,29 +77,13 @@ export default () => {
 						onChange={handleEmailChange}
 					/>
 				</div>
-				<div style={{ marginBottom: 20 }}>
-					<TextField
-						error={!validateData(password) ? true : false}
-						helperText={!validateData(password) ? 'Please, enter a valid password' : ''}
-						id='password'
-						type='password'
-						label='Password'
-						variant='outlined'
-						fullWidth
-						size='small'
-						InputProps={{ style: { color: 'white', borderColor: 'white !important' } }}
-						InputLabelProps={{ style: { color: 'white', border: 'white' } }}
-						value={password}
-						onChange={handlePasswordChange}
-					/>
-				</div>
 			</DialogContent>
 			<DialogActions style={{ background: 'rgba(0, 0, 0, 0.9)', color: 'white' }}>
 				<Typography variant='caption' style={{ color: 'yellow' }}>
-					<Link to={'reset-password'}>Forgot Password?</Link>
+					<Link to={''}>Login?</Link>
 				</Typography>
 				<Button color='secondary' variant='contained' onClick={handleSubmit} type='submit' disabled={invalid}>
-					{loading ? 'Connecting' : 'Login'}
+					{loading ? 'Connecting' : 'Reset'}
 				</Button>
 			</DialogActions>
 		</Dialog>

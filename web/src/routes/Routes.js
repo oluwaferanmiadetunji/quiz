@@ -4,8 +4,17 @@ import { PUBLIC_ROUTE_PATHS, AUTH_ROUTE_PATHS } from '../utils/constants';
 import Authenticated from './Authenticated';
 import Unauthenticated from './Unauthenticated';
 
-const { ADD_ADMIN, ADD_COURSE, ADD_QUESTION, ADMINS, COURSES, QUESTION, QUESTIONS, USER, USERS } = AUTH_ROUTE_PATHS;
-const { LOGIN, SIGNUP } = PUBLIC_ROUTE_PATHS;
+const {
+	ADD_ADMIN,
+	ADD_COURSE,
+	ADD_QUESTION,
+	ADMINS,
+	COURSES,
+	QUESTION,
+	QUESTIONS,
+	// , USER, USERS
+} = AUTH_ROUTE_PATHS;
+const { LOGIN, SIGNUP, RESET_PASSWORD } = PUBLIC_ROUTE_PATHS;
 
 const Admins = lazy(() => import('../pages/admins' /* webpackChunkName: "Add Admin Page" */));
 const AddAdmin = lazy(() => import('../pages/addAdmin' /* webpackChunkName: "Add Admin Page" */));
@@ -15,6 +24,8 @@ const Login = lazy(() => import('../pages/login' /* webpackChunkName: "Login Pag
 const Questions = lazy(() => import('../pages/questions' /* webpackChunkName: "Questions Page" */));
 const Question = lazy(() => import('../pages/question' /* webpackChunkName: "Question Page" */));
 const AddQuestion = lazy(() => import('../pages/addQuestion' /* webpackChunkName: "Add Question Page" */));
+const Signup = lazy(() => import('../pages/signup' /* webpackChunkName: "Signup Page" */));
+const ResetPassword = lazy(() => import('../pages/resetPassword' /* webpackChunkName: "Reset Password Page" */));
 
 const Routes = () => (
 	<Router>
@@ -32,6 +43,10 @@ const Routes = () => (
 			<Authenticated exact path={QUESTIONS} component={Questions} />
 
 			<Authenticated exact path={QUESTION} component={Question} />
+
+			<Unauthenticated exact path={SIGNUP} component={Signup} />
+
+			<Unauthenticated exact path={RESET_PASSWORD} component={ResetPassword} />
 
 			<Unauthenticated exact path={LOGIN} component={Login} />
 		</Switch>
