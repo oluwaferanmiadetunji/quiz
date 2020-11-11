@@ -14,6 +14,7 @@ import History from '../screens/history';
 import { SingleHistory } from '../screens/history';
 import TakeQuiz from '../screens/takeQuiz';
 import Register from '../screens/register';
+import Contact from '../screens/contact';
 import { useSelector } from 'react-redux';
 import { _retrieveData } from '../utils/storage';
 import Header from './Header';
@@ -72,6 +73,16 @@ export default () => {
 							component={SingleHistory}
 							options={{
 								title: 'My History',
+								headerTitleStyle: {
+									fontWeight: 'bold',
+								},
+							}}
+						/>
+						<Stack.Screen
+							name='Contact'
+							component={Contact}
+							options={{
+								title: 'Contact us',
 								headerTitleStyle: {
 									fontWeight: 'bold',
 								},

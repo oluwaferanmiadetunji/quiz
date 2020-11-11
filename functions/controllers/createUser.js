@@ -1,6 +1,7 @@
-const {admin, db, firebase} = require('../config/firebase');
+const { admin, db, firebase } = require('../config/firebase');
 const validateUserData = require('../helpers/validateUserData');
-const {USER_EXISTS, USER_EXISTS_RESPONSE, SUCCESS, FAILURE, USER_CREATED} = require('../constants');
+const { USER_EXISTS, USER_EXISTS_RESPONSE, SUCCESS, FAILURE, USER_CREATED } = require('../constants');
+const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	const email = req.body.email;
@@ -8,10 +9,10 @@ module.exports = async (req, res) => {
 	const name = req.body.name;
 
 	// validate data
-	const validateParams = validateUserData({email, password, name});
+	const validateParams = validateUserData({ email, password, name });
 
 	if (validateParams.error) {
-		return res.status(417).json({status: FAILURE, message: validateParams.message, data: ''});
+		return res.status(417).json({ status: FAILURE, message: validateParams.message, data: '' });
 	}
 	let token, userId;
 	firebase
@@ -37,11 +38,12 @@ module.exports = async (req, res) => {
 			});
 		})
 		.then(() => {
-			return res.status(200).json({status: SUCCESS, message: USER_CREATED, data: {name, email, userToken: token}});
+			return res.status(200).json({ status: SUCCESS, message: USER_CREATED, data: { name, email, userToken: token } });
 		})
 		.catch((err) => {
+			saveError(err);
 			if (err.code === USER_EXISTS) {
-				return res.status(500).json({status: FAILURE, message: USER_EXISTS_RESPONSE, data: ''});
+				return res.status(500).json({ status: FAILURE, message: USER_EXISTS_RESPONSE, data: '' });
 			}
 		});
 };

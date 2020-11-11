@@ -1,4 +1,5 @@
 const { db } = require('../config/firebase');
+const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	const question = req.body.question;
@@ -19,7 +20,7 @@ module.exports = async (req, res) => {
 		await db.ref(`questions/${key}`).update(data);
 		return res.status(200).json({ status: 'ok', message: 'Question updated successfully', data: null });
 	} catch (err) {
-		console.log(err);
+		await saveError(err);
 		return res.status(500).json({ status: 'error', message: 'Something went wrong!', data: '' });
 	}
 };

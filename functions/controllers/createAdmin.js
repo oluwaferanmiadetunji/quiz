@@ -1,6 +1,7 @@
 const { admin, db, firebase } = require('../config/firebase');
 const validateAdminData = require('../helpers/validateAdminData');
 const { USER_EXISTS, USER_EXISTS_RESPONSE, SUCCESS, FAILURE, USER_CREATED } = require('../constants');
+const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	const email = req.body.email;
@@ -28,6 +29,7 @@ module.exports = async (req, res) => {
 			return res.status(200).json({ status: SUCCESS, message: USER_CREATED, data: { key, data } });
 		})
 		.catch((err) => {
+			saveError(err);
 			if (err.code === USER_EXISTS) {
 				return res.status(500).json({ status: FAILURE, message: USER_EXISTS_RESPONSE, data: '' });
 			}

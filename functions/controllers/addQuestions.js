@@ -1,5 +1,6 @@
 const { db } = require('../config/firebase');
 const { v4: uuidv4 } = require('uuid');
+const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	const question = req.body.question;
@@ -21,6 +22,7 @@ module.exports = async (req, res) => {
 		await db.ref(`questions/${key}`).set(data);
 		return res.status(200).json({ status: 'ok', message: 'Question added successfully', data: { key, data } });
 	} catch (err) {
+		await saveError(err);
 		return res.status(500).json({ status: 'error', message: 'Something went wrong!', data: '' });
 	}
 };

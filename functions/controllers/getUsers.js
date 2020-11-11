@@ -1,4 +1,5 @@
 const { db } = require('../config/firebase');
+const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	let users;
@@ -31,6 +32,7 @@ module.exports = async (req, res) => {
 		}
 		return res.status(200).json({ status: 'ok', message: '', data: array });
 	} catch (err) {
+		await saveError(err);
 		return res.status(500).json({ status: 'error', message: 'Could not get users', data: '' });
 	}
 };

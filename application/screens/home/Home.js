@@ -67,6 +67,17 @@ export default ({ navigation }) => {
 						</View>
 					</Card>
 				</TouchableOpacity>
+				<TouchableOpacity onPress={() => handlePress('Contact')}>
+					<Card>
+						<View style={{ width: width * 0.8, flexDirection: 'row' }}>
+							<Entypo name='new-message' size={24} color={BLACK} />
+							<Text style={styles.text}>Contact Us</Text>
+							<View style={{ marginLeft: width * 0.5 }}>
+								<AntDesign name='right' size={24} color={BLACK} />
+							</View>
+						</View>
+					</Card>
+				</TouchableOpacity>
 
 				<TouchableOpacity onPress={() => dispatch(isLogged(false))}>
 					<Card>

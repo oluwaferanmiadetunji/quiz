@@ -1,4 +1,5 @@
 const { db } = require('../config/firebase');
+const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	try {
@@ -15,6 +16,7 @@ module.exports = async (req, res) => {
 		}
 		return res.status(200).json({ status: 'ok', message: 'Successful', data: array });
 	} catch (err) {
+		await saveError(err);
 		return res.status(500).json({ status: 'error', message: 'Could not get questions', data: [] });
 	}
 };

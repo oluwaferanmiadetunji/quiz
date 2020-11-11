@@ -1,5 +1,6 @@
-const {admin, db} = require('../config/firebase');
-const {v4: uuidv4} = require('uuid');
+const { admin, db } = require('../config/firebase');
+const { v4: uuidv4 } = require('uuid');
+const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	const userId = req.body.uid;
@@ -16,5 +17,7 @@ module.exports = async (req, res) => {
 			db.ref('user').child(userId).child('times').set(admin.database.ServerValue.increment(1));
 		})
 		.then(() => {})
-		.catch(() => {});
+		.catch((err) => {
+			saveError(err)
+		});
 };

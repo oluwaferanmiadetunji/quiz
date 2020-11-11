@@ -1,5 +1,6 @@
 const {db} = require('../config/firebase');
 const shuffle = require('../helpers/shuffle');
+const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	const count = parseInt(req.body.count);
@@ -15,6 +16,7 @@ module.exports = async (req, res) => {
 		}
 		return res.status(200).json({status: 'ok', message: 'Questions set', data: questions});
 	} catch (err) {
+		await saveError(err);
 		return res.status(500).json({status: 'error', message: 'Could not get questions', data: ''});
 	}
 };

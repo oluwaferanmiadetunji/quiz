@@ -1,6 +1,7 @@
 const { admin, db, firebase } = require('../config/firebase');
 const validateLoginData = require('../helpers/validateLoginData');
 const { NO_USER, WRONG_PASSWORD, SUCCESS, FAILURE, NO_USER_RESPONSE, USER_LOGGED, GENERAL_ERROR } = require('../constants');
+const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	const email = req.body.email;
@@ -56,6 +57,7 @@ module.exports = async (req, res) => {
 			});
 		})
 		.catch((err) => {
+			saveError(err);
 			if (err.code === NO_USER) {
 				return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
 			} else if (err.code === WRONG_PASSWORD) {
