@@ -1,3 +1,3 @@
-import component from './component';
+import User from './User';
 
-export default component;
+export default User;

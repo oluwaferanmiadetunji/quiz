@@ -11,6 +11,8 @@ const Admins = lazy(() => import('../pages/admins' /* webpackChunkName: "Add Adm
 const AddAdmin = lazy(() => import('../pages/addAdmin' /* webpackChunkName: "Add Admin Page" */));
 const AddCourse = lazy(() => import('../pages/addCourse' /* webpackChunkName: "Add Course Page" */));
 const Courses = lazy(() => import('../pages/courses' /* webpackChunkName: "Courses Page" */));
+const Users = lazy(() => import('../pages/users' /* webpackChunkName: "Users Page" */));
+const User = lazy(() => import('../pages/user' /* webpackChunkName: "User Page" */));
 const Login = lazy(() => import('../pages/login' /* webpackChunkName: "Login Page" */));
 const Questions = lazy(() => import('../pages/questions' /* webpackChunkName: "Questions Page" */));
 const Question = lazy(() => import('../pages/question' /* webpackChunkName: "Question Page" */));
@@ -34,6 +36,10 @@ const Routes = () => (
 			<Authenticated exact path={QUESTIONS} component={Questions} />
 
 			<Authenticated exact path={QUESTION} component={Question} />
+
+			<Authenticated exact path={USERS} component={Users} />
+
+			<Authenticated exact path={USER} component={User} />
 
 			<Unauthenticated exact path={SIGNUP} component={Signup} />
 

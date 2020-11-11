@@ -3,11 +3,11 @@ import { toast } from 'react-toastify';
 const data = {
 	position: 'top-center',
 	autoClose: 5000,
-	hideProgressBar: false,
+	hideProgressBar: true,
 	closeOnClick: true,
-	pauseOnHover: true,
+	pauseOnHover: false,
 	draggable: true,
-	progress: undefined,
+	progress: false,
 };
 
 export default (message, type) => {

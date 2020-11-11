@@ -5,6 +5,8 @@ import titleReducer from '../components/layout/redux';
 import questionsReducer from '../pages/questions/redux';
 import questionReducer from '../pages/question/redux';
 import adminsReducer from '../pages/admins/redux';
+import usersReducer from '../pages/users/redux';
+import userReducer from '../pages/user/redux';
 
 export default combineReducers({
 	isLogged: authReducer,
@@ -13,4 +15,6 @@ export default combineReducers({
 	questions: questionsReducer,
 	question: questionReducer,
 	admins: adminsReducer,
+	users: usersReducer,
+	user: userReducer,
 });
