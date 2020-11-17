@@ -35,6 +35,10 @@ module.exports = async (req, res) => {
 				};
 				array.push(data);
 			}
+			await db.ref(`user/${uid}`).update({
+				...userData,
+				lastLogin: new Date().toISOString(),
+			});
 			return res.status(200).json({
 				status: SUCCESS,
 				message: USER_LOGGED,
