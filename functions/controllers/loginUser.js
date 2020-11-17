@@ -15,55 +15,42 @@ module.exports = async (req, res) => {
 	}
 
 	let token, uid, userData;
-	firebase
-		.auth()
-		.signInWithEmailAndPassword(email, password)
-		.then((data) => {
-			uid = data.user.uid;
-			return data.user.getIdToken();
-		})
-		.then((IdToken) => {
-			token = IdToken;
-			return db.ref(`user/${uid}`).once('value', (snapshot) => {
-				userData = snapshot.val();
-			});
-		})
-		.then(() => {
-			if (!!userData) {
-				const history = userData.history;
-				const key = Object.keys(history);
-				const value = Object.values(history);
+	try {
+		const data = await firebase.auth().signInWithEmailAndPassword(email, password);
+		uid = data.user.uid;
+		token = await data.user.getIdToken();
 
-				let array = [];
-				for (let i = 0; i < key.length; i++) {
-					const data = {
-						key: key[i],
-						data: value[i],
-					};
-					array.push(data);
-				}
-				return res.status(200).json({
-					status: SUCCESS,
-					message: USER_LOGGED,
-					data: { token, user: { uid, ...userData, history: array } },
-				});
-			} else {
-				return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
+		const snapshot = await db.ref(`user/${uid}`).once('value');
+		userData = snapshot.val();
+		if (userData) {
+			const history = userData.history;
+			const key = Object.keys(history);
+			const value = Object.values(history);
+
+			let array = [];
+			for (let i = 0; i < key.length; i++) {
+				const data = {
+					key: key[i],
+					data: value[i],
+				};
+				array.push(data);
 			}
-		})
-		.then(() => {
-			db.ref(`user/${uid}`).update({
-				lastLogin: admin.database.ServerValue.TIMESTAMP,
+			return res.status(200).json({
+				status: SUCCESS,
+				message: USER_LOGGED,
+				data: { token, user: { uid, ...userData, history: array } },
 			});
-		})
-		.catch((err) => {
-			saveError(err);
-			if (err.code === NO_USER) {
-				return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
-			} else if (err.code === WRONG_PASSWORD) {
-				return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
-			} else {
-				return res.status(417).json({ status: FAILURE, message: GENERAL_ERROR, data: '' });
-			}
-		});
+		} else {
+			return res.status(404).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
+		}
+	} catch (err) {
+		await saveError(err);
+		if (err.code === NO_USER) {
+			return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
+		} else if (err.code === WRONG_PASSWORD) {
+			return res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE, data: '' });
+		} else {
+			return res.status(500).json({ status: FAILURE, message: GENERAL_ERROR, data: '' });
+		}
+	}
 };
