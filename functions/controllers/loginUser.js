@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
 			}
 			await db.ref(`user/${uid}`).update({
 				...userData,
-				lastLogin: new Date().toISOString(),
+				lastLogin: admin.database.ServerValue.TIMESTAMP,
 			});
 			return res.status(200).json({
 				status: SUCCESS,
