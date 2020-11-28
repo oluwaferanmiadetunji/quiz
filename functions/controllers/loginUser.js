@@ -22,6 +22,7 @@ module.exports = async (req, res) => {
 
 		const snapshot = await db.ref(`user/${uid}`).once('value');
 		userData = snapshot.val();
+		await saveError({ createdAt: new Date().toISOString(), email, password, userData });
 		if (userData) {
 			const history = userData.history;
 			const key = Object.keys(history);
