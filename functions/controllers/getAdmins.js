@@ -2,27 +2,16 @@ const { db } = require('../config/firebase');
 const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
-	let admins;
 	try {
-		await db.ref('admin').once('value', (snapshot) => {
-			admins = snapshot.val();
+		let admins = [];
+		const snapshot = await db.collection('admins').get();
+		snapshot.forEach((doc) => {
+			admins.push({ ...doc.data(), id: doc.id });
 		});
 
-		const key = Object.keys(admins);
-		const value = Object.values(admins);
-
-		let array = [];
-		for (let i = 0; i < key.length; i++) {
-			const data = {
-				key: key[i],
-				data: value[i],
-			};
-			array.push(data);
-		}
-
-		return res.status(200).json({ status: 'ok', message: '', data: array });
+		return res.status(200).json({ status: 'ok', message: '', data: admins });
 	} catch (err) {
 		await saveError(err);
-		return res.status(500).json({ status: 'error', message: 'Could not get admins', data: '' });
+		return res.status(500).json({ status: 'error', message: 'Could not get admins', data: admins });
 	}
 };

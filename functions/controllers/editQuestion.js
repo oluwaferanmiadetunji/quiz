@@ -7,20 +7,18 @@ module.exports = async (req, res) => {
 	const incorrectAnswers = req.body.incorrectAnswers;
 	const type = req.body.type;
 	const category = req.body.category;
-	const key = req.params.id;
 
 	try {
-		const data = {
+		await db.collection('questions').doc(req.params.id).update({
 			question,
 			correctAnswer,
 			incorrectAnswers,
 			type,
 			category,
-		};
-		await db.ref(`questions/${key}`).update(data);
-		return res.status(200).json({ status: 'ok', message: 'Question updated successfully', data: null });
+		});
+		return res.status(200).json({ status: 'ok', message: 'Question updated successfully' });
 	} catch (err) {
 		await saveError(err);
-		return res.status(500).json({ status: 'error', message: 'Something went wrong!', data: '' });
+		return res.status(500).json({ status: 'error', message: 'Something went wrong!' });
 	}
 };

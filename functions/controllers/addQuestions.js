@@ -1,5 +1,4 @@
 const { db } = require('../config/firebase');
-const { v4: uuidv4 } = require('uuid');
 const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
@@ -8,7 +7,6 @@ module.exports = async (req, res) => {
 	const incorrectAnswers = req.body.incorrectAnswers;
 	const type = req.body.type;
 	const category = req.body.category;
-	const key = uuidv4();
 
 	try {
 		const data = {
@@ -19,8 +17,8 @@ module.exports = async (req, res) => {
 			type,
 			category,
 		};
-		await db.ref(`questions/${key}`).set(data);
-		return res.status(200).json({ status: 'ok', message: 'Question added successfully', data: { key, data } });
+		const { id } = await db.collection('questions').add(data);
+		return res.status(200).json({ status: 'ok', message: 'Question added successfully', data: { id, ...data } });
 	} catch (err) {
 		await saveError(err);
 		return res.status(500).json({ status: 'error', message: 'Something went wrong!', data: '' });

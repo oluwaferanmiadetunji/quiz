@@ -6,32 +6,17 @@ module.exports = async (req, res) => {
 	const duration = req.body.duration;
 	const name = req.body.name;
 	const id = req.user.uid;
-	let userData;
+
 	try {
-		await db.ref(`/user/${id}`).update({
+		await db.collection('users').doc(id).update({
 			count,
 			duration,
 			name,
 		});
-		await db.ref(`user/${id}`).once('value', (snapshot) => {
-			userData = snapshot.val();
-		});
-		const history = userData.history;
-		const key = Object.keys(history);
-		const value = Object.values(history);
 
-		let array = [];
-		for (let i = 0; i < key.length; i++) {
-			const data = {
-				key: key[i],
-				data: value[i],
-			};
-			array.push(data);
-		}
-
-		return res.status(200).json({ status: 'ok', message: 'Account successfully updated', data: { uid: id, ...userData, history: array } });
+		return res.status(200).json({ status: 'ok', message: 'Account successfully updated' });
 	} catch (err) {
 		await saveError(err);
-		return res.status(500).json({ status: 'error', message: 'Error updating account', data: null });
+		return res.status(500).json({ status: 'error', message: 'Error updating account' });
 	}
 };

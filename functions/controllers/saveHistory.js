@@ -1,23 +1,24 @@
-const { admin, db } = require('../config/firebase');
-const { v4: uuidv4 } = require('uuid');
-const saveError = require('./saveError');
+const { db } = require('../config/firebase');
 
 module.exports = async (req, res) => {
-	const userId = req.body.uid;
+	const userId = req.user.uid;
 	const data = req.body.data;
 
-	db.ref(`user/${userId}/history/${uuidv4()}`)
-		.set({
-			createdAt: admin.database.ServerValue.TIMESTAMP,
+	try {
+		const user = db.collection('users').doc(userId);
+		const { total, correct, times } = (await user.get()).data();
+
+		await user.collection('history').add({
+			createdAt: new Date().toISOString(),
 			data,
-		})
-		.then(() => {
-			db.ref('user').child(userId).child('total').set(admin.database.ServerValue.increment(data.total));
-			db.ref('user').child(userId).child('correct').set(admin.database.ServerValue.increment(data.correct));
-			db.ref('user').child(userId).child('times').set(admin.database.ServerValue.increment(1));
-		})
-		.then(() => {})
-		.catch((err) => {
-			saveError(err)
 		});
+		await user.update({
+			total: total + data.total,
+			correct: correct + data.correct,
+			times: times + 1,
+		});
+		return res.status(200).json({ status: 'ok', message: 'Successful' });
+	} catch (err) {
+		console.log(err);
+	}
 };

@@ -3,24 +3,10 @@ const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
 	const uid = req.params.id;
-	let userData;
-	try {
-		await db.ref(`user/${uid}`).once('value', (snapshot) => {
-			userData = snapshot.val();
-		});
-		const history = userData.history ? userData.history : [];
-		const key = Object.keys(history);
-		const value = Object.values(history);
 
-		let array = [];
-		for (let i = 0; i < key.length; i++) {
-			const data = {
-				key: key[i],
-				data: value[i],
-			};
-			array.push(data);
-		}
-		res.status(200).json({ status: 'ok', message: 'Successful', data: { uid, history: array } });
+	try {
+		const doc = await db.collection('users').doc(uid).get();
+		return res.status(200).json({ status: 'ok', message: 'Successful', data: doc.data() });
 	} catch (err) {
 		await saveError(err);
 	}

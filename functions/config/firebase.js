@@ -10,6 +10,6 @@ admin.initializeApp({
 
 firebase.initializeApp(config);
 
-const db = admin.database();
+const db = admin.firestore();
 
-module.exports = {admin, db, firebase};
+module.exports = { admin, db, firebase };
