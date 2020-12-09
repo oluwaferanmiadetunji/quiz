@@ -22,7 +22,7 @@ const Courses = () => {
 
 	const deleteCourse = async ({ id, course }) => {
 		dispatch({ type: DELETE_COURSE, payload: id });
-		await makeDeleteReq('courses');
+		await makeDeleteReq('courses', { id, course });
 	};
 
 	useEffect(() => {
