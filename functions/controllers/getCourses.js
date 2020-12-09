@@ -4,7 +4,7 @@ const saveError = require('./saveError');
 module.exports = async (req, res) => {
 	try {
 		let courses = [];
-		const snapshot = await db.collection('courses').get();
+		const snapshot = await db.collection('courses').orderBy('createdAt').get();
 		snapshot.forEach((doc) => {
 			courses.push({ ...doc.data(), id: doc.id });
 		});

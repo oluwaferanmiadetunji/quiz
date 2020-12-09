@@ -68,7 +68,7 @@ const AddQuestion = () => {
 	useEffect(() => {
 		dispatch(setTitle('Add Question'));
 		const getCourses = async () => {
-			const { data } = await makeGetReq('courses/all');
+			const { data } = await makeGetReq('courses');
 			dispatch({ type: SET_COURSES, payload: data });
 		};
 		getCourses();
@@ -160,9 +160,9 @@ const AddQuestion = () => {
 						onChange={(event) => setCategory(event.target.value)}
 						InputProps={{ style: { color: 'white', background: '#111', borderColor: 'white !important' } }}
 						InputLabelProps={{ style: { color: 'white', background: '#111', border: 'white' } }}>
-						{courses.map(({ data }, index) => (
-							<option value={data.course} key={index} style={{ borderBottom: '2px solid white' }}>
-								{data.course}
+						{courses.map(({ course }, index) => (
+							<option value={course} key={index} style={{ borderBottom: '2px solid white' }}>
+								{course}
 							</option>
 						))}
 					</TextField>

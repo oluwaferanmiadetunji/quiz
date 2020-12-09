@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { StyledTableCell, StyledTableRow, useStyles } from './style';
 import Button from '@material-ui/core/Button';
 import dayjs from 'dayjs';
-import { makeGetReq, makeDeleteReq } from '../../utils/api';
+import { makeGetReq, makePostReq } from '../../utils/api';
 import withLayout from '../../components/layout';
 import { SET_COURSES, DELETE_COURSE } from './redux';
 import { setTitle } from '../../components/layout/redux';
@@ -22,7 +22,7 @@ const Courses = () => {
 
 	const deleteCourse = async ({ id, course }) => {
 		dispatch({ type: DELETE_COURSE, payload: id });
-		await makeDeleteReq('courses', { id, course });
+		await makePostReq('courses/delete', { id, course });
 	};
 
 	useEffect(() => {

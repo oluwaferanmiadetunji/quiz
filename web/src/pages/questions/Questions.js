@@ -32,10 +32,10 @@ const Courses = () => {
 		getQuestions();
 	}, [dispatch]);
 
-	const getSingleQuestion = (key) => {
-		const singleQuestion = [...questions].find((question) => question.key === key);
+	const getSingleQuestion = (id) => {
+		const singleQuestion = [...questions].find((question) => question.id === id);
 		dispatch(setQuestion(singleQuestion));
-		history.push(`/questions/${key}`);
+		history.push(`/questions/${id}`);
 	};
 
 	return (
@@ -53,21 +53,21 @@ const Courses = () => {
 				</TableHead>
 				{questions ? (
 					<TableBody>
-						{questions.map(({ key, data }, index) => (
+						{questions.map(({ type, createdAt, question, category, id }, index) => (
 							<StyledTableRow key={index}>
 								<StyledTableCell component='th' scope='row'>
 									{index + 1}
 								</StyledTableCell>
-								<StyledTableCell align='right'> {data.question} </StyledTableCell>
-								<StyledTableCell align='right'> {data.category} </StyledTableCell>
-								<StyledTableCell align='right'> {data.type} </StyledTableCell>
-								<StyledTableCell align='right'>{dayjs(data.createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
+								<StyledTableCell align='right'> {question} </StyledTableCell>
+								<StyledTableCell align='right'> {category} </StyledTableCell>
+								<StyledTableCell align='right'> {type} </StyledTableCell>
+								<StyledTableCell align='right'>{dayjs(createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
 								<StyledTableCell align='right'>
 									<Button
 										color='secondary'
 										variant='contained'
 										onClick={() => {
-											getSingleQuestion(key);
+											getSingleQuestion(id);
 										}}>
 										View
 									</Button>
