@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
 	let users;
 	try {
 		let users = [];
-		const snapshot = await db.collection('users').orderBy('createdAt').get();
+		const snapshot = await db.collection('users').orderBy('createdAt', 'desc').get();
 		snapshot.forEach((doc) => {
 			users.push({ ...doc.data(), id: doc.id });
 		});

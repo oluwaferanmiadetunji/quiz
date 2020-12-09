@@ -4,7 +4,7 @@ const saveError = require('./saveError');
 module.exports = async (req, res) => {
 	try {
 		let admins = [];
-		const snapshot = await db.collection('admins').orderBy('createdAt').get();
+		const snapshot = await db.collection('admins').orderBy('createdAt', 'desc').get();
 		snapshot.forEach((doc) => {
 			admins.push({ ...doc.data(), id: doc.id });
 		});
