@@ -51,7 +51,7 @@ app.delete('/questions/:id', deleteQuestion);
 app.post('/questions/:id', editQuestion);
 
 app.post('/courses', addCourse);
-app.delete('/courses', deleteCourse);
+app.post('/courses/delete', deleteCourse);
 app.get('/courses', getCourses);
 
 app.post('/reset', resetPassword);
