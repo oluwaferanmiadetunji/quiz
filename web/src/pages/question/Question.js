@@ -11,9 +11,7 @@ const Question = () => {
 	const classes = Styles();
 
 	const singleQuestion = useSelector((state) => state.question);
-	const {
-		data: { question, correctAnswer, incorrectAnswers, createdAt, type, category },
-	} = singleQuestion;
+	const { question, correctAnswer, incorrectAnswers, createdAt, type, category } = singleQuestion;
 
 	return (
 		<div className={classes.root}>

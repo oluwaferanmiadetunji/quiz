@@ -34,6 +34,8 @@ const AddAdmin = () => {
 		setLoading(true);
 		const { status, message, data } = await makePostReq('admin/register', { email: email.trim(), password: password.trim() });
 		setLoading(false);
+		setEmail('');
+		setPassword('');
 		Toast(message, status);
 		dispatch(ADD_ADMIN(data));
 	};

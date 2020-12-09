@@ -25,7 +25,7 @@ export default function Delete() {
 
 	const deleteQuestion = async () => {
 		setLoading(true);
-		const key = singleQuestion.key;
+		const key = singleQuestion.id;
 		dispatch({ type: DELETE_QUESTION, payload: key });
 		await makeDeleteReq(`questions/${key}`);
 		setLoading(false);

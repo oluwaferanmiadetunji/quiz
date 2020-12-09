@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,27 +12,19 @@ import { makePostReq } from '../../utils/api';
 
 export default function () {
 	const singleQuestion = useSelector((state) => state.question);
-	const {
-		key,
-		data: { question, correctAnswer, incorrectAnswers },
-	} = singleQuestion;
 
 	const [open, setOpen] = useState(false);
 	const classes = Styles();
-	const [q, setQuestion] = useState('');
-	const [ca, setCorrectAnswer] = useState('');
-	const [ica, setIncorrectAnswers] = useState([]);
-	const [ic1] = useState('');
-	const [ic2] = useState('');
-	const [ic3] = useState('');
+	const [question, setQuestion] = useState(singleQuestion.question);
+	const [correctAnswer, setCorrectAnswer] = useState(singleQuestion.correctAnswer);
+	const [incorrectAnswers, setIncorrectAnswers] = useState(singleQuestion.incorrectAnswers);
+	const [createdAt, setCreatedAt] = useState(singleQuestion.createdAt);
+	const [type, setType] = useState(singleQuestion.type);
+	const [category, setCategory] = useState(singleQuestion.category);
+	const [id, setId] = useState(singleQuestion.id);
+
 	const [message, setMessage] = useState('');
 	const [loading, setLoading] = useState(false);
-
-	useEffect(() => {
-		setQuestion(question);
-		setCorrectAnswer(correctAnswer);
-		setIncorrectAnswers(incorrectAnswers);
-	}, [correctAnswer, incorrectAnswers, question]);
 
 	const invalid = question === '' || correctAnswer === '';
 
@@ -49,7 +41,7 @@ export default function () {
 		setMessage('');
 		setLoading(true);
 
-		let questionData = {  
+		let questionData = {
 			question: '',
 			correctAnswer: '',
 			incorrectAnswers: [],
@@ -82,12 +74,12 @@ export default function () {
 							label='Question *'
 							variant='outlined'
 							autoFocus
-							error={q.trim() === '' ? true : false}
-							helperText={q.trim() === '' ? 'Enter a question' : ''}
+							error={question.trim() === '' ? true : false}
+							helperText={question.trim() === '' ? 'Enter a question' : ''}
 							multiline
 							rows={4}
 							fullWidth
-							value={q}
+							value={question}
 							onChange={(event) => {
 								setQuestion(event.target.value);
 							}}
@@ -101,9 +93,9 @@ export default function () {
 							label='Correct Answer *'
 							variant='outlined'
 							fullWidth
-							error={ca.trim() === '' ? true : false}
-							helperText={ca.trim() === '' ? 'Enter a correct answer' : ''}
-							value={ca}
+							error={correctAnswer.trim() === '' ? true : false}
+							helperText={correctAnswer.trim() === '' ? 'Enter a correct answer' : ''}
+							value={correctAnswer}
 							onChange={(event) => {
 								setCorrectAnswer(event.target.value);
 							}}
@@ -111,7 +103,7 @@ export default function () {
 							InputLabelProps={{ style: { color: 'white', background: '#111', border: 'white' } }}
 						/>
 					</div>
-					{ica.map((answer, index) => (
+					{incorrectAnswers.map((answer, index) => (
 						<div className={classes.formField} key={index}>
 							<TextField
 								id={`incorrectAnswer${index}`}

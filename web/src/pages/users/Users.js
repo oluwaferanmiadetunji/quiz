@@ -32,11 +32,11 @@ const Courses = () => {
 		getUsers();
 	}, [dispatch]);
 
-	const getSingleUser = (key) => {
-		const singleUser = [...users].find((question) => question.key === key);
+	const getSingleUser = (id) => {
+		const singleUser = [...users].find((user) => user.id === id);
 		dispatch({ type: SET_USER, payload: singleUser });
 		console.log(singleUser);
-		history.push(`/users/${key}`);
+		history.push(`/users/${id}`);
 	};
 
 	return (
@@ -54,21 +54,21 @@ const Courses = () => {
 				</TableHead>
 				{users ? (
 					<TableBody>
-						{users.map(({ key, data }, index) => (
+						{users.map(({ name, email, activated, createdAt, id }, index) => (
 							<StyledTableRow key={index}>
 								<StyledTableCell component='th' scope='row'>
 									{index + 1}
 								</StyledTableCell>
-								<StyledTableCell align='right'> {data.name} </StyledTableCell>
-								<StyledTableCell align='right'> {data.email} </StyledTableCell>
-								<StyledTableCell align='right'> {data.status} </StyledTableCell>
-								<StyledTableCell align='right'>{dayjs(data.createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
+								<StyledTableCell align='right'> {name} </StyledTableCell>
+								<StyledTableCell align='right'> {email} </StyledTableCell>
+								<StyledTableCell align='right'> {activated ? 'Premium' : 'Free'} </StyledTableCell>
+								<StyledTableCell align='right'>{dayjs(createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
 								<StyledTableCell align='right'>
 									<Button
 										color='secondary'
 										variant='contained'
 										onClick={() => {
-											getSingleUser(key);
+											getSingleUser(id);
 										}}>
 										View
 									</Button>
