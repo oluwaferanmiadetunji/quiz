@@ -42,21 +42,15 @@ const Admins = () => {
 				</TableHead>
 				{admins ? (
 					<TableBody>
-						{admins.map((admin, index) => (
+						{admins.map(({ createdAt, email, lastLogin, id }, index) => (
 							<StyledTableRow key={index}>
 								<StyledTableCell component='th' scope='row'>
 									{index + 1}
 								</StyledTableCell>
-								<StyledTableCell align='right'> {admin.data.email} </StyledTableCell>
-								<StyledTableCell align='right'>{dayjs(admin.data.createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
+								<StyledTableCell align='right'> {email} </StyledTableCell>
+								<StyledTableCell align='right'>{dayjs(createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
 								<StyledTableCell align='right'>
-									<Button
-										color='secondary'
-										variant='contained'
-										// onClick={() => {
-										// 	deleteCourse(course.key);
-										// }}
-										style={{ backgroundColor: 'red', color: 'white' }}>
+									<Button color='secondary' variant='contained' style={{ backgroundColor: 'red', color: 'white' }}>
 										Delete
 									</Button>
 								</StyledTableCell>

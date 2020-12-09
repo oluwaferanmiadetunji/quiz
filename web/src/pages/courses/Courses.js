@@ -20,15 +20,15 @@ const Courses = () => {
 
 	const courses = useSelector((state) => state.courses);
 
-	const deleteCourse = async (key) => {
-		dispatch({ type: DELETE_COURSE, payload: key });
-		await makeDeleteReq(`courses/${key}`);
+	const deleteCourse = async ({ id, course }) => {
+		dispatch({ type: DELETE_COURSE, payload: id });
+		await makeDeleteReq('courses');
 	};
 
 	useEffect(() => {
 		dispatch(setTitle('Courses'));
 		const getCourses = async () => {
-			const { data } = await makeGetReq('courses/all');
+			const { data } = await makeGetReq('courses');
 			dispatch({ type: SET_COURSES, payload: data });
 		};
 		getCourses();
@@ -47,19 +47,19 @@ const Courses = () => {
 				</TableHead>
 				{courses ? (
 					<TableBody>
-						{courses.map((course, index) => (
+						{courses.map(({ createdAt, course, id }, index) => (
 							<StyledTableRow key={index}>
 								<StyledTableCell component='th' scope='row'>
 									{index + 1}
 								</StyledTableCell>
-								<StyledTableCell align='right'> {course.data.course} </StyledTableCell>
-								<StyledTableCell align='right'>{dayjs(course.data.createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
+								<StyledTableCell align='right'> {course} </StyledTableCell>
+								<StyledTableCell align='right'>{dayjs(createdAt).format('MMM DD YYYY HH:mm')}</StyledTableCell>
 								<StyledTableCell align='right'>
 									<Button
 										color='secondary'
 										variant='contained'
 										onClick={() => {
-											deleteCourse(course.key);
+											deleteCourse({ id, course });
 										}}
 										style={{ backgroundColor: 'red', color: 'white' }}>
 										Delete

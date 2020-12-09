@@ -27,12 +27,17 @@ export const makeGetReq = async (path) => {
 	}
 };
 
-export const makeDeleteReq = async (path) => {
+export const makeDeleteReq = async (path, data) => {
 	const config = {
 		headers: { Authorization: `Bearer ${Token}` },
 	};
 	try {
-		const response = await axios.delete(`${BASE_URL}/${path}`, config);
+		let response;
+		if (data) {
+			response = await axios.delete(`${BASE_URL}/${path}`, data, config);
+		} else {
+			response = await axios.delete(`${BASE_URL}/${path}`, config);
+		}
 		return response.data;
 	} catch (err) {
 		return err.response.data;
