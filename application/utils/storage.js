@@ -3,9 +3,7 @@ import { AsyncStorage } from 'react-native';
 export const _storeData = async (key, payload) => {
 	try {
 		await AsyncStorage.setItem(key, payload);
-	} catch (err) {
-		console.log(err);
-	}
+	} catch (err) {}
 };
 
 export const _retrieveData = async (key) => {

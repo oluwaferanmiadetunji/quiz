@@ -6,6 +6,7 @@ module.exports = async (req, res) => {
 	const count = req.user.count;
 	const category = req.body.category;
 	const activated = req.user.activated;
+
 	try {
 		let questions = [];
 		let snapshot;
@@ -19,7 +20,7 @@ module.exports = async (req, res) => {
 		});
 		const data = await shuffle(questions).slice(0, count);
 
-		return res.status(200).json({ status: 'ok', message: 'Questions set', data: '' });
+		return res.status(200).json({ status: 'ok', message: 'Questions set', data });
 	} catch (err) {
 		await saveError(err);
 		return res.status(500).json({ status: 'error', message: 'Could not get questions' });

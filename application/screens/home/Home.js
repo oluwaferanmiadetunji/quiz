@@ -6,7 +6,7 @@ import { Card } from 'react-native-elements';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
-import { isLogged } from '../login/redux';
+import { isLogged } from '../../redux/login';
 import { FontAwesome } from '@expo/vector-icons';
 
 const { height, width } = Dimensions.get('window');

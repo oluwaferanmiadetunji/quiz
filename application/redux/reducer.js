@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import { reducer as loginReducer } from '../screens/login/redux';
+import { reducer as loginReducer } from './login';
+import { reducer as UserReducer } from './user';
 
 const allReducers = combineReducers({
-	login: loginReducer,
+	isUserLoggedIn: loginReducer,
+	user: UserReducer,
 });
 
 export default allReducers;

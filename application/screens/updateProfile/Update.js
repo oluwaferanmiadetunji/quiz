@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Dimensions, SafeAreaView } from 'react-native';
 import styles from './style';
 import CustomButton from '../../components/Button';
@@ -8,12 +8,15 @@ import { Input, Block, Text } from 'galio-framework';
 import { makePostReq } from '../../utils/api';
 import show from '../../utils/showMessage';
 const { height, width } = Dimensions.get('window');
-import { _retrieveData, _storeData } from '../../utils/storage';
+import { useSelector, useDispatch } from 'react-redux';
+import { editDetails } from '../../redux/user';
 
 export default () => {
-	const [count, setCount] = useState('');
-	const [duration, setDuration] = useState('');
-	const [name, setName] = useState('');
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user);
+	const [count, setCount] = useState(`${user.count}`);
+	const [duration, setDuration] = useState(`${user.duration}`);
+	const [name, setName] = useState(user.name);
 
 	const [loading, setLoading] = useState(false);
 
@@ -22,11 +25,11 @@ export default () => {
 			show('The maximum number of questions you can attempt is 50', 'warning');
 		} else {
 			setLoading(true);
-			const { status, message, data } = await makePostReq('user/update', { name: name.trim(), count: parseInt(count), duration: parseInt(duration) });
+			const { status, message } = await makePostReq('user/update', { name: name.trim(), count: parseInt(count), duration: parseInt(duration) });
 			if (status === 'ok') {
 				show(message, 'success');
 				setLoading(false);
-				await _storeData('User', JSON.stringify(data));
+				dispatch(editDetails({ count, duration, name }));
 			} else {
 				show(message, 'danger');
 				setLoading(false);
@@ -34,21 +37,11 @@ export default () => {
 		}
 	};
 
-	const disabled = (count.trim() === '') | (duration.trim() === '') | (name.trim() === '');
+	const disabled = (count === '') | (duration === '') | (name.trim() === '');
 
 	const disabledClass = () => {
 		return disabled ? GRAY : BLUE;
 	};
-
-	useEffect(() => {
-		const getData = async () => {
-			const data = JSON.parse(await _retrieveData('User'));
-			setName(data.name);
-			setCount(`${data.count}`);
-			setDuration(`${data.duration}`);
-		};
-		getData();
-	}, []);
 
 	return (
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.05 }}>

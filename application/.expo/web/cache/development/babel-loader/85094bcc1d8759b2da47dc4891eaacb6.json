@@ -1,0 +1,1 @@
+{"ast":null,"code":"import Quiz from \"./Quiz\";\nexport default Quiz;","map":{"version":3,"sources":["/home/oluwaferanmiadetunji/Documents/Workspace/freelance/quiz/application/screens/quiz/index.js"],"names":["Quiz"],"mappings":"AAAA,OAAOA,IAAP;AAEA,eAAeA,IAAf","sourcesContent":["import Quiz from './Quiz';\n\nexport default Quiz;\n"]},"metadata":{},"sourceType":"module"}

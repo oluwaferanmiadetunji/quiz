@@ -22,12 +22,12 @@ import Header from './Header';
 const Stack = createStackNavigator();
 
 export default () => {
-	const { isLogged } = useSelector((state) => state.login);
+	const isLoggedIn = useSelector(({ isUserLoggedIn }) => isUserLoggedIn);
 
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				{!isLogged && (
+				{!isLoggedIn && (
 					<>
 						<Stack.Screen
 							name='App'
@@ -42,7 +42,7 @@ export default () => {
 					</>
 				)}
 
-				{isLogged && (
+				{isLoggedIn && (
 					<>
 						<Stack.Screen name='Home' component={Home} options={{ headerTitle: (props) => <Header {...props} /> }} />
 						<Stack.Screen
