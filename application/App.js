@@ -10,16 +10,16 @@ import { _retrieveData } from './utils/storage';
 
 const store = createStore(reducer);
 
-_retrieveData('Token')
-	.then((token) => {
-		const decoded = jwtDecode(token);
-		if (decoded.exp * 1000 < Date.now()) {
-			store.dispatch(isLogged(false));
-		} else {
-			store.dispatch(isLogged(true));
-		}
-	})
-	.catch(() => store.dispatch(isLogged(false)));
+// _retrieveData('Token')
+// 	.then((token) => {
+// 		const decoded = jwtDecode(token);
+// 		if (decoded.exp * 1000 < Date.now()) {
+// 			store.dispatch(isLogged(false));
+// 		} else {
+// 			store.dispatch(isLogged(true));
+// 		}
+// 	})
+// 	.catch(() => store.dispatch(isLogged(false)));
 
 export default function App() {
 	return (

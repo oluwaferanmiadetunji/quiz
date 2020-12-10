@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
 			await user.update({
 				lastLogin: new Date().toISOString(),
 			});
-			res.status(200).json({ status: SUCCESS, message: USER_LOGGED, data: token });
+			res.status(200).json({ status: SUCCESS, message: USER_LOGGED, data: { token, user: doc.data() } });
 		} else {
 			res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE });
 		}

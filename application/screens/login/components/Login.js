@@ -7,7 +7,7 @@ import { BLACK, GREEN, GRAY, BLUE } from '../../../components/Color';
 import { Input, Block } from 'galio-framework';
 import { makePostReq } from '../../../utils/api';
 import show from '../../../utils/showMessage';
-import { isLogged } from '../redux';
+import { isLogged, setToken } from '../redux';
 import { useDispatch } from 'react-redux';
 import { _storeData } from '../../../utils/storage';
 
@@ -32,9 +32,8 @@ export default ({ navigation }) => {
 
 		if (status === 'ok') {
 			show(message, 'success');
-			await _storeData('Token', data.token);
-			await _storeData('User', JSON.stringify(data.user));
 			dispatch(isLogged(true));
+			dispatch(setToken(data));
 		} else {
 			show(message, 'danger');
 			dispatch(isLogged(false));
