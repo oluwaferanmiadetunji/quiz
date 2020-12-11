@@ -50,7 +50,7 @@ export default ({ navigation }) => {
 						<View style={{ width: width * 0.8, flexDirection: 'row' }}>
 							<Entypo name='edit' size={24} color={BLACK} />
 							<Text style={styles.text}>Update Profile</Text>
-							<View style={{ marginLeft: width * 0.38 }}>
+							<View style={{ marginLeft: width * 0.36 }}>
 								<AntDesign name='right' size={24} color={BLACK} />
 							</View>
 						</View>
@@ -72,7 +72,7 @@ export default ({ navigation }) => {
 						<View style={{ width: width * 0.8, flexDirection: 'row' }}>
 							<Entypo name='new-message' size={24} color={BLACK} />
 							<Text style={styles.text}>Contact Us</Text>
-							<View style={{ marginLeft: width * 0.5 }}>
+							<View style={{ marginLeft: width * 0.42 }}>
 								<AntDesign name='right' size={24} color={BLACK} />
 							</View>
 						</View>
@@ -84,7 +84,7 @@ export default ({ navigation }) => {
 						<View style={{ width: width * 0.8, flexDirection: 'row' }}>
 							<Entypo name='login' size={24} color={RED} />
 							<Text style={{ ...styles.text, color: RED }}>Signout</Text>
-							<View style={{ marginLeft: width * 0.49 }}>
+							<View style={{ marginLeft: width * 0.48 }}>
 								<AntDesign name='right' size={24} color={RED} />
 							</View>
 						</View>

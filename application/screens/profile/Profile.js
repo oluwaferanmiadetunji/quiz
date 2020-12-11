@@ -80,7 +80,7 @@ export default () => {
 				</Card>
 				<Card>
 					<View style={{ width: width * 0.8 }}>
-						<Text style={styles.text}>{correct === 0 || toal === 0 ? '0 %' : `${((correct / total) * 100).toFixed(2)} %`}</Text>
+						<Text style={styles.text}>{correct === 0 || total === 0 ? '0 %' : `${((correct / total) * 100).toFixed(2)} %`}</Text>
 						<Text muted>Success Rate</Text>
 					</View>
 				</Card>

@@ -22,15 +22,11 @@ export default ({ navigation }) => {
 	const [open, setOpen] = useState(false);
 
 	const finish = async () => {
-		const data = {
-			total: questions.length,
-			correct: questions.filter((data) => data.isCorrect === true).length,
-			data: questions,
-		};
-		console.log(data);
-		dispatch(saveQuestion(questions));
-		await makePostReq('user/history/save', { data, total, correct });
+		const total = questions.length;
+		const correct = questions.filter((data) => data.isCorrect === true).length;
 
+		dispatch(saveQuestion({ data: questions, total, correct }));
+		await makePostReq('user/history/save', { data: questions, total, correct });
 		navigation.navigate('Summary');
 	};
 

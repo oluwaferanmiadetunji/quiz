@@ -4,8 +4,6 @@ const SET_INDEX = 'SET_INDEX';
 const SAVE_QUESTION = 'SAVE_QUESTION';
 const SET_COURSE = 'SET_COURSE';
 
-import test from './test';
-
 const setQuestions = (value) => ({
 	payload: value,
 	type: SET_QUESTIONS,

@@ -4,16 +4,19 @@ module.exports = async (req, res) => {
 	const userId = req.user.uid;
 	const data = req.body.data;
 	const numTotal = req.body.total;
-	const numCorrect = req.body.correct
+	const numCorrect = req.body.correct;
+	const collection = db.collection('history');
+	const user = db.collection('users').doc(userId);
 
 	try {
-		const user = db.collection('users').doc(userId);
 		const { total, correct, times } = (await user.get()).data();
 
-		await user.collection('history').add({
+		await collection.add({
+			userId,
 			createdAt: new Date().toISOString(),
 			data,
 		});
+
 		await user.update({
 			total: total + numTotal,
 			correct: correct + numCorrect,
