@@ -34,7 +34,7 @@ export default ({ navigation }) => {
 		if (status === 'ok') {
 			show(message, 'success');
 			await _storeData('Token', data.token);
-			setDetails(data.user);
+			dispatch(setDetails(data.user));
 			dispatch(isLogged(true));
 		} else {
 			show(message, 'danger');
