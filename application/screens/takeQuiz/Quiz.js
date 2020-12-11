@@ -8,6 +8,7 @@ import { Block } from 'galio-framework';
 import CustomButton from '../../components/Button';
 import { Card } from 'react-native-elements';
 import styles from './style';
+import { makePostReq } from '../../utils/api';
 
 const { height, width } = Dimensions.get('window');
 
@@ -15,12 +16,22 @@ export default ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { all, single, index, course } = useSelector((state) => state.question);
 	const { duration } = useSelector((state) => state.user);
-	const [answered, setAnswered] = useState(false);
 	const [selectedIndex, setSelectedIndex] = useState(null);
+	const [questions, setQuestions] = useState([]);
 
 	const [open, setOpen] = useState(false);
 
-	const finish = () => {};
+	const finish = async () => {
+		const data = {
+			total: questions.length,
+			correct: questions.filter((data) => data.isCorrect === true).length,
+			data: questions,
+		};
+		dispatch(saveQuestion(questions));
+		const res = await makePostReq('user/history/save', data);
+		console.log(res);
+		navigation.navigate('Summary');
+	};
 
 	const selectAnswer = (index) => {
 		setSelectedIndex(index);
@@ -42,14 +53,32 @@ export default ({ navigation }) => {
 		return answerClass;
 	};
 
-	const back = () => {
-		if (index !== 0) {
-			dispatch(setIndex(index - 1));
+	const submitAnswer = () => {
+		let isCorrect = false;
+		const selectedAnswer = single.answers[selectedIndex];
+		if (selectedAnswer === single.correctAnswer) {
+			isCorrect = true;
 		}
+		let singleQuestion = {};
+		singleQuestion.id = single.id;
+		singleQuestion.selectedAnswer = selectedAnswer;
+		singleQuestion.isCorrect = isCorrect;
+		singleQuestion.answers = single.answers;
+		singleQuestion.question = single.question;
+		singleQuestion.answers = single.answers;
+		setQuestions([...questions, singleQuestion]);
+		setSelectedIndex(null);
 	};
 
 	const next = () => {
-		dispatch(setIndex(index + 1));
+		if (selectedIndex !== null) {
+			submitAnswer();
+			if (index + 1 < all.length) {
+				dispatch(setIndex(index + 1));
+			} else {
+				finish();
+			}
+		}
 	};
 
 	useEffect(() => {
@@ -60,11 +89,11 @@ export default ({ navigation }) => {
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.07 }}>
 			<Modal isVisible={open} animationIn='bounceInUp' backdropColor='black' backdropOpacity={1}>
 				<Block style={{ width: width * 0.8 }}>
-					<Text style={{ color: 'white', fontSize: 22, marginLeft: 15 }}>Are you sure you want to cancel this quiz?</Text>
+					<Text style={{ color: 'white', fontSize: 18, marginLeft: 15, textAlign: 'center' }}>Are you sure you want to cancel this quiz?</Text>
 					<CustomButton
 						style={{ marginTop: 30, backgroundColor: 'green', marginLeft: 15 }}
 						onPress={() => setOpen(false)}
-						textStyling={{ color: 'white' }}>
+						textStyling={{ color: 'white', textAlign: 'center' }}>
 						No, Stay
 					</CustomButton>
 					<CustomButton
@@ -74,7 +103,7 @@ export default ({ navigation }) => {
 							setOpen(false);
 							navigation.navigate('Home');
 						}}
-						textStyling={{ color: 'white' }}>
+						textStyling={{ color: 'white', textAlign: 'center' }}>
 						Yes, Cancel
 					</CustomButton>
 				</Block>
@@ -94,7 +123,7 @@ export default ({ navigation }) => {
 				<Text muted style={{ textAlign: 'center', fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
 					{course}
 				</Text>
-				<Text muted style={{ textAlign: 'center', fontSize: 18 }}>
+				<Text muted style={{ textAlign: 'center', fontSize: 14 }}>
 					{index + 1} / {all.length}
 				</Text>
 				<Card containerStyle={{ marginBottom: 30, borderColor: 'white' }}>
@@ -123,18 +152,21 @@ export default ({ navigation }) => {
 					))}
 			</ScrollView>
 			<Block style={{ width: width * 0.8, marginBottom: 0, flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-				<CustomButton style={{ backgroundColor: '#007bff', marginBottom: 20 }} onPress={back} textStyling={{ textAlign: 'center', fontSize: 16 }}>
-					Back
-				</CustomButton>
 				{index + 1 < all.length ? (
 					<CustomButton style={{ backgroundColor: 'green', marginBottom: 20 }} onPress={next} textStyling={{ textAlign: 'center', fontSize: 16 }}>
 						Next
 					</CustomButton>
 				) : (
-					<CustomButton style={{ backgroundColor: 'green', marginBottom: 20 }} onPress={finish} textStyling={{ textAlign: 'center', fontSize: 16 }}>
+					<CustomButton style={{ backgroundColor: 'green', marginBottom: 20 }} onPress={next} textStyling={{ textAlign: 'center', fontSize: 16 }}>
 						Submit
 					</CustomButton>
 				)}
+				<CustomButton
+					style={{ backgroundColor: 'red', marginBottom: 20 }}
+					onPress={() => setOpen(true)}
+					textStyling={{ textAlign: 'center', fontSize: 16 }}>
+					Cancel
+				</CustomButton>
 			</Block>
 		</SafeAreaView>
 	);

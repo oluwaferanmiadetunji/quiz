@@ -44,7 +44,7 @@ export default () => {
 
 				{isLoggedIn && (
 					<>
-						{/* <Stack.Screen name='Home' component={Home} options={{ headerTitle: (props) => <Header {...props} /> }} />
+						<Stack.Screen name='Home' component={Home} options={{ headerTitle: (props) => <Header {...props} /> }} />
 						<Stack.Screen
 							name='Profile'
 							component={Profile}
@@ -87,7 +87,7 @@ export default () => {
 									fontWeight: 'bold',
 								},
 							}}
-						/> */}
+						/>
 						<Stack.Screen
 							name='TakeQuiz'
 							component={TakeQuiz}

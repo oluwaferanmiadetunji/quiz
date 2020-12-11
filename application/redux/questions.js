@@ -32,11 +32,11 @@ const saveQuestion = (value) => ({
 });
 
 const initialState = {
-	all: test,
+	all: [],
 	single: {},
 	index: 0,
-	answered: [],
-	course: 'General',
+	answered: {},
+	course: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -54,12 +54,17 @@ const reducer = (state = initialState, action) => {
 		case SAVE_QUESTION:
 			return {
 				...state,
-				answered: [...action.payload],
+				answered: action.payload,
 			};
 		case SET_INDEX:
 			return {
 				...state,
 				index: action.payload,
+			};
+		case SET_COURSE:
+			return {
+				...state,
+				course: action.payload,
 			};
 		default:
 			return state;

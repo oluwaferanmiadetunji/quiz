@@ -1,0 +1,72 @@
+[
+	{
+		"id": "Up1VwwChxMIyjVwx5IUZ",
+		"selectedAnswer": "1822",
+		"isCorrect": false,
+		"answers": ["1822", "1934", "1983", "1984"],
+		"question": "What year did Skoal, a smokeless Tobacco company, release their first line of Pouches, known as Skoal Bandits?"
+	},
+	{
+		"id": "pYjDGv7YFDQtF9n1kp7R",
+		"selectedAnswer": "Risk",
+		"isCorrect": false,
+		"answers": ["Clue", "Risk", "Monopoly", "Candy Land"],
+		"question": "Which board game was first released on February 6th, 1935?"
+	},
+	{
+		"id": "pYjDGv7YFDQtF9n1kp7R",
+		"selectedAnswer": "Risk",
+		"isCorrect": false,
+		"answers": ["Clue", "Risk", "Monopoly", "Candy Land"],
+		"question": "Which board game was first released on February 6th, 1935?"
+	},
+	{
+		"id": "OrCj7OGLz6EihnilXQEj",
+		"selectedAnswer": "Synagogue",
+		"isCorrect": false,
+		"answers": ["Church", "Synagogue", "Temple", "Mosque"],
+		"question": "Irish musician Hozier released a music track in 2013 titled, Take Me to ______"
+	},
+	{
+		"id": "03RZujpn4yzea8UOAifV",
+		"selectedAnswer": "Lake Superior",
+		"isCorrect": true,
+		"answers": ["Lake Michigan", "Lake Superior", "Lake Huron", "Caspian Sea"],
+		"question": "Which is the largest freshwater lake in the world?"
+	},
+	{
+		"id": "aRm6goujhkIy14fyyoQI",
+		"selectedAnswer": "Marie Antoinette",
+		"isCorrect": true,
+		"answers": ["Elizabeth I", "Czar Nicholas II", "Marie Antoinette", "Henry VIII"],
+		"question": "Which famous world leader is famed for the saying, Let them eat cake, yet is rumored that he/she never said it at all?"
+	},
+	{
+		"id": "6uecVOAz94L0eNG9Obff",
+		"selectedAnswer": "center",
+		"isCorrect": true,
+		"answers": ["relative", "static", "absolute", "center"],
+		"question": "In CSS, which of these values CANNOT be used with the position property?"
+	},
+	{
+		"id": "dPXa0OaFXKvsTjaI87HU",
+		"selectedAnswer": "Queue",
+		"isCorrect": false,
+		"answers": ["Heap", "Tree", "Queue", "Stack"],
+		"question": "Which data structure does FILO apply to?"
+	},
+	{
+		"id": "hfsuKvnrsA0zdPwwEBcM",
+		"selectedAnswer": "Party-hat Duplication Glitch",
+		"isCorrect": false,
+		"answers": ["TzHaar Massacre", "The Falador Massacre", "Noclip glitch", "Party-hat Duplication Glitch"],
+		"question": "On the 6th of June 2006, what was the name of the infamous glitch that occurred in the MMO RuneScape?"
+	},
+	{
+		"id": "ouGjLzE8T5e8UFeqVyf4",
+		"selectedAnswer": "Fire",
+		"isCorrect": false,
+		"answers": ["Ice", "Thunder", "Fire", "Water"],
+		"question": "What element does the Zinogre use in Monster Hunter?"
+	}
+]

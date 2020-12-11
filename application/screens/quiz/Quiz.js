@@ -22,9 +22,7 @@ export default ({ navigation }) => {
 
 	const handleSubmit = async () => {
 		setLoading(true);
-		const c = course ? course : courses[0].course;
-		const { data, message, status } = await makePostReq('quiz', { category: c });
-		console.log({ data, message, status });
+		const { data, message, status } = await makePostReq('quiz', { category: course });
 		if (status === 'ok') {
 			setLoading(false);
 			dispatch(setQuestions(data));
