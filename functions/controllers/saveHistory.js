@@ -3,6 +3,8 @@ const { db } = require('../config/firebase');
 module.exports = async (req, res) => {
 	const userId = req.user.uid;
 	const data = req.body.data;
+	const numTotal = req.body.total;
+	const numCorrect = req.body.correct
 
 	try {
 		const user = db.collection('users').doc(userId);
@@ -13,8 +15,8 @@ module.exports = async (req, res) => {
 			data,
 		});
 		await user.update({
-			total: total + data.total,
-			correct: correct + data.correct,
+			total: total + numTotal,
+			correct: correct + numCorrect,
 			times: times + 1,
 		});
 		return res.status(200).json({ status: 'ok', message: 'Successful' });

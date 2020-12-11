@@ -27,9 +27,10 @@ export default ({ navigation }) => {
 			correct: questions.filter((data) => data.isCorrect === true).length,
 			data: questions,
 		};
+		console.log(data);
 		dispatch(saveQuestion(questions));
-		const res = await makePostReq('user/history/save', data);
-		console.log(res);
+		await makePostReq('user/history/save', { data, total, correct });
+
 		navigation.navigate('Summary');
 	};
 
@@ -109,22 +110,22 @@ export default ({ navigation }) => {
 				</Block>
 			</Modal>
 			<View style={{ marginBottom: 10 }}>
-				{/* <CountDown
-					until={duration * 60}
+				<CountDown
+					until={parseInt(duration, 10) * 60}
 					digitStyle={{ backgroundColor: '#060814' }}
 					digitTxtStyle={{ color: '#fff', fontWeight: 'bold' }}
 					timeLabelStyle={{ color: '#000', fontSize: 10 }}
 					timeToShow={['H', 'M', 'S']}
 					onFinish={finish}
 					size={15}
-				/> */}
+				/>
 			</View>
 			<ScrollView style={styles.scrollView}>
 				<Text muted style={{ textAlign: 'center', fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
 					{course}
 				</Text>
 				<Text muted style={{ textAlign: 'center', fontSize: 14 }}>
-					{index + 1} / {all.length}
+					Question {index + 1} / {all.length}
 				</Text>
 				<Card containerStyle={{ marginBottom: 30, borderColor: 'white' }}>
 					<View style={{ width: width * 0.8 }}>
