@@ -15,6 +15,8 @@ module.exports = async (req, res) => {
 			userId,
 			createdAt: new Date().toISOString(),
 			data,
+			total: numTotal,
+			correct: numCorrect,
 		});
 
 		await user.update({
