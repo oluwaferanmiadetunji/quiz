@@ -1,6 +1,7 @@
 const { db } = require('../config/firebase');
 const shuffle = require('../helpers/shuffle');
 const saveError = require('./saveError');
+const _ = require('lodash');
 
 module.exports = async (req, res) => {
 	const count = req.user.count;
@@ -16,7 +17,12 @@ module.exports = async (req, res) => {
 			snapshot = await db.collection('questions').where('type', '==', 'Free').where('category', '==', category).get();
 		}
 		snapshot.forEach((doc) => {
-			questions.push({ ...doc.data(), id: doc.id });
+			questions.push({
+				correctAnswer: doc.data().correctAnswer,
+				answers: _.shuffle([...doc.data().incorrectAnswers, doc.data().correctAnswer]),
+				question: doc.data().question,
+				id: doc.id,
+			});
 		});
 		const data = await shuffle(questions).slice(0, count);
 

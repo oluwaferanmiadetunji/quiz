@@ -1,102 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Dimensions, SafeAreaView, Text, ScrollView, TouchableOpacity } from 'react-native';
-import styles from './style';
-import { Card } from 'react-native-elements';
-import { _retrieveData } from '../../utils/storage';
-import CustomButton from '../../components/Button';
-import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+import { setQuestion, setIndex, saveQuestion } from '../../redux/questions';
 import Modal from 'react-native-modal';
 import CountDown from 'react-native-countdown-component';
 import { Block } from 'galio-framework';
-import { makePostReq } from '../../utils/api';
+import CustomButton from '../../components/Button';
+import { Card } from 'react-native-elements';
+import styles from './style';
 
 const { height, width } = Dimensions.get('window');
 
-export default ({ navigation, route }) => {
-	const [index, setIndex] = useState(0);
-	const [currentQuestion, setCurrentQuestion] = useState({});
-	const [answer, setAnswer] = useState([]);
-	const [selectedIndex, setSelectedIndex] = useState(null);
-	const [correctIndex, setCorrectIndex] = useState(null);
-	const [numCorrect, setNumCorrect] = useState(0);
-	const [answeredQuestions, setAnsweredQuestions] = useState([]);
+export default ({ navigation }) => {
+	const dispatch = useDispatch();
+	const { all, single, index } = useSelector((state) => state.question);
+	const { duration } = useSelector((state) => state.user);
 	const [answered, setAnswered] = useState(false);
+
 	const [open, setOpen] = useState(false);
-	const { duration, questions, userId } = route.params;
 
-	useEffect(() => {
-		let q = questions[index];
-		setCurrentQuestion(q);
-		let shuffledAnswers = _.shuffle([...q.incorrectAnswers, q.correctAnswer]);
-		setCorrectIndex(shuffledAnswers.indexOf(q.correctAnswer));
-		setAnswer(shuffledAnswers);
-	}, [index]);
+	const finish = () => {};
 
-	const selectAnswer = (index) => {
-		setSelectedIndex(index);
-	};
-
-	const submit = () => {
-		if (selectedIndex === correctIndex) {
-			setNumCorrect(numCorrect + 1);
-		}
-		setAnswered(true);
-		let questionData = {};
-		questionData.isCorrect = selectedIndex === correctIndex ? true : false;
-		questionData.userPicked = answer[selectedIndex];
-		questionData.question = currentQuestion.question;
-		questionData.correctAnswer = currentQuestion.correctAnswer;
-
-		setAnsweredQuestions([...answeredQuestions, questionData]);
-
-		setTimeout(() => {
-			index + 1 != questions.length ? next() : finish();
-		}, 3000);
-	};
-
-	const next = () => {
-		setSelectedIndex(null);
-		setAnswered(false);
-		setIndex(index + 1);
-	};
-
-	const finish = async () => {
-		setTimeout(() => {
-			const data = {
-				uid: userId,
-				data: { questions: answeredQuestions, correct: numCorrect, total: questions.length },
-			};
-			makePostReq('user/history/save', data)
-				.then((res) => {
-					console.log(res);
-				})
-				.catch((err) => console.log(err));
-			navigation.navigate('Summary', { data });
-		}, 1500);
-	};
+	const selectAnswer = () => {};
 
 	const answerClass = (index) => {
-		let answerClass = styles.button;
-		if (!answered && selectedIndex === index) {
-			answerClass = styles.selected;
-		} else if (answered && correctIndex === index) {
-			answerClass = styles.correct;
-		} else if (answered && selectedIndex === index && correctIndex !== index) {
-			answerClass = styles.incorrect;
-		}
-		return answerClass;
+		return styles.button;
 	};
+
 	const textClass = (index) => {
-		let textClass = styles.black;
-		if (!answered && selectedIndex === index) {
-			textClass = styles.white;
-		} else if (answered && correctIndex === index) {
-			textClass = styles.black;
-		} else if (answered && selectedIndex === index && correctIndex !== index) {
-			textClass = styles.white;
-		}
-		return textClass;
+		return styles.black;
 	};
+
+	useEffect(() => {
+		dispatch(setQuestion(all[index]));
+	}, [index]);
 
 	return (
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.07 }}>
@@ -112,14 +49,7 @@ export default ({ navigation, route }) => {
 					<CustomButton
 						style={{ marginTop: 30, backgroundColor: 'red', marginLeft: 15 }}
 						onPress={() => {
-							setIndex(0);
-							setCurrentQuestion({});
-							setAnswer([]);
-							setSelectedIndex(null);
-							setCorrectIndex(null);
-							setNumCorrect(0);
-							setAnsweredQuestions([]);
-							setAnswered(false);
+							dispatch(setIndex(0));
 							setOpen(false);
 							navigation.navigate('Home');
 						}}
@@ -129,7 +59,7 @@ export default ({ navigation, route }) => {
 				</Block>
 			</Modal>
 			<View style={{ marginBottom: 10 }}>
-				<CountDown
+				{/* <CountDown
 					until={duration * 60}
 					digitStyle={{ backgroundColor: '#060814' }}
 					digitTxtStyle={{ color: '#fff', fontWeight: 'bold' }}
@@ -137,22 +67,22 @@ export default ({ navigation, route }) => {
 					timeToShow={['H', 'M', 'S']}
 					onFinish={finish}
 					size={15}
-				/>
+				/> */}
 			</View>
 			<ScrollView style={styles.scrollView}>
 				<Text muted style={{ textAlign: 'center', fontSize: 18 }}>
-					Question {index + 1} / {questions.length}
+					Question {index + 1} / {all.length}
 				</Text>
-				<Card containerStyle={{ marginBottom: 30 }}>
+				<Card containerStyle={{ marginBottom: 30, borderColor: 'white' }}>
 					<View style={{ width: width * 0.8 }}>
-						<Text muted style={{ textAlign: 'center', fontSize: 22 }}>
-							{currentQuestion.question}
+						<Text muted style={{ textAlign: 'left', fontSize: 18 }}>
+							{single.question}
 						</Text>
 					</View>
 				</Card>
 
-				{answer &&
-					answer.map((ans, index) => (
+				{single.answers &&
+					single.answers.map((ans, index) => (
 						<TouchableOpacity
 							onPress={() => {
 								answered ? null : selectAnswer(index);
@@ -172,7 +102,7 @@ export default ({ navigation, route }) => {
 				<CustomButton
 					style={{ backgroundColor: 'green', width: width * 0.8, marginBottom: 20 }}
 					onPress={() => {
-						selectedIndex === null || answered ? null : submit();
+						console.log(hi);
 					}}
 					textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }}>
 					Submit

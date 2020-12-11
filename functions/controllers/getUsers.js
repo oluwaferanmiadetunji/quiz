@@ -2,7 +2,6 @@ const { db } = require('../config/firebase');
 const saveError = require('./saveError');
 
 module.exports = async (req, res) => {
-	let users;
 	try {
 		let users = [];
 		const snapshot = await db.collection('users').orderBy('createdAt', 'desc').get();
