@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
 		return res.status(417).json({ status: FAILURE, message: validateParams.message, data: '' });
 	}
 	let token, uid;
+	let history = [];
 	try {
 		const data = await firebase.auth().signInWithEmailAndPassword(email, password);
 		uid = data.user.uid;
@@ -24,7 +25,11 @@ module.exports = async (req, res) => {
 			await user.update({
 				lastLogin: new Date().toISOString(),
 			});
-			res.status(200).json({ status: SUCCESS, message: USER_LOGGED, data: { token, user: doc.data() } });
+			const snapshot = await db.collection('history').where('userId', '==', uid).get();
+			snapshot.forEach((doc) => {
+				history.push({ ...doc.data(), id: doc.id });
+			});
+			res.status(200).json({ status: SUCCESS, message: USER_LOGGED, data: { token, user: { ...doc.data(), history } } });
 		} else {
 			res.status(417).json({ status: FAILURE, message: NO_USER_RESPONSE });
 		}
