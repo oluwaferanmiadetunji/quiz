@@ -5,12 +5,11 @@ import { Card } from 'react-native-elements';
 import { _retrieveData } from '../../utils/storage';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
-import test from './t';
 
 const { height, width } = Dimensions.get('window');
 
 export default ({ navigation }) => {
-	const user = useSelector((state) => state.user);
+	const { history } = useSelector((state) => state.user);
 
 	const navigate = (data) => {
 		navigation.navigate('SingleHistory', { details: data });
@@ -19,7 +18,7 @@ export default ({ navigation }) => {
 	return (
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.01 }}>
 			<ScrollView style={styles.scrollView}>
-				{test.map((data) => (
+				{history.map((data) => (
 					<TouchableWithoutFeedback onPress={() => navigate(data)} key={data.id}>
 						<Card>
 							<View style={{ width: width * 0.8 }}>

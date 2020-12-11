@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 const { height, width } = Dimensions.get('window');
 
 export default ({ route }) => {
-	const { createdAt, data } = route.params.details;
+	const { createdAt, data, correct, total } = route.params.details;
 
 	return (
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.01 }}>
@@ -17,20 +17,20 @@ export default ({ route }) => {
 					Date: {dayjs(createdAt).format('MMM DD, YYYY h:mm a')}
 				</Text>
 				<Text muted style={{ fontSize: 18, marginBottom: 10 }}>
-					Number of Correct: {data.correct}
+					Number of Correct: {correct}
 				</Text>
 				<Text muted style={{ fontSize: 18, marginBottom: 10 }}>
-					Number of Questions: {data.total}
+					Number of Questions: {total}
 				</Text>
 			</View>
 			<ScrollView style={styles.scrollView}>
-				{data.questions.length > 0
-					? data.questions.map((question, index) => (
+				{data.length > 0
+					? data.map((question, index) => (
 							<Card containerStyle={question.isCorrect ? styles.correct : styles.incorrect} key={index}>
 								<View style={{ width: width * 0.8 }}>
 									<Text style={styles.historyText}>Question {index + 1}</Text>
 									<Text style={styles.historyText}>Question: {question.question}</Text>
-									<Text style={styles.historyText}>Your answer: {question.userPicked}</Text>
+									<Text style={styles.historyText}>Your answer: {question.selectedAnswer}</Text>
 								</View>
 							</Card>
 					  ))
