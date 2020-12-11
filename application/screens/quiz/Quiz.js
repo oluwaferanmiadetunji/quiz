@@ -9,7 +9,7 @@ import { makeGetReq, makePostReq } from '../../utils/api';
 import { _retrieveData } from '../../utils/storage';
 import { Block, Input, Text } from 'galio-framework';
 import { useSelector, useDispatch } from 'react-redux';
-import { setQuestions } from '../../redux/questions';
+import { setQuestions, setCourse as SetCourse } from '../../redux/questions';
 
 const { height, width } = Dimensions.get('window');
 
@@ -21,21 +21,18 @@ export default ({ navigation }) => {
 	const [courses, setCourses] = useState([]);
 
 	const handleSubmit = async () => {
-		try {
-			setLoading(true);
-			const c = course ? course : courses[0].course;
-			const { data, message, status } = await makePostReq('quiz', { category: c });
-			if (status === 'ok') {
-				setLoading(false);
-				dispatch(setQuestions(data));
-				navigation.navigate('TakeQuiz');
-			} else {
-				setLoading(false);
-				show(message, 'danger');
-			}
-		} catch (err) {
-			show('Something went wrong!', 'danger');
+		setLoading(true);
+		const c = course ? course : courses[0].course;
+		const { data, message, status } = await makePostReq('quiz', { category: c });
+		console.log({ data, message, status });
+		if (status === 'ok') {
 			setLoading(false);
+			dispatch(setQuestions(data));
+			dispatch(SetCourse(course));
+			navigation.navigate('TakeQuiz');
+		} else {
+			setLoading(false);
+			show(message, 'danger');
 		}
 	};
 

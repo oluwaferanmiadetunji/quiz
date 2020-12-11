@@ -22,6 +22,8 @@ module.exports = async (req, res) => {
 				answers: _.shuffle([...doc.data().incorrectAnswers, doc.data().correctAnswer]),
 				question: doc.data().question,
 				id: doc.id,
+				selectedAnswer: null,
+				isCorrect: null,
 			});
 		});
 		const data = await shuffle(questions).slice(0, count);

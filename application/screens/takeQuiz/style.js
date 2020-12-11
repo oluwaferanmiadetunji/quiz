@@ -20,7 +20,7 @@ export default StyleSheet.create({
 		marginBottom: 10,
 	},
 	scrollView: {
-		marginBottom: 40,
+		marginBottom: 0,
 	},
 
 	button: {

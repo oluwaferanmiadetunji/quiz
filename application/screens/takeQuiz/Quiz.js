@@ -13,22 +13,43 @@ const { height, width } = Dimensions.get('window');
 
 export default ({ navigation }) => {
 	const dispatch = useDispatch();
-	const { all, single, index } = useSelector((state) => state.question);
+	const { all, single, index, course } = useSelector((state) => state.question);
 	const { duration } = useSelector((state) => state.user);
 	const [answered, setAnswered] = useState(false);
+	const [selectedIndex, setSelectedIndex] = useState(null);
 
 	const [open, setOpen] = useState(false);
 
 	const finish = () => {};
 
-	const selectAnswer = () => {};
+	const selectAnswer = (index) => {
+		setSelectedIndex(index);
+	};
 
 	const answerClass = (index) => {
-		return styles.button;
+		let answerClass = styles.button;
+		if (selectedIndex === index) {
+			answerClass = styles.selected;
+		}
+		return answerClass;
 	};
 
 	const textClass = (index) => {
-		return styles.black;
+		let answerClass = styles.black;
+		if (selectedIndex === index) {
+			answerClass = styles.white;
+		}
+		return answerClass;
+	};
+
+	const back = () => {
+		if (index !== 0) {
+			dispatch(setIndex(index - 1));
+		}
+	};
+
+	const next = () => {
+		dispatch(setIndex(index + 1));
 	};
 
 	useEffect(() => {
@@ -70,8 +91,11 @@ export default ({ navigation }) => {
 				/> */}
 			</View>
 			<ScrollView style={styles.scrollView}>
+				<Text muted style={{ textAlign: 'center', fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
+					{course}
+				</Text>
 				<Text muted style={{ textAlign: 'center', fontSize: 18 }}>
-					Question {index + 1} / {all.length}
+					{index + 1} / {all.length}
 				</Text>
 				<Card containerStyle={{ marginBottom: 30, borderColor: 'white' }}>
 					<View style={{ width: width * 0.8 }}>
@@ -85,7 +109,7 @@ export default ({ navigation }) => {
 					single.answers.map((ans, index) => (
 						<TouchableOpacity
 							onPress={() => {
-								answered ? null : selectAnswer(index);
+								selectAnswer(index);
 							}}
 							key={index}>
 							<Card containerStyle={answerClass(index)}>
@@ -98,27 +122,19 @@ export default ({ navigation }) => {
 						</TouchableOpacity>
 					))}
 			</ScrollView>
-			<Block style={{ width: width * 0.8, marginBottom: height * 0.05 }}>
-				<CustomButton
-					style={{ backgroundColor: 'green', width: width * 0.8, marginBottom: 20 }}
-					onPress={() => {
-						console.log(hi);
-					}}
-					textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }}>
-					Submit
+			<Block style={{ width: width * 0.8, marginBottom: 0, flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+				<CustomButton style={{ backgroundColor: '#007bff', marginBottom: 20 }} onPress={back} textStyling={{ textAlign: 'center', fontSize: 16 }}>
+					Back
 				</CustomButton>
-				<CustomButton
-					style={{ backgroundColor: '#FB6340', width: width * 0.8, marginBottom: 20 }}
-					onPress={finish}
-					textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }}>
-					Finish Quiz
-				</CustomButton>
-				<CustomButton
-					style={{ backgroundColor: 'red', width: width * 0.8, marginBottom: 20 }}
-					onPress={() => setOpen(true)}
-					textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }}>
-					Cancel Quiz
-				</CustomButton>
+				{index + 1 < all.length ? (
+					<CustomButton style={{ backgroundColor: 'green', marginBottom: 20 }} onPress={next} textStyling={{ textAlign: 'center', fontSize: 16 }}>
+						Next
+					</CustomButton>
+				) : (
+					<CustomButton style={{ backgroundColor: 'green', marginBottom: 20 }} onPress={finish} textStyling={{ textAlign: 'center', fontSize: 16 }}>
+						Submit
+					</CustomButton>
+				)}
 			</Block>
 		</SafeAreaView>
 	);
