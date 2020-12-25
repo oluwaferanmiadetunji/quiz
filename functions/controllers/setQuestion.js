@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
 				isCorrect: null,
 			});
 		});
-		const data = await shuffle(questions).slice(0, count);
+		const data = await shuffle(questions).slice(0, count + 1);
 
 		return res.status(200).json({ status: 'ok', message: 'Questions set', data });
 	} catch (err) {
