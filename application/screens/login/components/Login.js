@@ -3,7 +3,7 @@ import { View, Dimensions, SafeAreaView } from 'react-native';
 import styles from './style';
 import CustomButton from '../../../components/Button';
 import CustomText from '../../../components/Text';
-import { BLACK, GREEN, GRAY, BLUE } from '../../../components/Color';
+import { BLACK, GRAY, BLUE } from '../../../components/Color';
 import { Input, Block } from 'galio-framework';
 import { makePostReq } from '../../../utils/api';
 import show from '../../../utils/showMessage';
@@ -74,7 +74,7 @@ export default ({ navigation }) => {
 				)}
 			</Block>
 			<View style={{ marginTop: 30, flex: 1, flexDirection: 'row' }}>
-				<CustomText style={{ fontSize: 16, marginLeft: 5, color: GREEN, fontWeight: 'bold' }} onPress={() => navigation.navigate('ForgotPassword')}>
+				<CustomText style={{ fontSize: 16, marginLeft: 5, color: BLUE, fontWeight: 'bold' }} onPress={() => navigation.navigate('ForgotPassword')}>
 					Change Password
 				</CustomText>
 			</View>

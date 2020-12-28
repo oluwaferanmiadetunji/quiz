@@ -4,7 +4,7 @@ const saveError = require('./saveError');
 const _ = require('lodash');
 
 module.exports = async (req, res) => {
-	const count = req.user.count;
+	const count = req.body.count;
 	const category = req.body.category;
 	const activated = req.user.activated;
 
