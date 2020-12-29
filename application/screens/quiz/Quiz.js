@@ -3,28 +3,31 @@ import { View, Dimensions, SafeAreaView, Picker } from 'react-native';
 import styles from './style';
 import CustomButton from '../../components/Button';
 import CustomText from '../../components/Text';
-import { GREEN, BLACK, GRAY } from '../../components/Color';
+import { BLACK, GRAY, BLUE } from '../../components/Color';
 import show from '../../utils/showMessage';
 import { makeGetReq, makePostReq } from '../../utils/api';
 import { _retrieveData } from '../../utils/storage';
 import { Block, Input, Text } from 'galio-framework';
 import { useSelector, useDispatch } from 'react-redux';
-import { setQuestions, setCourse as SetCourse } from '../../redux/questions';
+import { setQuestions, setCourse as SetCourse, setDuration as SetDuration } from '../../redux/questions';
 
 const { height, width } = Dimensions.get('window');
 
 export default ({ navigation }) => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
+	const [count, setCount] = useState(`${user.count}`);
+	const [duration, setDuration] = useState(`${user.duration}`);
 	const [loading, setLoading] = useState(false);
 	const [course, setCourse] = useState('');
 	const [courses, setCourses] = useState([]);
 
 	const handleSubmit = async () => {
 		setLoading(true);
-		const { data, message, status } = await makePostReq('quiz', { category: course });
+		const { data, message, status } = await makePostReq('quiz', { category: course, count });
 		if (status === 'ok') {
 			setLoading(false);
+			dispatch(SetDuration(duration));
 			dispatch(setQuestions(data));
 			dispatch(SetCourse(course));
 			navigation.navigate('TakeQuiz');
@@ -61,11 +64,25 @@ export default ({ navigation }) => {
 				<Text muted style={{ marginTop: 10 }}>
 					Exam Count
 				</Text>
-				<Input placeholder='Exam Count' placeholderTextColor={BLACK} value={`${user.count}`} type='number-pad' color={BLACK} />
+				<Input
+					placeholder='Exam Count'
+					placeholderTextColor={BLACK}
+					value={count}
+					onChangeText={(text) => setCount(text)}
+					type='number-pad'
+					color={BLACK}
+				/>
 				<Text muted style={{ marginTop: 10 }}>
 					Exam Duration
 				</Text>
-				<Input placeholder='Exam Duration (minutes)' placeholderTextColor={BLACK} value={`${user.duration}`} type='number-pad' color={BLACK} />
+				<Input
+					placeholder='Exam Duration (minutes)'
+					placeholderTextColor={BLACK}
+					onChangeText={(text) => setDuration(text)}
+					value={duration}
+					type='number-pad'
+					color={BLACK}
+				/>
 			</Block>
 
 			{loading && (
@@ -80,7 +97,7 @@ export default ({ navigation }) => {
 				</CustomButton>
 			)}
 			<View style={{ marginTop: 30, flex: 1, flexDirection: 'row' }}>
-				<CustomText style={{ fontSize: 16, marginLeft: 5, color: GREEN, fontWeight: 'bold' }} onPress={() => navigation.navigate('Update')}>
+				<CustomText style={{ fontSize: 16, marginLeft: 5, color: BLUE, fontWeight: 'bold' }} onPress={() => navigation.navigate('Update')}>
 					Change Settings
 				</CustomText>
 			</View>

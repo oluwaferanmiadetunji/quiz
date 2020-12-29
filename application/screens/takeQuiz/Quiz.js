@@ -14,8 +14,7 @@ const { height, width } = Dimensions.get('window');
 
 export default ({ navigation }) => {
 	const dispatch = useDispatch();
-	const { all, single, index, course } = useSelector((state) => state.question);
-	const { duration } = useSelector((state) => state.user);
+	const { all, single, index, course, duration } = useSelector((state) => state.question);
 	const [selectedIndex, setSelectedIndex] = useState(null);
 	const [questions, setQuestions] = useState([]);
 

@@ -3,6 +3,7 @@ const SET_QUESTION = 'SET_QUESTION';
 const SET_INDEX = 'SET_INDEX';
 const SAVE_QUESTION = 'SAVE_QUESTION';
 const SET_COURSE = 'SET_COURSE';
+const SET_DURATION = 'SET_DURATION';
 
 const setQuestions = (value) => ({
 	payload: value,
@@ -17,6 +18,11 @@ const setQuestion = (value) => ({
 const setCourse = (value) => ({
 	payload: value,
 	type: SET_COURSE,
+});
+
+const setDuration = (value) => ({
+	payload: value,
+	type: SET_DURATION,
 });
 
 const setIndex = (value) => ({
@@ -35,6 +41,7 @@ const initialState = {
 	index: 0,
 	answered: {},
 	course: '',
+	duration: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -64,9 +71,14 @@ const reducer = (state = initialState, action) => {
 				...state,
 				course: action.payload,
 			};
+		case SET_DURATION:
+			return {
+				...state,
+				duration: action.payload,
+			};
 		default:
 			return state;
 	}
 };
 
-export { reducer, setQuestions, setQuestion, setIndex, saveQuestion, setCourse };
+export { reducer, setQuestions, setQuestion, setIndex, saveQuestion, setCourse, setDuration };
