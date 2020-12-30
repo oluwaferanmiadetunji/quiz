@@ -10,7 +10,8 @@ import { _retrieveData } from '../../utils/storage';
 import { Block, Input, Text } from 'galio-framework';
 import { useSelector, useDispatch } from 'react-redux';
 import { setQuestions, setCourse as SetCourse, setDuration as SetDuration } from '../../redux/questions';
-
+import Loader from './Loader';
+import QuestionLoader from './QuestionLoader';
 const { height, width } = Dimensions.get('window');
 
 export default ({ navigation }) => {
@@ -19,6 +20,7 @@ export default ({ navigation }) => {
 	const [count, setCount] = useState(`${user.count}`);
 	const [duration, setDuration] = useState(`${user.duration}`);
 	const [loading, setLoading] = useState(false);
+	const [questionLoading, setQuestionLoading] = useState(false);
 	const [course, setCourse] = useState('');
 	const [courses, setCourses] = useState([]);
 
@@ -39,14 +41,19 @@ export default ({ navigation }) => {
 
 	useEffect(() => {
 		const getData = async () => {
-			setLoading(true);
+			setQuestionLoading(true);
 			const { data } = await makeGetReq('courses');
 			setCourses(data);
-			setLoading(false);
+			setCourse(data[0].course);
+			setQuestionLoading(false);
 		};
 		getData();
 	}, []);
-	return (
+	return loading ? (
+		<QuestionLoader />
+	) : questionLoading ? (
+		<Loader />
+	) : (
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.05 }}>
 			<CustomText style={styles.title}>Set Quiz</CustomText>
 
@@ -85,17 +92,9 @@ export default ({ navigation }) => {
 				/>
 			</Block>
 
-			{loading && (
-				<CustomButton textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }} style={{ marginTop: 30, backgroundColor: GRAY }}>
-					Connecting...
-				</CustomButton>
-			)}
-
-			{!loading && (
-				<CustomButton textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }} style={{ marginTop: 30 }} onPress={handleSubmit}>
-					Start
-				</CustomButton>
-			)}
+			<CustomButton textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }} style={{ marginTop: 30 }} onPress={handleSubmit}>
+				Start
+			</CustomButton>
 			<View style={{ marginTop: 30, flex: 1, flexDirection: 'row' }}>
 				<CustomText style={{ fontSize: 16, marginLeft: 5, color: BLUE, fontWeight: 'bold' }} onPress={() => navigation.navigate('Update')}>
 					Change Settings

@@ -9,6 +9,7 @@ import CustomButton from '../../components/Button';
 import { Card } from 'react-native-elements';
 import styles from './style';
 import { makePostReq } from '../../utils/api';
+import Loader from './Loader';
 
 const { height, width } = Dimensions.get('window');
 
@@ -22,12 +23,16 @@ export default ({ navigation }) => {
 
 	const [open, setOpen] = useState(false);
 
+	const [loading, setLoading] = useState(false);
+
 	const finish = async () => {
 		const total = questions.length;
 		const correct = questions.filter((data) => data.isCorrect === true).length;
 
 		dispatch(saveQuestion({ data: questions, total, correct }));
+		setLoading(true);
 		await makePostReq('user/history/save', { data: questions, total, correct });
+		setLoading(false);
 		dispatch(setIndex(0));
 		navigation.navigate('Summary');
 	};
@@ -84,7 +89,9 @@ export default ({ navigation }) => {
 		dispatch(setQuestion(all[index]));
 	}, [index]);
 
-	return (
+	return loading ? (
+		<Loader />
+	) : (
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.07 }}>
 			<Modal isVisible={open} animationIn='bounceInUp' backdropColor='black' backdropOpacity={1}>
 				<Block style={{ width: width * 0.8 }}>
