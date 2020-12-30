@@ -15,7 +15,9 @@ const { height, width } = Dimensions.get('window');
 export default ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { all, single, index, course, duration } = useSelector((state) => state.question);
+
 	const [selectedIndex, setSelectedIndex] = useState(null);
+
 	const [questions, setQuestions] = useState([]);
 
 	const [open, setOpen] = useState(false);
@@ -26,6 +28,7 @@ export default ({ navigation }) => {
 
 		dispatch(saveQuestion({ data: questions, total, correct }));
 		await makePostReq('user/history/save', { data: questions, total, correct });
+		dispatch(setIndex(0));
 		navigation.navigate('Summary');
 	};
 
