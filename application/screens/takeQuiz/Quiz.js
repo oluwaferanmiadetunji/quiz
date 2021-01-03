@@ -26,16 +26,15 @@ export default ({ navigation }) => {
 	const [loading, setLoading] = useState(false);
 
 	const finish = async () => {
-		console.log(JSON.stringify(questions));
-		// const total = questions.length;
-		// const correct = questions.filter((data) => data.isCorrect === true).length;
+		const total = questions.length;
+		const correct = questions.filter((data) => data.isCorrect === true).length;
 
-		// dispatch(saveQuestion({ data: questions, total, correct }));
-		// setLoading(true);
-		// await makePostReq('user/history/save', { data: questions, total, correct });
-		// setLoading(false);
-		// dispatch(setIndex(0));
-		// navigation.navigate('Summary');
+		dispatch(saveQuestion({ data: questions, total, correct }));
+		setLoading(true);
+		await makePostReq('user/history/save', { data: questions, total, correct });
+		setLoading(false);
+		dispatch(setIndex(0));
+		navigation.navigate('Summary');
 	};
 
 	const selectAnswer = (index) => {

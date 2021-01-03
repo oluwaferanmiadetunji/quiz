@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { View, Dimensions, SafeAreaView, Text, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import styles from './style';
 import { Card } from 'react-native-elements';
 import { _retrieveData } from '../../utils/storage';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
+import { makeGetReq } from '../../utils/api';
+import { setDetails } from '../../redux/user';
 
 const { height, width } = Dimensions.get('window');
 
 export default ({ navigation }) => {
+	const dispatch = useDispatch();
+
 	const { history } = useSelector((state) => state.user);
 
 	const navigate = (data) => {
 		navigation.navigate('SingleHistory', { details: data });
 	};
+
+	useEffect(() => {
+		const getUserDetails = async () => {
+			const { data } = await makeGetReq('user');
+			dispatch(setDetails(data));
+		};
+
+		getUserDetails();
+	}, [history]);
 
 	return (
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.01 }}>
