@@ -6,8 +6,8 @@ module.exports = async (req, res) => {
 
 	try {
 		let history = [];
-		const doc = await db.collection('users').doc(uid).get();
-		const snapshot = await db.collection('history').where('userId', '==', uid).get();
+		const doc = await db.collection('users').doc(uid).orderBy('createdAt', 'desc').get();
+		const snapshot = await db.collection('history').where('userId', '==', uid).orderBy('createdAt', 'desc').get();
 		snapshot.forEach((doc) => {
 			history.push({ ...doc.data(), id: doc.id });
 		});

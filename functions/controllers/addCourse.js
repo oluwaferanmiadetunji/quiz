@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
 	const course = req.body.course;
 	const collection = db.collection('courses');
 	try {
-		const existing = await collection.where('course', '==', course).get();
+		const existing = await collection.where('course', '==', course).orderBy('createdAt', 'desc').get();
 		if (!existing.empty) {
 			return res.status(409).json({ status: 'error', message: 'Course exists already' });
 		} else {

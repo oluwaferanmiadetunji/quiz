@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Dimensions, SafeAreaView, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { setQuestion, setIndex, saveQuestion } from '../../redux/questions';
+import { setQuestion, setIndex, saveQuestion, saveAnsweredQuestions } from '../../redux/questions';
 import Modal from 'react-native-modal';
 import CountDown from 'react-native-countdown-component';
 import { Block } from 'galio-framework';
@@ -15,23 +15,21 @@ const { height, width } = Dimensions.get('window');
 
 export default ({ navigation }) => {
 	const dispatch = useDispatch();
-	const { all, single, index, course, duration } = useSelector((state) => state.question);
+	const { all, single, index, course, duration, answeredQuestions } = useSelector((state) => state.question);
 
 	const [selectedIndex, setSelectedIndex] = useState(null);
-
-	const [questions, setQuestions] = useState([]);
 
 	const [open, setOpen] = useState(false);
 
 	const [loading, setLoading] = useState(false);
 
 	const finish = async () => {
-		const total = questions.length;
-		const correct = questions.filter((data) => data.isCorrect === true).length;
+		const total = answeredQuestions.length;
+		const correct = answeredQuestions.filter((data) => data.isCorrect === true).length;
 
-		dispatch(saveQuestion({ data: questions, total, correct }));
+		dispatch(saveAnsweredQuestions({ data: answeredQuestions, total, correct }));
 		setLoading(true);
-		await makePostReq('user/history/save', { data: questions, total, correct });
+		await makePostReq('user/history/save', { data: answeredQuestions, total, correct });
 		setLoading(false);
 		dispatch(setIndex(0));
 		navigation.navigate('Summary');
@@ -63,14 +61,7 @@ export default ({ navigation }) => {
 		if (selectedAnswer === single.correctAnswer) {
 			isCorrect = true;
 		}
-		let singleQuestion = {};
-		singleQuestion.id = single.id;
-		singleQuestion.selectedAnswer = selectedAnswer;
-		singleQuestion.isCorrect = isCorrect;
-		singleQuestion.answers = single.answers;
-		singleQuestion.question = single.question;
-		singleQuestion.answers = single.answers;
-		setQuestions([...questions, singleQuestion]);
+		dispatch(saveQuestion({ id: single.id, isCorrect, selectedAnswer }));
 		setSelectedIndex(null);
 	};
 

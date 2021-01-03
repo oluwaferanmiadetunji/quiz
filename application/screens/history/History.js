@@ -27,7 +27,7 @@ export default ({ navigation }) => {
 		};
 
 		getUserDetails();
-	}, [history]);
+	}, []);
 
 	return (
 		<SafeAreaView style={{ ...styles.container, paddingTop: height * 0.01 }}>
