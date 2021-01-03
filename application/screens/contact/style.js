@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { WHITE, BLUE, BLACK } from '../../components/Color';
+import { WHITE, BLUE, BLACK, GRAY } from '../../components/Color';
 
 export default StyleSheet.create({
 	container: {
@@ -25,5 +25,15 @@ export default StyleSheet.create({
 	},
 	button: {
 		marginTop: 20,
+	},
+	textAreaContainer: {
+		borderColor: 'gray',
+		borderWidth: 1,
+		padding: 5,
+		borderRadius: 10,
+	},
+	textArea: {
+		borderRadius: 15,
+		paddingLeft: 7,
 	},
 });

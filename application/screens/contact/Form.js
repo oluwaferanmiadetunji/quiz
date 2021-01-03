@@ -5,6 +5,7 @@ import CustomButton from '../../components/Button';
 import CustomText from '../../components/Text';
 import { BLACK, BLUE, GRAY } from '../../components/Color';
 import { Input, Block, Text } from 'galio-framework';
+import { View, Image, ScrollView, TextInput } from 'react-native';
 import { makePostReq } from '../../utils/api';
 import show from '../../utils/showMessage';
 const { height, width } = Dimensions.get('window');
@@ -39,21 +40,25 @@ export default () => {
 			<Block style={{ width: width * 0.8, marginTop: height * 0.03 }}>
 				<Text style={{ fontSize: 16, textAlign: 'center', color: BLACK, marginBottom: 20 }}>Send Us a message</Text>
 				<Input
-					placeholder='Email Address'
+					placeholder='Email Address ...'
 					placeholderTextColor={BLACK}
 					onChangeText={(text) => setEmail(text)}
 					value={email}
 					type='email-address'
 					color={BLACK}
 				/>
-				<Input
-					placeholder='Message'
-					placeholderTextColor={BLACK}
-					onChangeText={(text) => setContent(text)}
-					value={content}
-					type='default'
-					color={BLACK}
-				/>
+				<View style={styles.textAreaContainer}>
+					<TextInput
+						style={styles.textArea}
+						underlineColorAndroid='transparent'
+						placeholder='Enter Message ...'
+						placeholderTextColor={BLACK}
+						numberOfLines={10}
+						multiline={true}
+						onChangeText={(text) => setContent(text)}
+						value={content}
+					/>
+				</View>
 
 				{loading && (
 					<CustomButton textStyling={{ width: width * 0.7, textAlign: 'center', fontSize: 16 }} style={{ marginTop: 30, backgroundColor: GRAY }}>
